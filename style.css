@@ -9,7 +9,7 @@
   --color-text-muted: #6b5b4f;
   --color-border: #e2d4c0;
   --color-error: #e53935;
-  --color-korean: #2c6e9e;        /* новый цвет для корейского текста */
+  --color-korean: #2c6e9e;
   
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Noto Serif SC', serif;
@@ -26,15 +26,15 @@
   --radius-lg: 12px;
   --radius-xl: 20px;
   
-  /* Увеличенные шрифты (~ +20%) */
-  --text-xs: 0.84rem;    /* было 0.7rem */
-  --text-sm: 0.96rem;    /* было 0.8rem */
-  --text-base: 1.08rem;  /* было 0.9rem */
-  --text-lg: 1.2rem;     /* было 1.0rem */
-  --text-xl: 1.44rem;    /* было 1.2rem */
-  --text-2xl: 1.8rem;    /* было 1.5rem */
-  --text-4xl: 2.4rem;    /* было 2.0rem */
-  --text-6xl: 4.2rem;    /* было 3.5rem */
+  /* Ещё больше увеличенные шрифты */
+  --text-xs: 1rem;      /* было 0.84 */
+  --text-sm: 1.15rem;   /* было 0.96 */
+  --text-base: 1.3rem;  /* было 1.08 */
+  --text-lg: 1.45rem;   /* было 1.2 */
+  --text-xl: 1.7rem;    /* было 1.44 */
+  --text-2xl: 2.1rem;   /* было 1.8 */
+  --text-4xl: 2.8rem;   /* было 2.4 */
+  --text-6xl: 5rem;     /* было 4.2 */
 }
 
 [data-theme="dark"] {
@@ -47,7 +47,7 @@
   --color-text: #f0e6d8;
   --color-text-muted: #b8a99a;
   --color-border: #4a372c;
-  --color-korean: #7ab3c8;   /* более светлый голубой для тёмной темы */
+  --color-korean: #7ab3c8;
 }
 
 * {
@@ -154,7 +154,7 @@ body {
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 65px; /* чуть шире для увеличенного шрифта */
+  min-width: 80px;
 }
 
 .carousel-item:hover {
@@ -169,20 +169,19 @@ body {
 
 .carousel-item .carousel-hanzi {
   font-family: var(--font-display);
-  font-size: 1.8rem; /* увеличен */
+  font-size: 2.2rem;  /* сильно увеличен */
   font-weight: 600;
   color: #fff;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .carousel-item .carousel-pinyin {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: #f1c40f;
 }
 
-/* Стиль для номера ключа в карусели */
 .carousel-num {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   color: #ffd966;
   margin-top: 2px;
 }
@@ -232,15 +231,15 @@ body {
   text-align: center;
 }
 
-/* Блок корейского названия с переводом */
+/* КОРЕЙСКИЙ БЛОК — ОЧЕНЬ КРУПНО */
 .korean-top {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
   font-family: var(--font-korean);
-  font-size: 1.2rem;        /* увеличен */
+  font-size: 1.6rem;   /* крупно */
   color: var(--color-korean);
   margin-bottom: var(--space-3);
   padding-bottom: var(--space-2);
@@ -248,11 +247,11 @@ body {
 }
 
 .kr-badge {
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .korean-meaning {
-  font-size: 1rem;          /* увеличен */
+  font-size: 1.3rem;   /* крупно */
   color: var(--color-korean);
   font-family: var(--font-sans);
   font-weight: normal;
@@ -322,7 +321,7 @@ body {
 .btn-speak {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
   margin-left: var(--space-2);
   padding: var(--space-1);
@@ -501,11 +500,12 @@ body {
   margin-top: 2px;
 }
 
+/* КОРЕЙСКИЙ В ПРИМЕРАХ — КРУПНО */
 .example-korean {
-  font-size: 0.9rem;        /* увеличен */
+  font-size: 1.2rem;
   color: var(--color-korean);
   font-family: var(--font-korean);
-  margin-top: 4px;
+  margin-top: 6px;
   font-weight: 500;
 }
 
