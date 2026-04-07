@@ -2,11 +2,100 @@
 let currentCharIdx = 0;
 let writer = null;
 let isPracticeMode = false;
-let stats = { practiced: 0, mastered: new Set() };
 let currentCharData = null;
 let totalStrokes = 0;
 let currentStrokeNum = 0;
 let isAnimating = false;
+
+// === СЕТКА ===
+let guidelineCanvas = null;
+let guidelineCtx = null;
+
+function initGuidelineCanvas() {
+  const canvas = document.getElementById('guideline-canvas');
+  if (!canvas) return;
+  
+  guidelineCanvas = canvas;
+  guidelineCtx = canvas.getContext('2d');
+  
+  const resizeObserver = new ResizeObserver(() => drawGrid());
+  const container = canvas.parentElement;
+  if (container) resizeObserver.observe(container);
+  
+  drawGrid();
+}
+
+function drawGrid() {
+  if (!guidelineCanvas || !guidelineCtx) return;
+  
+  const container = guidelineCanvas.parentElement;
+  if (!container) return;
+  
+  const size = container.clientWidth;
+  if (size === 0) return;
+  
+  guidelineCanvas.width = size;
+  guidelineCanvas.height = size;
+  guidelineCanvas.style.width = `${size}px`;
+  guidelineCanvas.style.height = `${size}px`;
+  
+  const ctx = guidelineCtx;
+  ctx.clearRect(0, 0, size, size);
+  
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const mainColor = isDark ? '#ef4444' : '#c0392b';
+  const lightColor = isDark ? 'rgba(239,68,68,0.2)' : 'rgba(192,57,43,0.15)';
+  
+  ctx.save();
+  
+  // Внешняя рамка
+  ctx.beginPath();
+  ctx.strokeStyle = mainColor;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(2, 2, size - 4, size - 4);
+  
+  // Центральные линии
+  ctx.beginPath();
+  ctx.strokeStyle = lightColor;
+  ctx.lineWidth = 1;
+  ctx.moveTo(size / 2, 4);
+  ctx.lineTo(size / 2, size - 4);
+  ctx.moveTo(4, size / 2);
+  ctx.lineTo(size - 4, size / 2);
+  ctx.stroke();
+  
+  // Диагонали
+  ctx.beginPath();
+  ctx.strokeStyle = lightColor;
+  ctx.lineWidth = 0.8;
+  ctx.moveTo(4, 4);
+  ctx.lineTo(size - 4, size - 4);
+  ctx.moveTo(size - 4, 4);
+  ctx.lineTo(4, size - 4);
+  ctx.stroke();
+  
+  // Линии третей
+  ctx.beginPath();
+  ctx.strokeStyle = lightColor;
+  ctx.lineWidth = 0.6;
+  ctx.setLineDash([4, 4]);
+  
+  const third = size / 3;
+  const twoThird = (size * 2) / 3;
+  ctx.moveTo(4, third);
+  ctx.lineTo(size - 4, third);
+  ctx.moveTo(4, twoThird);
+  ctx.lineTo(size - 4, twoThird);
+  ctx.moveTo(third, 4);
+  ctx.lineTo(third, size - 4);
+  ctx.moveTo(twoThird, 4);
+  ctx.lineTo(twoThird, size - 4);
+  ctx.stroke();
+  
+  ctx.restore();
+}
+
+function updateGridTheme() { drawGrid(); }
 
 // === UTILITIES ===
 function showToast(msg, duration = 2500) {
@@ -39,11 +128,6 @@ function setButtonsEnabled(enabled) {
   });
 }
 
-function updateStatsUI() {
-  document.getElementById('stat-practiced').textContent = stats.practiced;
-  document.getElementById('stat-mastered').textContent = stats.mastered.size;
-}
-
 function updateStrokeProgress(strokeNum, total) {
   document.getElementById('current-stroke').textContent = strokeNum;
   document.getElementById('total-strokes').textContent = total;
@@ -59,10 +143,11 @@ function renderCarousel() {
   container.innerHTML = '';
   CHARACTERS.forEach((c, i) => {
     const btn = document.createElement('button');
-    btn.className = `carousel-item ${i === currentCharIdx ? 'active' : ''} ${stats.mastered.has(i) ? 'mastered' : ''}`;
+    btn.className = `carousel-item ${i === currentCharIdx ? 'active' : ''}`;
     btn.innerHTML = `
       <span class="carousel-hanzi">${c.char}</span>
       <span class="carousel-pinyin">${c.pinyin}</span>
+      <span class="carousel-num">${c.radicalNum}</span>
     `;
     btn.onclick = () => selectChar(i);
     container.appendChild(btn);
@@ -81,149 +166,47 @@ function setupCarouselNavigation() {
   const prevBtn = document.getElementById('carouselPrev');
   const nextBtn = document.getElementById('carouselNext');
   
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      container.scrollBy({ left: -140, behavior: 'smooth' });
-    });
-  }
-  
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      container.scrollBy({ left: 140, behavior: 'smooth' });
-    });
-  }
-  
-  let touchStartX = 0;
-  container.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-  });
-  container.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        container.scrollBy({ left: 140, behavior: 'smooth' });
-      } else {
-        container.scrollBy({ left: -140, behavior: 'smooth' });
-      }
-    }
-  });
+  if (prevBtn) prevBtn.addEventListener('click', () => container.scrollBy({ left: -120, behavior: 'smooth' }));
+  if (nextBtn) nextBtn.addEventListener('click', () => container.scrollBy({ left: 120, behavior: 'smooth' }));
 }
 
-// === ФАКТЫ (всегда раскрыты) ===
-function updateFactsExpanded(facts) {
-  if (!facts) return;
-  
-  const historyEl = document.getElementById('history-text');
-  const positionEl = document.getElementById('position-text');
-  const statsEl = document.getElementById('stats-text');
-  
-  if (historyEl) historyEl.textContent = facts.history || 'Информация отсутствует';
-  if (positionEl) positionEl.textContent = facts.position || 'Информация отсутствует';
-  if (statsEl) statsEl.textContent = facts.stats || 'Информация отсутствует';
-}
-
+// === ОТОБРАЖЕНИЕ ИНФОРМАЦИИ ===
 function renderInfo(charData) {
   if (!charData) return;
+  
+  // Отображаем корейское название и его перевод на русский
+  document.getElementById('korean-name').textContent = charData.koreanName;
+  document.getElementById('korean-meaning').textContent = `(${charData.koreanMeaning})`;
+  
   document.getElementById('info-char').textContent = charData.char;
   document.getElementById('info-pinyin').textContent = charData.pinyin;
-  document.getElementById('info-transcription').textContent = `(${charData.transcription})`;
   document.getElementById('info-meaning').textContent = charData.meaning;
-  document.getElementById('stroke-count').textContent = `Количество черт: ${charData.strokes}`;
-  document.getElementById('radical-display').textContent = `Ключ №${charData.radicalNum}`;
+  document.getElementById('stroke-count').textContent = charData.strokes;
+  document.getElementById('radical-num').textContent = charData.radicalNum;
+  document.getElementById('tone-indicator').textContent = charData.tone;
   
-  const toneNames = { 
-    1: "1-й тон (высокий ровный) ¯", 
-    2: "2-й тон (восходящий) ´", 
-    3: "3-й тон (нисходяще-восходящий) ˇ", 
-    4: "4-й тон (нисходящий) `", 
-    5: "нейтральный тон" 
-  };
-  const toneIndicator = document.getElementById('tone-indicator');
-  if (toneIndicator) {
-    toneIndicator.textContent = toneNames[charData.tone] || toneNames[1];
-    toneIndicator.className = `tone-indicator tone-${charData.tone || 1}`;
-  }
+  document.getElementById('history-text').textContent = charData.history;
+  document.getElementById('position-text').textContent = charData.position;
+  document.getElementById('stats-text').textContent = charData.stats;
   
   renderExamples(charData.examples);
-  updateFactsExpanded(charData.facts);
 }
 
-function renderExamples(examplesStr) {
+function renderExamples(examples) {
   const container = document.getElementById('examples-grid');
   if (!container) return;
   
-  const examplesList = examplesStr.split('、');
   container.innerHTML = '';
   
-  const examplesData = {
-    '王': { pinyin: 'wáng', transcription: 'ван', meaning: 'король' },
-    '丁': { pinyin: 'dīng', transcription: 'дин', meaning: 'гвоздь, человек' },
-    '七': { pinyin: 'qī', transcription: 'ци', meaning: 'семь' },
-    '三': { pinyin: 'sān', transcription: 'сань', meaning: 'три' },
-    '十': { pinyin: 'shí', transcription: 'ши', meaning: 'десять' },
-    '中': { pinyin: 'zhōng', transcription: 'чжун', meaning: 'центр' },
-    '串': { pinyin: 'chuàn', transcription: 'чуань', meaning: 'связка' },
-    '丰': { pinyin: 'fēng', transcription: 'фэн', meaning: 'изобильный' },
-    '丸': { pinyin: 'wán', transcription: 'вань', meaning: 'пилюля' },
-    '凡': { pinyin: 'fán', transcription: 'фань', meaning: 'обычный' },
-    '丹': { pinyin: 'dān', transcription: 'дань', meaning: 'красный' },
-    '户': { pinyin: 'hù', transcription: 'ху', meaning: 'дверь' },
-    '乂': { pinyin: 'yì', transcription: 'и', meaning: 'косить' },
-    '乃': { pinyin: 'nǎi', transcription: 'най', meaning: 'затем' },
-    '久': { pinyin: 'jiǔ', transcription: 'цзю', meaning: 'долгий' },
-    '八': { pinyin: 'bā', transcription: 'ба', meaning: 'восемь' },
-    '九': { pinyin: 'jiǔ', transcription: 'цзю', meaning: 'девять' },
-    '乞': { pinyin: 'qǐ', transcription: 'ци', meaning: 'просить' },
-    '也': { pinyin: 'yě', transcription: 'е', meaning: 'также' },
-    '了': { pinyin: 'le', transcription: 'лэ', meaning: 'частица' },
-    '矛': { pinyin: 'máo', transcription: 'мао', meaning: 'копьё' },
-    '事': { pinyin: 'shì', transcription: 'ши', meaning: 'дело' },
-    '贰': { pinyin: 'èr', transcription: 'эр', meaning: 'два (формально)' },
-    '于': { pinyin: 'yú', transcription: 'юй', meaning: 'в, на' },
-    '云': { pinyin: 'yún', transcription: 'юнь', meaning: 'облако' },
-    '些': { pinyin: 'xiē', transcription: 'се', meaning: 'немного' },
-    '方': { pinyin: 'fāng', transcription: 'фан', meaning: 'квадрат' },
-    '亡': { pinyin: 'wáng', transcription: 'ван', meaning: 'погибать' },
-    '亢': { pinyin: 'kàng', transcription: 'кан', meaning: 'высокий' },
-    '交': { pinyin: 'jiāo', transcription: 'цзяо', meaning: 'пересекаться' },
-    '你': { pinyin: 'nǐ', transcription: 'ни', meaning: 'ты' },
-    '什': { pinyin: 'shén', transcription: 'шэнь', meaning: 'что' },
-    '仁': { pinyin: 'rén', transcription: 'жэнь', meaning: 'гуманность' },
-    '仇': { pinyin: 'chóu', transcription: 'чоу', meaning: 'враг' },
-    '儿': { pinyin: 'ér', transcription: 'эр', meaning: 'сын' },
-    '兀': { pinyin: 'wù', transcription: 'у', meaning: 'высокий' },
-    '允': { pinyin: 'yǔn', transcription: 'юнь', meaning: 'разрешать' },
-    '元': { pinyin: 'yuán', transcription: 'юань', meaning: 'начало' },
-    '入': { pinyin: 'rù', transcription: 'жу', meaning: 'входить' },
-    '內': { pinyin: 'nèi', transcription: 'нэй', meaning: 'внутри' },
-    '全': { pinyin: 'quán', transcription: 'цюань', meaning: 'полный' },
-    '兩': { pinyin: 'liǎng', transcription: 'лян', meaning: 'два' },
-    '公': { pinyin: 'gōng', transcription: 'гун', meaning: 'общественный' },
-    '分': { pinyin: 'fēn', transcription: 'фэнь', meaning: 'разделять' },
-    '半': { pinyin: 'bàn', transcription: 'бань', meaning: 'половина' },
-    '冂': { pinyin: 'jiōng', transcription: 'цзюн', meaning: 'дальний' },
-    '冃': { pinyin: 'mào', transcription: 'мао', meaning: 'шапка' },
-    '冄': { pinyin: 'rǎn', transcription: 'жань', meaning: 'медленно' },
-    '内': { pinyin: 'nèi', transcription: 'нэй', meaning: 'внутри' },
-    '冠': { pinyin: 'guān', transcription: 'гуань', meaning: 'корона' },
-    '冢': { pinyin: 'zhǒng', transcription: 'чжун', meaning: 'могила' },
-    '冥': { pinyin: 'míng', transcription: 'мин', meaning: 'тёмный' },
-    '冰': { pinyin: 'bīng', transcription: 'бин', meaning: 'лёд' },
-    '冷': { pinyin: 'lěng', transcription: 'лэн', meaning: 'холодный' },
-    '凍': { pinyin: 'dòng', transcription: 'дун', meaning: 'замерзать' },
-    '凝': { pinyin: 'níng', transcription: 'нин', meaning: 'застывать' }
-  };
-  
-  examplesList.forEach(example => {
-    const data = examplesData[example] || { pinyin: '?', transcription: '?', meaning: '?' };
+  examples.forEach(example => {
+    const data = window.getExampleData(example);
     const card = document.createElement('div');
     card.className = 'example-card';
     card.innerHTML = `
       <div class="example-char">${example}</div>
       <div class="example-pinyin">${data.pinyin}</div>
-      <div class="example-transcription">${data.transcription}</div>
       <div class="example-meaning">${data.meaning}</div>
+      <div class="example-korean">🇰🇷 ${data.korean}</div>
     `;
     container.appendChild(card);
   });
@@ -232,9 +215,7 @@ function renderExamples(examplesStr) {
 // === HANZI WRITER ===
 function clearWriterContainer() {
   const container = document.getElementById('hanzi-target');
-  if (container) {
-    container.innerHTML = '';
-  }
+  if (container) container.innerHTML = '';
 }
 
 function getWriterOptions() {
@@ -247,7 +228,7 @@ function getWriterOptions() {
     showCharacter: true,
     strokeColor: isDark ? '#ef4444' : '#c0392b',
     outlineColor: isDark ? '#444' : '#ddd',
-    highlightColor: '#3b82f6',
+    highlightColor: '#f1c40f',
     drawingColor: '#2c6e9e',
     drawingWidth: 5,
     strokeAnimationSpeed: 1,
@@ -259,24 +240,24 @@ function getWriterOptions() {
       totalStrokes = data.strokes ? data.strokes.length : currentCharData.strokes;
       updateStrokeProgress(0, totalStrokes);
       hideError();
+      setTimeout(drawGrid, 100);
     },
     onLoadCharDataError: function(reason) {
-      console.error('Error loading character data:', reason);
-      showError('Не удалось загрузить данные иероглифа. Проверьте соединение.');
+      console.error('Error:', reason);
+      showError('Не удалось загрузить данные иероглифа.');
     }
   };
 }
 
 function initWriter(char) {
   if (writer) {
-    try {
-      writer.cancelQuiz();
-    } catch(e) {}
+    try { writer.cancelQuiz(); } catch(e) {}
     writer = null;
   }
   
   clearWriterContainer();
   writer = HanziWriter.create('hanzi-target', char, getWriterOptions());
+  setTimeout(() => initGuidelineCanvas(), 100);
 }
 
 function animateCharacter() {
@@ -289,7 +270,7 @@ function animateCharacter() {
   writer.animateCharacter({
     onComplete: function() {
       isAnimating = false;
-      showToast('✅ Анимация завершена!');
+      showToast('Анимация завершена');
       updateStrokeProgress(totalStrokes, totalStrokes);
     }
   });
@@ -314,7 +295,6 @@ function startPracticeMode() {
   currentStrokeNum = 0;
   
   document.getElementById('practice-banner').classList.add('active');
-  document.querySelector('.writer-wrap')?.classList.add('practice-active');
   setButtonsEnabled(false);
   
   writer.hideCharacter();
@@ -323,9 +303,8 @@ function startPracticeMode() {
     onCorrectStroke: function(strokeData) {
       currentStrokeNum = strokeData.strokeNum + 1;
       updateStrokeProgress(currentStrokeNum, totalStrokes);
-      
       if (strokeData.strokesRemaining > 0) {
-        showToast(`✅ Черта ${currentStrokeNum} из ${totalStrokes}`, 1200);
+        showToast(`Черта ${currentStrokeNum} из ${totalStrokes}`, 1200);
       }
     },
     onMistake: function(strokeData) {
@@ -334,18 +313,12 @@ function startPracticeMode() {
         svg.style.animation = 'shake 0.5s';
         setTimeout(() => svg.style.animation = '', 500);
       }
-      
       if (strokeData.mistakesOnStroke === 1) {
-        showToast('❌ Попробуйте ещё раз!', 1500);
+        showToast('Попробуйте ещё раз!', 1500);
       }
     },
-    onComplete: function(summaryData) {
-      showToast('🎉 Иероглиф освоен!', 3000);
-      stats.mastered.add(currentCharIdx);
-      stats.practiced++;
-      updateStatsUI();
-      renderCarousel();
-      
+    onComplete: function() {
+      showToast('Иероглиф освоен!', 3000);
       const target = document.getElementById('hanzi-target');
       target.style.transform = 'scale(1.05)';
       setTimeout(() => {
@@ -355,10 +328,7 @@ function startPracticeMode() {
     }
   });
   
-  stats.practiced++;
-  updateStatsUI();
-  renderCarousel();
-  showToast('✍️ Нарисуйте черты по порядку!');
+  showToast('Нарисуйте черты по порядку!');
 }
 
 function exitPracticeMode() {
@@ -373,16 +343,13 @@ function exitPracticeMode() {
   }
   
   document.getElementById('practice-banner').classList.remove('active');
-  document.querySelector('.writer-wrap')?.classList.remove('practice-active');
   setButtonsEnabled(true);
   updateStrokeProgress(0, totalStrokes);
-  
   showToast('Выход из практики');
 }
 
 function selectChar(idx) {
   if (!CHARACTERS[idx]) return;
-  
   if (isPracticeMode) exitPracticeMode();
   
   currentCharIdx = idx;
@@ -392,10 +359,7 @@ function selectChar(idx) {
   renderCarousel();
   renderInfo(currentCharData);
   setButtonsEnabled(true);
-  
   initWriter(currentCharData.char);
-  
-  showToast(`Загружен: ${currentCharData.char} (${currentCharData.transcription})`);
 }
 
 function speakText(text, lang = 'zh-CN') {
@@ -414,16 +378,13 @@ function speakText(text, lang = 'zh-CN') {
 document.getElementById('btn-animate')?.addEventListener('click', () => {
   if (isPracticeMode) exitPracticeMode();
   animateCharacter();
-  showToast('🎬 Анимация...');
 });
 
 document.getElementById('btn-practice')?.addEventListener('click', startPracticeMode);
 document.getElementById('btn-exit-practice')?.addEventListener('click', exitPracticeMode);
 document.getElementById('btn-retry')?.addEventListener('click', () => selectChar(currentCharIdx));
 document.getElementById('btn-speak')?.addEventListener('click', () => {
-  if (currentCharData) {
-    speakText(currentCharData.char);
-  }
+  if (currentCharData) speakText(currentCharData.char);
 });
 
 // Theme
@@ -444,7 +405,10 @@ themeToggle?.addEventListener('click', () => {
     writer.updateColor('strokeColor', isDark ? '#ef4444' : '#c0392b');
     writer.updateColor('outlineColor', isDark ? '#444' : '#ddd');
   }
+  drawGrid();
 });
+
+window.addEventListener('resize', () => setTimeout(drawGrid, 100));
 
 // Init
 window.addEventListener('load', () => {
@@ -452,13 +416,11 @@ window.addEventListener('load', () => {
     showToast('Ошибка загрузки данных');
     return;
   }
-  
   if (typeof HanziWriter === 'undefined') {
-    showError('Ошибка загрузки Hanzi Writer. Проверьте подключение к интернету.');
+    showError('Ошибка загрузки Hanzi Writer');
     return;
   }
   
-  updateStatsUI();
   renderCarousel();
   setupCarouselNavigation();
   selectChar(0);
