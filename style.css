@@ -74,19 +74,20 @@ body {
   width: 100%;
 }
 
-/* HEADER */
+/* HEADER (десктопная версия) */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-3) var(--space-4);
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
-    color: white;
-    border-bottom: 2px solid #f1c40f;
-    width: 100%;
-    flex-wrap: wrap; /* <-- ДОБАВИТЬ ЭТУ СТРОКУ */
-    gap: 10px;       /* <-- ДОБАВИТЬ ЭТУ СТРОКУ для отступа между строками */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  color: white;
+  border-bottom: 2px solid #f1c40f;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
 .logo {
   display: flex;
   align-items: center;
@@ -520,12 +521,6 @@ body {
   margin-bottom: var(--space-5);
 }
 
-@media (max-width: 768px) {
-  .examples-grid-2 {
-    grid-template-columns: 1fr 1fr; /* два в ряд на мобильных */
-  }
-}
-
 .example-card {
   background: var(--color-surface-offset);
   border-radius: var(--radius-lg);
@@ -927,7 +922,6 @@ body {
 
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ===== */
 @media (max-width: 768px) {
-  /* Убираем горизонтальный скролл и ограничения */
   body {
     overflow-x: hidden;
   }
@@ -942,11 +936,14 @@ body {
     padding: 0;
   }
 
-  /* Шапка на всю ширину */
+  /* ШАПКА — НА ВСЮ ШИРИНУ ЭКРАНА */
   .header {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
     padding: var(--space-2) var(--space-2);
-    width: 100%;
     border-radius: 0;
+    box-sizing: border-box;
   }
 
   /* КАРУСЕЛЬ И БАННЕР ОШИБОК — НА ВСЮ ШИРИНУ ЭКРАНА */
@@ -963,12 +960,11 @@ body {
     box-sizing: border-box;
   }
 
-  /* Отступы для контента, чтобы не прилипал к краям */
   .key-info-container {
     padding: 0 var(--space-2);
   }
 
-  /* 1. Примеры иероглифов — два в ряд */
+  /* Примеры иероглифов — два в ряд */
   .examples-grid-2 {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-3);
@@ -990,7 +986,7 @@ body {
     align-items: center;
   }
 
-  /* 2. Карусель: внутренняя настройка (обёртка, кнопки) */
+  /* Карусель: внутренняя настройка (обёртка, кнопки) */
   .radical-carousel-container {
     flex-wrap: wrap;
     justify-content: space-between;
@@ -1027,7 +1023,7 @@ body {
     height: 36px;
   }
 
-  /* 3. Кнопки управления (4 штуки) */
+  /* Кнопки управления (4 штуки) */
   .key-controls {
     gap: var(--space-5);
     padding: var(--space-4);
@@ -1039,7 +1035,7 @@ body {
     font-size: 36px;
   }
 
-  /* 4. Левая карточка */
+  /* Левая карточка */
   .key-card {
     padding: var(--space-4);
   }
@@ -1058,18 +1054,15 @@ body {
     flex-direction: column;
   }
 
-  /* 5. Прогресс-бар и тон */
   .progress-section,
   .tone-box {
     margin: var(--space-3) 0;
   }
 
-  /* 6. Правая карточка */
   .info-card {
     padding: var(--space-4);
   }
 
-  /* 7. Текст в правой колонке */
   .history-text,
   .fact-text,
   .memory-association {
