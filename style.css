@@ -65,6 +65,7 @@ body {
   line-height: 1.4;
   transition: background-color 0.2s, color 0.2s;
   font-size: var(--text-base);
+  overflow-x: hidden;
 }
 
 /* ===== ОБЩИЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ (ДЕСКТОП) ===== */
@@ -925,6 +926,7 @@ body {
 
   .app-container {
     width: 100%;
+    max-width: 100%;
     padding: 0;
     margin: 0;
   }
@@ -933,23 +935,34 @@ body {
     padding: 0;
   }
 
-  /* Шапка, карусель, баннер ошибок — на всю ширину */
+  /* Жёсткая фиксация ширины для верхних блоков */
   .header,
   .radical-carousel-container,
   .error-banner {
-    width: 100%;
-    margin: 0;
-    padding: var(--space-2) var(--space-2);
-    border-radius: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
     box-sizing: border-box;
   }
 
+  .header {
+    padding: var(--space-2) var(--space-2);
+    border-radius: 0;
+  }
+
   .radical-carousel-container {
+    padding: var(--space-2);
+    border-radius: 0;
     margin-bottom: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .error-banner {
     padding: var(--space-3) var(--space-4);
+    border-radius: 0;
+    margin-bottom: var(--space-4);
   }
 
   /* Отступы для контента */
@@ -979,15 +992,10 @@ body {
     align-items: center;
   }
 
-  /* Карусель: внутренняя настройка (обёртка, кнопки) */
-  .radical-carousel-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
+  /* Карусель: внутренняя настройка */
   .radical-carousel {
     order: 1;
-    width: 100%;
+    width: 100% !important;
     margin: var(--space-2) 0;
     padding: 0;
   }
