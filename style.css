@@ -915,3 +915,143 @@ body {
 .square-icon img {
   display: none;
 }
+
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ===== */
+@media (max-width: 768px) {
+  /* 1. Примеры иероглифов — два в ряд */
+  .examples-grid-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .example-card {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .example-char {
+    font-size: 4rem !important;
+    min-width: auto !important;
+  }
+
+  .example-details {
+    align-items: center;
+  }
+
+  /* 2. Карусель: кнопки избранное/тема — увеличиваем, чтобы не терялись */
+  .radical-carousel-container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .radical-carousel {
+    order: 1;
+    width: 100%;
+    margin: var(--space-2) 0;
+  }
+
+  .carousel-nav {
+    order: 2;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+  }
+
+  .carousel-actions {
+    order: 3;
+    gap: var(--space-2);
+    padding-right: 0;
+  }
+
+  .square-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+
+  .square-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* 3. Кнопки управления (4 штуки) — увеличиваем и раздвигаем */
+  .key-controls {
+    gap: var(--space-5);
+    padding: var(--space-4);
+  }
+
+  .key-controls .btn-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
+  }
+
+  /* 4. Левая карточка: отступы и размер иероглифа */
+  .key-card {
+    padding: var(--space-4);
+  }
+
+  .char-giant {
+    font-size: clamp(3rem, 8vw, 6rem);
+    min-width: 100px;
+  }
+
+  .char-details {
+    min-width: auto;
+    text-align: center;
+  }
+
+  .char-main-layout {
+    flex-direction: column;
+  }
+
+  /* 5. Прогресс-бар и тон */
+  .progress-section, .tone-box {
+    margin: var(--space-3) 0;
+  }
+
+  /* 6. Правая карточка: отступы */
+  .info-card {
+    padding: var(--space-4);
+  }
+
+  /* 7. Текст в правой колонке — чуть мельче для читаемости */
+  .history-text, .fact-text, .memory-association {
+    font-size: var(--text-sm);
+  }
+}
+
+/* Для очень маленьких экранов (до 480px) */
+@media (max-width: 480px) {
+  .examples-grid-2 {
+    gap: var(--space-2);
+  }
+
+  .example-char {
+    font-size: 3rem !important;
+  }
+
+  .key-controls .btn-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+
+  .square-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .square-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+  }
+}
