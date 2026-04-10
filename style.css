@@ -926,6 +926,30 @@ body {
 
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ===== */
 @media (max-width: 768px) {
+  /* Убираем отступы по бокам, чтобы блоки занимали всю ширину экрана */
+  .app-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .main {
+    padding: 0;
+  }
+
+  .header {
+    padding: var(--space-2);
+  }
+
+  .radical-carousel-container {
+    border-radius: 0;
+    margin-bottom: var(--space-2);
+  }
+
+  /* Добавляем небольшие отступы для контента, чтобы не прилипало к краям */
+  .key-info-container {
+    padding: 0 var(--space-2);
+  }
+
   /* 1. Примеры иероглифов — два в ряд */
   .examples-grid-2 {
     grid-template-columns: 1fr 1fr;
