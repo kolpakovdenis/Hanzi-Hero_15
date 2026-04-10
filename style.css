@@ -1109,3 +1109,55 @@ body {
         padding: 0 var(--space-2);
     }
 }
+/* ===== ПОЛНАЯ ШИРИНА ДЛЯ ВЕРХНИХ БЛОКОВ НА МОБИЛЬНЫХ ===== */
+@media (max-width: 768px) {
+  /* Растягиваем карусель и баннер ошибок на всю ширину */
+  .radical-carousel-container,
+  .error-banner {
+    margin-left: calc(-1 * var(--space-2));
+    margin-right: calc(-1 * var(--space-2));
+    width: calc(100% + 2 * var(--space-2));
+    border-radius: 0;
+  }
+
+  /* Убираем боковые границы, чтобы блоки плотно прилегали к краям экрана */
+  .radical-carousel-container {
+    border-left: none;
+    border-right: none;
+    margin-bottom: var(--space-2);
+  }
+
+  .error-banner {
+    border-left: none;
+    border-right: none;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Убираем padding у main, чтобы контент не создавал лишних отступов */
+  .main {
+    padding: 0;
+  }
+
+  /* Симметричные отступы для контента (как у карточек) */
+  .key-info-container {
+    padding: 0 var(--space-2);
+  }
+
+  /* Шапка тоже на всю ширину с минимальными отступами */
+  .header {
+    padding: var(--space-2) var(--space-2);
+  }
+}
+
+/* Для очень маленьких экранов (<480px) – гарантированное растяжение через 100vw */
+@media (max-width: 480px) {
+  .radical-carousel-container,
+  .error-banner {
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+    border-radius: 0;
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+}
