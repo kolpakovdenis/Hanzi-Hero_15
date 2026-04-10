@@ -927,26 +927,43 @@ body {
 
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ===== */
 @media (max-width: 768px) {
-  /* Убираем отступы по бокам, чтобы блоки занимали всю ширину экрана */
+  /* Убираем горизонтальный скролл и ограничения */
+  body {
+    overflow-x: hidden;
+  }
+
   .app-container {
     max-width: 100%;
     margin: 0;
+    padding: 0;
   }
 
   .main {
     padding: 0;
   }
 
+  /* Шапка на всю ширину */
   .header {
-    padding: var(--space-2);
-  }
-
-  .radical-carousel-container {
+    padding: var(--space-2) var(--space-2);
+    width: 100%;
     border-radius: 0;
-    margin-bottom: var(--space-2);
   }
 
-  /* Добавляем небольшие отступы для контента, чтобы не прилипало к краям */
+  /* КАРУСЕЛЬ И БАННЕР ОШИБОК — НА ВСЮ ШИРИНУ ЭКРАНА */
+  .radical-carousel-container,
+  .error-banner {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+    box-sizing: border-box;
+  }
+
+  /* Отступы для контента, чтобы не прилипал к краям */
   .key-info-container {
     padding: 0 var(--space-2);
   }
@@ -973,10 +990,11 @@ body {
     align-items: center;
   }
 
-  /* 2. Карусель: кнопки избранное/тема — увеличиваем, чтобы не терялись */
+  /* 2. Карусель: внутренняя настройка (обёртка, кнопки) */
   .radical-carousel-container {
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-bottom: var(--space-2);
   }
 
   .radical-carousel {
@@ -1009,7 +1027,7 @@ body {
     height: 36px;
   }
 
-  /* 3. Кнопки управления (4 штуки) — увеличиваем и раздвигаем */
+  /* 3. Кнопки управления (4 штуки) */
   .key-controls {
     gap: var(--space-5);
     padding: var(--space-4);
@@ -1021,7 +1039,7 @@ body {
     font-size: 36px;
   }
 
-  /* 4. Левая карточка: отступы и размер иероглифа */
+  /* 4. Левая карточка */
   .key-card {
     padding: var(--space-4);
   }
@@ -1041,22 +1059,25 @@ body {
   }
 
   /* 5. Прогресс-бар и тон */
-  .progress-section, .tone-box {
+  .progress-section,
+  .tone-box {
     margin: var(--space-3) 0;
   }
 
-  /* 6. Правая карточка: отступы */
+  /* 6. Правая карточка */
   .info-card {
     padding: var(--space-4);
   }
 
-  /* 7. Текст в правой колонке — чуть мельче для читаемости */
-  .history-text, .fact-text, .memory-association {
+  /* 7. Текст в правой колонке */
+  .history-text,
+  .fact-text,
+  .memory-association {
     font-size: var(--text-sm);
   }
 }
 
-/* Для очень маленьких экранов (до 480px) */
+/* Для очень маленьких экранов (до 480px) — дополнительная коррекция */
 @media (max-width: 480px) {
   .examples-grid-2 {
     gap: var(--space-2);
@@ -1086,78 +1107,5 @@ body {
   .carousel-nav {
     width: 32px;
     height: 32px;
-  }
-}
-
-/* Принудительное растяжение ТОЛЬКО на маленьких сенсорных экранах */
-@media (pointer: coarse) and (max-width: 768px) {
-    .app-container {
-        max-width: 100%;
-        margin: 0;
-    }
-    .header {
-        border-radius: 0;
-        padding: var(--space-2);
-    }
-    .radical-carousel-container {
-        border-radius: 0;
-    }
-    .main {
-        padding: 0;
-    }
-    .key-info-container {
-        padding: 0 var(--space-2);
-    }
-}
-/* ===== ПОЛНАЯ ШИРИНА ДЛЯ ВЕРХНИХ БЛОКОВ НА МОБИЛЬНЫХ ===== */
-@media (max-width: 768px) {
-  /* Растягиваем карусель и баннер ошибок на всю ширину */
-  .radical-carousel-container,
-  .error-banner {
-    margin-left: calc(-1 * var(--space-2));
-    margin-right: calc(-1 * var(--space-2));
-    width: calc(100% + 2 * var(--space-2));
-    border-radius: 0;
-  }
-
-  /* Убираем боковые границы, чтобы блоки плотно прилегали к краям экрана */
-  .radical-carousel-container {
-    border-left: none;
-    border-right: none;
-    margin-bottom: var(--space-2);
-  }
-
-  .error-banner {
-    border-left: none;
-    border-right: none;
-    margin-bottom: var(--space-4);
-  }
-
-  /* Убираем padding у main, чтобы контент не создавал лишних отступов */
-  .main {
-    padding: 0;
-  }
-
-  /* Симметричные отступы для контента (как у карточек) */
-  .key-info-container {
-    padding: 0 var(--space-2);
-  }
-
-  /* Шапка тоже на всю ширину с минимальными отступами */
-  .header {
-    padding: var(--space-2) var(--space-2);
-  }
-}
-
-/* Для очень маленьких экранов (<480px) – гарантированное растяжение через 100vw */
-@media (max-width: 480px) {
-  .radical-carousel-container,
-  .error-banner {
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    width: 100vw;
-    border-radius: 0;
-    padding-left: var(--space-2);
-    padding-right: var(--space-2);
   }
 }
