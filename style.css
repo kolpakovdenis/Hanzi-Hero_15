@@ -67,14 +67,14 @@ body {
   font-size: var(--text-base);
 }
 
-/* ===== ОБЩИЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ ===== */
+/* ===== ОБЩИЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ (ДЕСКТОП) ===== */
 .app-container {
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* HEADER (десктопная версия) */
+/* HEADER (ДЕСКТОП) */
 .header {
   display: flex;
   justify-content: space-between;
@@ -102,7 +102,7 @@ body {
   padding: var(--space-4);
 }
 
-/* КАРУСЕЛЬ */
+/* КАРУСЕЛЬ (ДЕСКТОП) */
 .radical-carousel-container {
   position: relative;
   display: flex;
@@ -195,7 +195,6 @@ body {
   line-height: 1;
 }
 
-/* Стиль для пиньиня */
 .carousel-item .carousel-pinyin {
   font-size: var(--text-sm);
   color: #f1c40f;
@@ -263,7 +262,6 @@ body {
   }
 }
 
-/* Ограничиваем размер гигантского иероглифа */
 .char-giant {
   font-family: var(--font-display);
   font-size: clamp(4rem, 10vw, 8rem);
@@ -288,7 +286,6 @@ body {
   transform: scale(0.85);
 }
 
-/* Для очень широких — ещё сильнее */
 .char-giant[data-char="亠"],
 .char-giant[data-char="冂"],
 .char-giant[data-char="冖"],
@@ -431,7 +428,7 @@ body {
   text-align: center;
 }
 
-/* КНОПКИ УПРАВЛЕНИЯ (4 штуки) - увеличены на 20% */
+/* КНОПКИ УПРАВЛЕНИЯ (4 штуки) */
 .key-controls {
   display: flex;
   justify-content: center;
@@ -885,7 +882,7 @@ body {
   }
 }
 
-/* ИКОНКИ В КАРУСЕЛИ (избранное и тема) - увеличены до размера ключей */
+/* ИКОНКИ В КАРУСЕЛИ (избранное и тема) */
 .square-icon {
   background: rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
@@ -927,39 +924,35 @@ body {
   }
 
   .app-container {
-    max-width: 100%;
-    margin: 0;
+    width: 100%;
     padding: 0;
+    margin: 0;
   }
 
   .main {
     padding: 0;
   }
 
-  /* ШАПКА — НА ВСЮ ШИРИНУ ЭКРАНА */
-  .header {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+  /* Шапка, карусель, баннер ошибок — на всю ширину */
+  .header,
+  .radical-carousel-container,
+  .error-banner {
+    width: 100%;
+    margin: 0;
     padding: var(--space-2) var(--space-2);
     border-radius: 0;
     box-sizing: border-box;
   }
 
-  /* КАРУСЕЛЬ И БАННЕР ОШИБОК — НА ВСЮ ШИРИНУ ЭКРАНА */
-  .radical-carousel-container,
-  .error-banner {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    padding-left: var(--space-2);
-    padding-right: var(--space-2);
-    box-sizing: border-box;
+  .radical-carousel-container {
+    margin-bottom: var(--space-2);
   }
 
+  .error-banner {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Отступы для контента */
   .key-info-container {
     padding: 0 var(--space-2);
   }
@@ -990,13 +983,13 @@ body {
   .radical-carousel-container {
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: var(--space-2);
   }
 
   .radical-carousel {
     order: 1;
     width: 100%;
     margin: var(--space-2) 0;
+    padding: 0;
   }
 
   .carousel-nav {
