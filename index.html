@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ключи Канси — Тренажёр</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet" />
@@ -11,26 +11,37 @@
 <body>
   <header class="header">
     <div class="logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 7V4h16v3"/>
-        <path d="M9 20h6"/>
-        <path d="M12 4v16"/>
-      </svg>
-      <span>Ключи Канси</span>
-    </div>
-    <div class="header-actions">
-      <button class="btn-icon" id="themeToggle" aria-label="Тема">
-        <span id="themeIcon">🌙</span>
-      </button>
+      <span>🐉 Ключи Канси</span>
     </div>
   </header>
 
   <main class="main">
-    <!-- КАРУСЕЛЬ КЛЮЧЕЙ -->
+    <!-- КАРУСЕЛЬ + КНОПКИ СПРАВА -->
     <div class="radical-carousel-container">
       <button class="carousel-nav carousel-prev" id="carouselPrev">‹</button>
       <div class="radical-carousel" id="radicalCarousel"></div>
       <button class="carousel-nav carousel-next" id="carouselNext">›</button>
+      <div class="carousel-actions">
+        <button class="square-icon" id="btn-favorites-scroll" title="Избранное">📜</button>
+        <button class="square-icon theme-toggle" id="themeToggle" title="Тема инь-янь">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#1e3a5f;stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="whiteGradient" x1="100%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="url(#whiteGradient)"/>
+            <path d="M50,2 A48,48 0 1,1 49.9,2 A24,24 0 0,0 50,50 A24,24 0 0,1 50,2" fill="url(#blueGradient)"/>
+            <circle cx="50" cy="74" r="7" fill="#ffffff"/>
+            <circle cx="50" cy="26" r="7" fill="#1e3a5f"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div id="error-banner" class="error-banner" style="display: none;">
@@ -44,70 +55,70 @@
     <div class="key-info-container">
       <!-- ЛЕВАЯ КОЛОНКА -->
       <div class="key-card">
-        <div class="korean-top">
-          <span class="kr-badge">🇰🇷</span>
-          <span id="korean-name">한일</span>
-          <span class="korean-meaning" id="korean-meaning">(Корея и Япония)</span>
+        <div class="char-main-layout">
+          <div class="char-giant" id="info-char">一</div>
+          <div class="char-details">
+            <div class="char-pinyin" id="info-pinyin">yī</div>
+            <div class="char-meaning" id="info-meaning">один</div>
+            <div class="char-korean">
+              <span class="kr-label">🇰🇷</span>
+              <span id="char-korean-name">한일</span>
+              <span class="korean-meaning" id="korean-meaning">(один)</span>
+            </div>
+            <div class="stroke-count">
+              Ключ №<span id="radical-num">1</span> · Черты: <span id="stroke-count">1</span>
+            </div>
+          </div>
         </div>
+
         <div class="writer-wrap">
           <div class="grid-overlay-container">
             <canvas id="guideline-canvas" class="guideline-canvas"></canvas>
             <div id="hanzi-target" class="hanzi-target-overlay"></div>
           </div>
         </div>
-        <div class="char-info">
-          <div class="char-big" id="info-char">一</div>
-          <div class="char-pinyin">
-            <span id="info-pinyin">yī</span>
-            <button class="btn-speak" id="btn-speak">🔊</button>
+
+        <div class="progress-section">
+          <div class="progress-label">📝 Прогресс написания:</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
           </div>
-          <div class="char-meaning" id="info-meaning">один</div>
-          <div class="stroke-count">
-            Ключ №<span id="radical-num">1</span> · Количество черт: <span id="stroke-count">1</span>
+          <div class="progress-text">
+            Черта <span id="current-stroke">0</span> из <span id="total-strokes">0</span>
           </div>
         </div>
+
+        <div class="key-controls">
+  <button class="btn-icon" id="btn-speak" title="Произношение (озвучить иероглиф)">🐼</button>
+  <button class="btn-icon" id="btn-animate" title="Анимация (показать порядок черт)">💿</button>
+  <button class="btn-icon" id="btn-practice" title="Практика (нарисовать иероглиф)">🖌️</button>
+  <button class="btn-icon btn-favorite" id="btn-favorite" title="Избранное (добавить в список)">⭐</button>
+</div>
+
         <div class="tone-box">
-          <div class="tone-label">ТОН</div>
+          <div class="tone-label">🎵 ТОН</div>
           <div class="tone-value" id="tone-indicator">1-й тон (высокий уровень)</div>
         </div>
       </div>
 
       <!-- ПРАВАЯ КОЛОНКА -->
       <div class="info-card">
-        <div class="action-buttons">
-          <button class="btn btn-outline" id="btn-animate">🎬 Показать</button>
-          <button class="btn btn-primary" id="btn-practice">✍️ Писать</button>
-        </div>
-
-        <div class="stroke-progress-block">
-          <div class="stroke-label">Черта: <span id="current-stroke">0</span> / <span id="total-strokes">1</span></div>
-          <div class="progress-track">
-            <div class="progress-fill" id="progress-fill"></div>
-          </div>
-        </div>
-
         <div class="examples-section">
           <div class="section-title">📚 ПРИМЕРЫ ИЕРОГЛИФОВ С ЭТИМ КЛЮЧОМ</div>
-          <div class="examples-grid-4" id="examples-grid"></div>
+          <div class="examples-grid-2" id="examples-grid"></div>
         </div>
 
-        <div class="facts-section">
-          <div class="section-title">🏛️ ИНТЕРЕСНЫЕ ФАКТЫ</div>
-          
-          <div class="fact-block">
-            <div class="fact-heading">🏛️ ИСТОРИЯ И ПРОИСХОЖДЕНИЕ</div>
-            <div class="fact-text" id="history-text">—</div>
-          </div>
-          
-          <div class="fact-block">
-            <div class="fact-heading">📍 РАСПОЛОЖЕНИЕ В ИЕРОГЛИФЕ</div>
-            <div class="fact-text" id="position-text">—</div>
-          </div>
-          
-          <div class="fact-block">
-            <div class="fact-heading">📊 СТАТИСТИКА</div>
-            <div class="fact-text" id="stats-text">—</div>
-          </div>
+        <div class="memory-permanent-header">🎨 Запомните этот образ — он откроет дверь в мир иероглифов</div>
+        <div class="memory-association" id="memory-association"></div>
+
+        <div class="history-permanent-header">✨ Путешествие этого ключа сквозь тысячелетия — живая нить китайской письменности</div>
+        <div class="history-block" id="history-block">
+          <div class="history-text" id="history-text">—</div>
+        </div>
+
+        <div class="fact-block">
+          <div class="fact-heading">📍 РАСПОЛОЖЕНИЕ В ИЕРОГЛИФЕ</div>
+          <div class="fact-text" id="position-text">—</div>
         </div>
 
         <div class="resource-link">
@@ -118,10 +129,20 @@
     </div>
 
     <div class="practice-mode-banner" id="practice-banner">
-      <span>✍️ Режим практики</span>
+      <span>✍️ Режим практики — рисуйте черты по порядку</span>
       <button class="btn-exit-practice" id="btn-exit-practice">✕</button>
     </div>
   </main>
+
+  <div id="favorites-modal" class="favorites-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>📜 Избранные ключи</span>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div id="favorites-list" class="favorites-list"></div>
+    </div>
+  </div>
 
   <div id="toast" class="toast"></div>
 
