@@ -67,6 +67,13 @@ body {
   font-size: var(--text-base);
 }
 
+/* ===== ОБЩИЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ ===== */
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 /* HEADER */
 .header {
   display: flex;
@@ -76,6 +83,7 @@ body {
   background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
   color: white;
   border-bottom: 2px solid #f1c40f;
+  width: 100%;
 }
 
 .logo {
@@ -86,14 +94,13 @@ body {
   font-size: var(--text-xl);
 }
 
-/* MAIN - на всю ширину */
+/* MAIN */
 .main {
-  max-width: 100%;
-  margin: 0;
+  width: 100%;
   padding: var(--space-4);
 }
 
-/* КАРУСЕЛЬ - на всю ширину */
+/* КАРУСЕЛЬ */
 .radical-carousel-container {
   position: relative;
   display: flex;
