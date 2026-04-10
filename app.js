@@ -6,6 +6,7 @@ let currentCharData = null;
 let totalStrokes = 0;
 let currentStrokeNum = 0;
 let isAnimating = false;
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
 // === СЕТКА ===
 let guidelineCanvas = null;
@@ -31,7 +32,9 @@ function drawGrid() {
   const container = guidelineCanvas.parentElement;
   if (!container) return;
   
-  const size = container.clientWidth;
+  const rect = container.getBoundingClientRect();
+  const size = Math.min(rect.width, rect.height);
+  
   if (size === 0) return;
   
   guidelineCanvas.width = size;
@@ -44,55 +47,68 @@ function drawGrid() {
   
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const mainColor = isDark ? '#ef4444' : '#c0392b';
-  const lightColor = isDark ? 'rgba(239,68,68,0.2)' : 'rgba(192,57,43,0.15)';
+  const accentColor = '#e67e22';
+  const lightColor = isDark ? 'rgba(239,68,68,0.3)' : 'rgba(192,57,43,0.25)';
   
   ctx.save();
+  ctx.shadowBlur = 0;
   
-  // Внешняя рамка
+  const margin = Math.max(3, size * 0.01);
+  
   ctx.beginPath();
   ctx.strokeStyle = mainColor;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(2, 2, size - 4, size - 4);
+  ctx.lineWidth = Math.max(2, size * 0.007);
+  ctx.strokeRect(margin, margin, size - margin*2, size - margin*2);
   
-  // Центральные линии
   ctx.beginPath();
-  ctx.strokeStyle = lightColor;
-  ctx.lineWidth = 1;
-  ctx.moveTo(size / 2, 4);
-  ctx.lineTo(size / 2, size - 4);
-  ctx.moveTo(4, size / 2);
-  ctx.lineTo(size - 4, size / 2);
+  ctx.strokeStyle = accentColor;
+  ctx.lineWidth = Math.max(1, size * 0.003);
+  ctx.strokeRect(margin/2, margin/2, size - margin, size - margin);
+  
+  ctx.beginPath();
+  ctx.strokeStyle = mainColor;
+  ctx.lineWidth = Math.max(1.5, size * 0.005);
+  ctx.moveTo(size / 2, margin);
+  ctx.lineTo(size / 2, size - margin);
+  ctx.moveTo(margin, size / 2);
+  ctx.lineTo(size - margin, size / 2);
   ctx.stroke();
   
-  // Диагонали
   ctx.beginPath();
-  ctx.strokeStyle = lightColor;
-  ctx.lineWidth = 0.8;
-  ctx.moveTo(4, 4);
-  ctx.lineTo(size - 4, size - 4);
-  ctx.moveTo(size - 4, 4);
-  ctx.lineTo(4, size - 4);
+  ctx.strokeStyle = accentColor;
+  ctx.lineWidth = Math.max(1, size * 0.004);
+  ctx.moveTo(margin, margin);
+  ctx.lineTo(size - margin, size - margin);
+  ctx.moveTo(size - margin, margin);
+  ctx.lineTo(margin, size - margin);
   ctx.stroke();
   
-  // Линии третей
   ctx.beginPath();
   ctx.strokeStyle = lightColor;
-  ctx.lineWidth = 0.6;
-  ctx.setLineDash([4, 4]);
+  ctx.lineWidth = Math.max(1, size * 0.003);
+  ctx.setLineDash([Math.max(4, size * 0.015), Math.max(3, size * 0.01)]);
   
   const third = size / 3;
   const twoThird = (size * 2) / 3;
-  ctx.moveTo(4, third);
-  ctx.lineTo(size - 4, third);
-  ctx.moveTo(4, twoThird);
-  ctx.lineTo(size - 4, twoThird);
-  ctx.moveTo(third, 4);
-  ctx.lineTo(third, size - 4);
-  ctx.moveTo(twoThird, 4);
-  ctx.lineTo(twoThird, size - 4);
+  ctx.moveTo(margin, third);
+  ctx.lineTo(size - margin, third);
+  ctx.moveTo(margin, twoThird);
+  ctx.lineTo(size - margin, twoThird);
+  ctx.moveTo(third, margin);
+  ctx.lineTo(third, size - margin);
+  ctx.moveTo(twoThird, margin);
+  ctx.lineTo(twoThird, size - margin);
   ctx.stroke();
   
   ctx.restore();
+}
+
+function setGridDim(dim) {
+  const canvas = document.getElementById('guideline-canvas');
+  if (canvas) {
+    if (dim) canvas.classList.add('dim');
+    else canvas.classList.remove('dim');
+  }
 }
 
 function updateGridTheme() { drawGrid(); }
@@ -129,10 +145,79 @@ function setButtonsEnabled(enabled) {
 }
 
 function updateStrokeProgress(strokeNum, total) {
-  document.getElementById('current-stroke').textContent = strokeNum;
-  document.getElementById('total-strokes').textContent = total;
-  const percent = total > 0 ? Math.round((strokeNum / total) * 100) : 0;
-  document.getElementById('progress-fill').style.width = percent + '%';
+  const currentEl = document.getElementById('current-stroke');
+  const totalEl = document.getElementById('total-strokes');
+  const progressFill = document.getElementById('progress-fill');
+  if (currentEl) currentEl.textContent = strokeNum;
+  if (totalEl) totalEl.textContent = total;
+  if (progressFill) {
+    const percent = total > 0 ? Math.round((strokeNum / total) * 100) : 0;
+    progressFill.style.width = percent + '%';
+  }
+}
+
+// === ИЗБРАННОЕ ===
+function updateFavoriteButton() {
+  const btn = document.getElementById('btn-favorite');
+  if (!btn) return;
+  const isFav = favorites.includes(currentCharIdx);
+  if (isFav) btn.classList.add('active');
+  else btn.classList.remove('active');
+}
+
+function toggleFavorite() {
+  const idx = currentCharIdx;
+  const isFav = favorites.includes(idx);
+  if (isFav) {
+    favorites = favorites.filter(i => i !== idx);
+    showToast('Удалено из избранного');
+  } else {
+    favorites.push(idx);
+    showToast('Добавлено в избранное ⭐');
+  }
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  updateFavoriteButton();
+  updateFavoritesModal();
+}
+
+const favoritesModal = document.getElementById('favorites-modal');
+const favoritesList = document.getElementById('favorites-list');
+
+function updateFavoritesModal() {
+  if (!favoritesList) return;
+  if (favorites.length === 0) {
+    favoritesList.innerHTML = '<div class="empty-favorites">Нет избранных ключей</div>';
+    return;
+  }
+  favoritesList.innerHTML = '';
+  favorites.forEach(idx => {
+    const charData = CHARACTERS[idx];
+    if (!charData) return;
+    const div = document.createElement('div');
+    div.className = 'fav-item';
+    div.innerHTML = `
+      <div class="fav-char">${charData.char}</div>
+      <div class="fav-info">
+        <div class="fav-pinyin">${charData.pinyin}</div>
+        <div class="fav-meaning">${charData.meaning}</div>
+      </div>
+    `;
+    div.addEventListener('click', () => {
+      selectChar(idx);
+      closeFavoritesModal();
+    });
+    favoritesList.appendChild(div);
+  });
+}
+
+function openFavoritesModal() {
+  if (!favoritesModal) return;
+  updateFavoritesModal();
+  favoritesModal.style.display = 'flex';
+}
+
+function closeFavoritesModal() {
+  if (favoritesModal) favoritesModal.style.display = 'none';
 }
 
 // === КАРУСЕЛЬ ===
@@ -174,22 +259,29 @@ function setupCarouselNavigation() {
 function renderInfo(charData) {
   if (!charData) return;
   
-  // Отображаем корейское название и его перевод на русский
-  document.getElementById('korean-name').textContent = charData.koreanName;
-  document.getElementById('korean-meaning').textContent = `(${charData.koreanMeaning})`;
+  const charGiant = document.getElementById('info-char');
+  charGiant.textContent = charData.char;
+  fitCharToContainer(charGiant, charData.char);   
   
   document.getElementById('info-char').textContent = charData.char;
   document.getElementById('info-pinyin').textContent = charData.pinyin;
   document.getElementById('info-meaning').textContent = charData.meaning;
+  document.getElementById('char-korean-name').textContent = charData.koreanName;
+  document.getElementById('korean-meaning').textContent = `(${charData.koreanMeaning})`;
   document.getElementById('stroke-count').textContent = charData.strokes;
   document.getElementById('radical-num').textContent = charData.radicalNum;
   document.getElementById('tone-indicator').textContent = charData.tone;
-  
   document.getElementById('history-text').textContent = charData.history;
   document.getElementById('position-text').textContent = charData.position;
-  document.getElementById('stats-text').textContent = charData.stats;
   
-  renderExamples(charData.examples);
+  const memText = charData.memoryHook || '';
+  const memBlock = document.getElementById('memory-association');
+  if (memBlock) {
+    memBlock.innerHTML = memText;
+  }
+  
+  renderExamples(charData.examples.slice(0, 2));
+  updateFavoriteButton();
 }
 
 function renderExamples(examples) {
@@ -204,9 +296,11 @@ function renderExamples(examples) {
     card.className = 'example-card';
     card.innerHTML = `
       <div class="example-char">${example}</div>
-      <div class="example-pinyin">${data.pinyin}</div>
-      <div class="example-meaning">${data.meaning}</div>
-      <div class="example-korean">🇰🇷 ${data.korean}</div>
+      <div class="example-details">
+        <div class="example-pinyin">${data.pinyin}</div>
+        <div class="example-meaning">${data.meaning}</div>
+        <div class="example-korean">🇰🇷 ${data.korean}</div>
+      </div>
     `;
     container.appendChild(card);
   });
@@ -219,32 +313,44 @@ function clearWriterContainer() {
 }
 
 function getWriterOptions() {
+  const container = document.getElementById('hanzi-target');
+  const size = container ? container.clientWidth : 320;
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  
   return {
-    width: 300,
-    height: 300,
-    padding: 5,
+    width: size,
+    height: size,
+    padding: Math.max(10, size * 0.03),
     showOutline: true,
     showCharacter: true,
     strokeColor: isDark ? '#ef4444' : '#c0392b',
     outlineColor: isDark ? '#444' : '#ddd',
     highlightColor: '#f1c40f',
     drawingColor: '#2c6e9e',
-    drawingWidth: 5,
+    drawingWidth: Math.max(4, size * 0.02),
     strokeAnimationSpeed: 1,
     delayBetweenStrokes: 500,
     strokeHighlightSpeed: 2,
     showHintAfterMisses: 3,
     highlightOnComplete: true,
+    
     onLoadCharDataSuccess: function(data) {
       totalStrokes = data.strokes ? data.strokes.length : currentCharData.strokes;
       updateStrokeProgress(0, totalStrokes);
       hideError();
-      setTimeout(drawGrid, 100);
+      setTimeout(() => {
+        drawGrid();
+        const svg = document.querySelector('#hanzi-target svg');
+        if (svg) {
+          svg.style.display = 'block';
+          svg.style.margin = '0 auto';
+        }
+      }, 100);
     },
+    
     onLoadCharDataError: function(reason) {
       console.error('Error:', reason);
-      showError('Не удалось загрузить данные иероглифа.');
+      showError('Не удалось загрузить данные иероглифа. Проверьте подключение к интернету.');
     }
   };
 }
@@ -256,13 +362,16 @@ function initWriter(char) {
   }
   
   clearWriterContainer();
-  writer = HanziWriter.create('hanzi-target', char, getWriterOptions());
-  setTimeout(() => initGuidelineCanvas(), 100);
+  
+  setTimeout(() => {
+    writer = HanziWriter.create('hanzi-target', char, getWriterOptions());
+    initGuidelineCanvas();
+  }, 50);
 }
 
 function animateCharacter() {
   if (!writer) return;
-  
+  setGridDim(true);
   updateStrokeProgress(0, totalStrokes);
   currentStrokeNum = 0;
   isAnimating = true;
@@ -270,6 +379,7 @@ function animateCharacter() {
   writer.animateCharacter({
     onComplete: function() {
       isAnimating = false;
+      setGridDim(false);
       showToast('Анимация завершена');
       updateStrokeProgress(totalStrokes, totalStrokes);
     }
@@ -293,6 +403,7 @@ function startPracticeMode() {
   
   isPracticeMode = true;
   currentStrokeNum = 0;
+  setGridDim(true);
   
   document.getElementById('practice-banner').classList.add('active');
   setButtonsEnabled(false);
@@ -318,7 +429,7 @@ function startPracticeMode() {
       }
     },
     onComplete: function() {
-      showToast('Иероглиф освоен!', 3000);
+      showToast('Иероглиф освоен! 🎉', 3000);
       const target = document.getElementById('hanzi-target');
       target.style.transform = 'scale(1.05)';
       setTimeout(() => {
@@ -336,6 +447,7 @@ function exitPracticeMode() {
   
   isPracticeMode = false;
   currentStrokeNum = 0;
+  setGridDim(false);
   
   if (writer) {
     writer.cancelQuiz();
@@ -375,40 +487,64 @@ function speakText(text, lang = 'zh-CN') {
 }
 
 // === EVENT LISTENERS ===
+document.getElementById('btn-speak')?.addEventListener('click', () => {
+  if (currentCharData) speakText(currentCharData.char);
+});
 document.getElementById('btn-animate')?.addEventListener('click', () => {
   if (isPracticeMode) exitPracticeMode();
   animateCharacter();
 });
-
 document.getElementById('btn-practice')?.addEventListener('click', startPracticeMode);
 document.getElementById('btn-exit-practice')?.addEventListener('click', exitPracticeMode);
 document.getElementById('btn-retry')?.addEventListener('click', () => selectChar(currentCharIdx));
-document.getElementById('btn-speak')?.addEventListener('click', () => {
-  if (currentCharData) speakText(currentCharData.char);
+document.getElementById('btn-favorite')?.addEventListener('click', toggleFavorite);
+document.getElementById('btn-favorites-scroll')?.addEventListener('click', openFavoritesModal);
+
+document.querySelector('.modal-close')?.addEventListener('click', closeFavoritesModal);
+window.addEventListener('click', (e) => {
+  if (e.target === favoritesModal) closeFavoritesModal();
 });
 
-// Theme
+// Theme toggle with animation
 const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
 let theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', theme);
-themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+// Apply initial theme state
+if (theme === 'dark') {
+  themeToggle.classList.add('active');
+}
 
 themeToggle?.addEventListener('click', () => {
+  // Add animation class
+  themeToggle.classList.add('theme-switching');
+  
   theme = theme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
-  themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
   
+  // Update button active state
+  if (theme === 'dark') {
+    themeToggle.classList.add('active');
+  } else {
+    themeToggle.classList.remove('active');
+  }
+  
+  // Update writer colors if exists
   if (writer && currentCharData) {
     const isDark = theme === 'dark';
     writer.updateColor('strokeColor', isDark ? '#ef4444' : '#c0392b');
     writer.updateColor('outlineColor', isDark ? '#444' : '#ddd');
   }
+  
+  // Update grid
   drawGrid();
+  
+  // Remove animation class after animation completes
+  setTimeout(() => {
+    themeToggle.classList.remove('theme-switching');
+  }, 500);
 });
-
-window.addEventListener('resize', () => setTimeout(drawGrid, 100));
 
 // Init
 window.addEventListener('load', () => {
@@ -424,4 +560,22 @@ window.addEventListener('load', () => {
   renderCarousel();
   setupCarouselNavigation();
   selectChar(0);
+  updateFavoritesModal();
 });
+
+// === АВТОМАТИЧЕСКОЕ МАСШТАБИРОВАНИЕ ШИРОКИХ ИЕРОГЛИФОВ ===
+function fitCharToContainer(charElement, char) {
+  if (!charElement) return;
+  
+  // Список широких иероглифов, которые вылезают
+  const wideChars = ['亠', '冂', '冖', '冫', '人', '入', '八', '儿', '冃', '冄'];
+  
+  if (wideChars.includes(char)) {
+    charElement.style.transform = 'scale(0.75)';
+    charElement.style.fontSize = 'clamp(4rem, 10vw, 8rem)';
+  } else {
+    charElement.style.transform = 'scale(0.9)';
+    charElement.style.fontSize = '';
+  }
+}
+
