@@ -1103,38 +1103,3 @@ body {
     height: 32px;
   }
 }
-
-/* Мобильный логотип внутри карусели */
-.mobile-logo {
-  display: none;
-}
-
-/* ===== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ===== */
-@media (max-width: 768px) {
-  /* Скрываем старую шапку */
-  .header {
-    display: none;
-  }
-
-  /* Показываем логотип внутри карусели */
-  .mobile-logo {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: var(--text-xl);
-    font-weight: 700;
-    padding: var(--space-2) 0;
-    color: white;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    margin-bottom: var(--space-2);
-  }
-
-  /* Убираем лишние отступы у контейнера карусели */
-  .radical-carousel-container {
-    padding-top: 0;
-  }
-
-  /* Остальные ваши мобильные стили остаются без изменений */
-  /* ... (ваши существующие правила) ... */
-}
