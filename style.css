@@ -86,14 +86,14 @@ body {
   font-size: var(--text-xl);
 }
 
-/* MAIN */
+/* MAIN - на всю ширину */
 .main {
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: var(--space-4);
 }
 
-/* КАРУСЕЛЬ */
+/* КАРУСЕЛЬ - на всю ширину */
 .radical-carousel-container {
   position: relative;
   display: flex;
@@ -104,6 +104,7 @@ body {
   border-radius: var(--radius-xl);
   padding: var(--space-2);
   border: 1px solid #f1c40f;
+  width: 100%;
 }
 
 .radical-carousel {
@@ -185,7 +186,7 @@ body {
   line-height: 1;
 }
 
-/* ВОССТАНОВЛЕННЫЙ СТИЛЬ ДЛЯ ПИНЬИНЯ */
+/* Стиль для пиньиня */
 .carousel-item .carousel-pinyin {
   font-size: var(--text-sm);
   color: #f1c40f;
@@ -421,7 +422,7 @@ body {
   text-align: center;
 }
 
-/* КНОПКИ УПРАВЛЕНИЯ */
+/* КНОПКИ УПРАВЛЕНИЯ (4 штуки) - увеличены на 20% */
 .key-controls {
   display: flex;
   justify-content: center;
@@ -434,8 +435,8 @@ body {
 }
 
 .key-controls .btn-icon {
-  width: 68px;
-  height: 68px;
+  width: 82px;
+  height: 82px;
   background: var(--color-surface);
   border: 2px solid var(--color-border);
   border-radius: 50%;
@@ -444,7 +445,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 44px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
@@ -513,7 +514,7 @@ body {
 
 @media (max-width: 768px) {
   .examples-grid-2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr; /* два в ряд на мобильных */
   }
 }
 
@@ -881,21 +882,21 @@ body {
   }
 }
 
-/* ИКОНКИ В КАРУСЕЛИ (избранное и тема) */
+/* ИКОНКИ В КАРУСЕЛИ (избранное и тема) - увеличены до размера ключей */
 .square-icon {
   background: rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
   border: 2px solid #f1c40f;
   border-radius: var(--radius-lg);
-  width: 65px;
-  height: 65px;
+  width: 80px;
+  height: 80px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #f1c40f;
-  font-size: 32px;
+  font-size: 40px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
@@ -907,8 +908,8 @@ body {
 }
 
 .square-icon svg {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   display: block;
 }
 
@@ -966,14 +967,14 @@ body {
   }
 
   .square-icon {
-    width: 56px;
-    height: 56px;
-    font-size: 28px;
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
   }
 
   .square-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
 
   /* 3. Кнопки управления (4 штуки) — увеличиваем и раздвигаем */
@@ -983,9 +984,9 @@ body {
   }
 
   .key-controls .btn-icon {
-    width: 64px;
-    height: 64px;
-    font-size: 32px;
+    width: 70px;
+    height: 70px;
+    font-size: 36px;
   }
 
   /* 4. Левая карточка: отступы и размер иероглифа */
@@ -1034,20 +1035,20 @@ body {
   }
 
   .key-controls .btn-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+  }
+
+  .square-icon {
     width: 56px;
     height: 56px;
     font-size: 28px;
   }
 
-  .square-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-  }
-
   .square-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .carousel-nav {
