@@ -1087,3 +1087,22 @@ body {
     height: 32px;
   }
 }
+/* Принудительное растяжение на сенсорных экранах (в т.ч. компьютерная версия на телефоне) */
+@media (pointer: coarse) {
+  .app-container {
+    max-width: 100%;
+    margin: 0;
+  }
+  .header {
+    border-radius: 0;
+  }
+  .radical-carousel-container {
+    border-radius: 0;
+  }
+  .main {
+    padding: 0;
+  }
+  .key-info-container {
+    padding: 0 var(--space-2);
+  }
+}
