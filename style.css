@@ -76,16 +76,17 @@ body {
 
 /* HEADER */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-3) var(--space-4);
-  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
-  color: white;
-  border-bottom: 2px solid #f1c40f;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    color: white;
+    border-bottom: 2px solid #f1c40f;
+    width: 100%;
+    flex-wrap: wrap; /* <-- ДОБАВИТЬ ЭТУ СТРОКУ */
+    gap: 10px;       /* <-- ДОБАВИТЬ ЭТУ СТРОКУ для отступа между строками */
 }
-
 .logo {
   display: flex;
   align-items: center;
@@ -1087,22 +1088,24 @@ body {
     height: 32px;
   }
 }
-/* Принудительное растяжение на сенсорных экранах (в т.ч. компьютерная версия на телефоне) */
-@media (pointer: coarse) {
-  .app-container {
-    max-width: 100%;
-    margin: 0;
-  }
-  .header {
-    border-radius: 0;
-  }
-  .radical-carousel-container {
-    border-radius: 0;
-  }
-  .main {
-    padding: 0;
-  }
-  .key-info-container {
-    padding: 0 var(--space-2);
-  }
+
+/* Принудительное растяжение ТОЛЬКО на маленьких сенсорных экранах */
+@media (pointer: coarse) and (max-width: 768px) {
+    .app-container {
+        max-width: 100%;
+        margin: 0;
+    }
+    .header {
+        border-radius: 0;
+        padding: var(--space-2);
+    }
+    .radical-carousel-container {
+        border-radius: 0;
+    }
+    .main {
+        padding: 0;
+    }
+    .key-info-container {
+        padding: 0 var(--space-2);
+    }
 }
