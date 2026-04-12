@@ -55,16 +55,19 @@ function drawGrid() {
   
   const margin = Math.max(3, size * 0.01);
   
+  // Внешняя рамка
   ctx.beginPath();
   ctx.strokeStyle = mainColor;
   ctx.lineWidth = Math.max(2, size * 0.007);
   ctx.strokeRect(margin, margin, size - margin*2, size - margin*2);
   
+  // Внутренняя рамка
   ctx.beginPath();
   ctx.strokeStyle = accentColor;
   ctx.lineWidth = Math.max(1, size * 0.003);
   ctx.strokeRect(margin/2, margin/2, size - margin, size - margin);
   
+  // Крест по центру
   ctx.beginPath();
   ctx.strokeStyle = mainColor;
   ctx.lineWidth = Math.max(1.5, size * 0.005);
@@ -74,6 +77,7 @@ function drawGrid() {
   ctx.lineTo(size - margin, size / 2);
   ctx.stroke();
   
+  // Диагонали
   ctx.beginPath();
   ctx.strokeStyle = accentColor;
   ctx.lineWidth = Math.max(1, size * 0.004);
@@ -83,6 +87,7 @@ function drawGrid() {
   ctx.lineTo(margin, size - margin);
   ctx.stroke();
   
+  // Пунктирные линии (сетка 3x3)
   ctx.beginPath();
   ctx.strokeStyle = lightColor;
   ctx.lineWidth = Math.max(1, size * 0.003);
@@ -112,6 +117,54 @@ function setGridDim(dim) {
 }
 
 function updateGridTheme() { drawGrid(); }
+
+// === TOOLTIP SYSTEM ===
+function initTooltips() {
+  const tooltip = document.getElementById('tooltip');
+  if (!tooltip) return;
+
+  // Находим все элементы с data-tooltip
+  document.querySelectorAll('[data-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      const text = el.getAttribute('data-tooltip');
+      if (text) {
+        tooltip.textContent = text;
+        tooltip.classList.add('show');
+        updateTooltipPosition(e);
+      }
+    });
+    
+    el.addEventListener('mousemove', updateTooltipPosition);
+    
+    el.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('show');
+    });
+  });
+}
+
+function updateTooltipPosition(e) {
+  const tooltip = document.getElementById('tooltip');
+  if (!tooltip || !tooltip.classList.contains('show')) return;
+  
+  const x = e.clientX;
+  const y = e.clientY;
+  
+  // Позиционируем над курсором
+  tooltip.style.left = `${x}px`;
+  tooltip.style.top = `${y - tooltip.offsetHeight - 10}px`;
+}
+
+// === ANIMATIONS ===
+function animateBlocks() {
+  // Сбрасываем анимацию для всех info-block
+  const blocks = document.querySelectorAll('.info-block');
+  blocks.forEach((block, index) => {
+    block.style.animation = 'none';
+    block.offsetHeight; // Trigger reflow
+    block.style.animation = `fadeInUp 0.6s ease forwards`;
+    block.style.animationDelay = `${index * 0.1}s`;
+  });
+}
 
 // === UTILITIES ===
 function showToast(msg, duration = 2500) {
@@ -144,16 +197,46 @@ function setButtonsEnabled(enabled) {
   });
 }
 
+// === УЛУЧШЕННЫЙ ИНДИКАТОР ПРОГРЕССА С ТОЧКАМИ ===
+function renderStrokeDots(total) {
+  const container = document.getElementById('stroke-dots');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'stroke-dot';
+    dot.dataset.stroke = i + 1;
+    container.appendChild(dot);
+  }
+}
+
 function updateStrokeProgress(strokeNum, total) {
   const currentEl = document.getElementById('current-stroke');
   const totalEl = document.getElementById('total-strokes');
   const progressFill = document.getElementById('progress-fill');
+  const percentageEl = document.getElementById('progress-percentage');
+  
   if (currentEl) currentEl.textContent = strokeNum;
   if (totalEl) totalEl.textContent = total;
+  
   if (progressFill) {
     const percent = total > 0 ? Math.round((strokeNum / total) * 100) : 0;
     progressFill.style.width = percent + '%';
+    if (percentageEl) percentageEl.textContent = percent + '%';
   }
+  
+  // Обновляем точки
+  const dots = document.querySelectorAll('.stroke-dot');
+  dots.forEach((dot, index) => {
+    dot.classList.remove('active', 'completed');
+    if (index < strokeNum) {
+      dot.classList.add('completed');
+    } else if (index === strokeNum) {
+      dot.classList.add('active');
+    }
+  });
 }
 
 // === ИЗБРАННОЕ ===
@@ -259,29 +342,64 @@ function setupCarouselNavigation() {
 function renderInfo(charData) {
   if (!charData) return;
   
+  // Обновляем основную информацию
   const charGiant = document.getElementById('info-char');
-  charGiant.textContent = charData.char;
-  fitCharToContainer(charGiant, charData.char);   
-  
-  document.getElementById('info-char').textContent = charData.char;
-  document.getElementById('info-pinyin').textContent = charData.pinyin;
-  document.getElementById('info-meaning').textContent = charData.meaning;
-  document.getElementById('char-korean-name').textContent = charData.koreanName;
-  document.getElementById('korean-meaning').textContent = `(${charData.koreanMeaning})`;
-  document.getElementById('stroke-count').textContent = charData.strokes;
-  document.getElementById('radical-num').textContent = charData.radicalNum;
-  document.getElementById('tone-indicator').textContent = charData.tone;
-  document.getElementById('history-text').textContent = charData.history;
-  document.getElementById('position-text').textContent = charData.position;
-  
-  const memText = charData.memoryHook || '';
-  const memBlock = document.getElementById('memory-association');
-  if (memBlock) {
-    memBlock.innerHTML = memText;
+  if (charGiant) {
+    charGiant.textContent = charData.char;
+    charGiant.setAttribute('data-char', charData.char);
+    fitCharToContainer(charGiant, charData.char);
   }
   
+  const pinyinEl = document.getElementById('info-pinyin');
+  if (pinyinEl) pinyinEl.textContent = charData.pinyin;
+  
+  const meaningEl = document.getElementById('info-meaning');
+  if (meaningEl) meaningEl.textContent = charData.meaning;
+  
+  const koreanNameEl = document.getElementById('char-korean-name');
+  if (koreanNameEl) koreanNameEl.textContent = charData.koreanName;
+  
+  const koreanMeaningEl = document.getElementById('korean-meaning');
+  if (koreanMeaningEl) koreanMeaningEl.textContent = `(${charData.koreanMeaning})`;
+  
+  const strokeCountEl = document.getElementById('stroke-count');
+  if (strokeCountEl) strokeCountEl.textContent = charData.strokes;
+  
+  const radicalNumEl = document.getElementById('radical-num');
+  if (radicalNumEl) radicalNumEl.textContent = charData.radicalNum;
+  
+  const toneEl = document.getElementById('tone-indicator');
+  if (toneEl) toneEl.textContent = charData.tone;
+  
+  // Обновляем историю с форматированием (разбиваем на абзацы если есть переносы строк)
+  const historyEl = document.getElementById('history-text');
+  if (historyEl) {
+    // Заменяем переносы строк на <br> если они есть в данных
+    const formattedHistory = charData.history.replace(/\n/g, '<br>');
+    historyEl.innerHTML = formattedHistory;
+  }
+  
+  const positionEl = document.getElementById('position-text');
+  if (positionEl) positionEl.textContent = charData.position;
+  
+  // Ассоциация для запоминания
+  const memBlock = document.getElementById('memory-association');
+  if (memBlock) {
+    memBlock.innerHTML = charData.memoryHook || '';
+  }
+  
+  // Рендерим примеры (максимум 2)
   renderExamples(charData.examples.slice(0, 2));
+  
+  // Обновляем кнопку избранного
   updateFavoriteButton();
+  
+  // Инициализируем точки прогресса
+  renderStrokeDots(charData.strokes);
+  updateStrokeProgress(0, charData.strokes);
+  
+  // Запускаем анимацию блоков
+  animateBlocks();
 }
 
 function renderExamples(examples) {
@@ -405,7 +523,9 @@ function startPracticeMode() {
   currentStrokeNum = 0;
   setGridDim(true);
   
-  document.getElementById('practice-banner').classList.add('active');
+  const banner = document.getElementById('practice-banner');
+  if (banner) banner.classList.add('active');
+  
   setButtonsEnabled(false);
   
   writer.hideCharacter();
@@ -454,7 +574,9 @@ function exitPracticeMode() {
     writer.showCharacter();
   }
   
-  document.getElementById('practice-banner').classList.remove('active');
+  const banner = document.getElementById('practice-banner');
+  if (banner) banner.classList.remove('active');
+  
   setButtonsEnabled(true);
   updateStrokeProgress(0, totalStrokes);
   showToast('Выход из практики');
@@ -490,10 +612,12 @@ function speakText(text, lang = 'zh-CN') {
 document.getElementById('btn-speak')?.addEventListener('click', () => {
   if (currentCharData) speakText(currentCharData.char);
 });
+
 document.getElementById('btn-animate')?.addEventListener('click', () => {
   if (isPracticeMode) exitPracticeMode();
   animateCharacter();
 });
+
 document.getElementById('btn-practice')?.addEventListener('click', startPracticeMode);
 document.getElementById('btn-exit-practice')?.addEventListener('click', exitPracticeMode);
 document.getElementById('btn-retry')?.addEventListener('click', () => selectChar(currentCharIdx));
@@ -512,7 +636,7 @@ document.documentElement.setAttribute('data-theme', theme);
 
 // Apply initial theme state
 if (theme === 'dark') {
-  themeToggle.classList.add('active');
+  themeToggle?.classList.add('active');
 }
 
 themeToggle?.addEventListener('click', () => {
@@ -546,23 +670,6 @@ themeToggle?.addEventListener('click', () => {
   }, 500);
 });
 
-// Init
-window.addEventListener('load', () => {
-  if (typeof CHARACTERS === 'undefined') {
-    showToast('Ошибка загрузки данных');
-    return;
-  }
-  if (typeof HanziWriter === 'undefined') {
-    showError('Ошибка загрузки Hanzi Writer');
-    return;
-  }
-  
-  renderCarousel();
-  setupCarouselNavigation();
-  selectChar(0);
-  updateFavoritesModal();
-});
-
 // === АВТОМАТИЧЕСКОЕ МАСШТАБИРОВАНИЕ ШИРОКИХ ИЕРОГЛИФОВ ===
 function fitCharToContainer(charElement, char) {
   if (!charElement) return;
@@ -579,3 +686,25 @@ function fitCharToContainer(charElement, char) {
   }
 }
 
+// Init
+window.addEventListener('load', () => {
+  if (typeof CHARACTERS === 'undefined') {
+    showToast('Ошибка загрузки данных');
+    return;
+  }
+  if (typeof HanziWriter === 'undefined') {
+    showError('Ошибка загрузки Hanzi Writer');
+    return;
+  }
+  
+  renderCarousel();
+  setupCarouselNavigation();
+  initTooltips(); // Инициализируем подсказки
+  selectChar(0);
+  updateFavoritesModal();
+});
+
+// Обработка изменения размера окна
+window.addEventListener('resize', () => {
+  setTimeout(drawGrid, 100);
+});
