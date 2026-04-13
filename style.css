@@ -1049,92 +1049,105 @@ body {
   border-color: rgba(0,0,0,0.9) transparent transparent;
 }
 
-/* === ИСПРАВЛЕННАЯ МОБИЛЬНАЯ ВЕРСИЯ (до 768px) === */
+/* === ИСПРАВЛЕНИЕ ДЛЯ ЗАГОЛОВКОВ БЛОКОВ НА МОБИЛЬНЫХ === */
 @media (max-width: 768px) {
-    /* 1. Заставляем весь основной контейнер быть одной колонкой */
-    .key-info-container {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-4);
-    }
-
-    /* 2. Примеры иероглифов в одну колонку (было в 2, что ломало верстку на телефонах) */
-    .examples-grid-2 {
-        grid-template-columns: 1fr !important; 
-        gap: var(--space-3);
-    }
-
-    /* 3. Детали информации (Пиньин, Значение) выстраиваем вертикально, а не горизонтально */
-    .detail-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.2rem;
-    }
-
-    .detail-label {
-        min-width: auto;
-        width: 100%;
-        margin-bottom: 4px;
-        font-size: 1.3rem;
-    }
-    
-    .detail-value {
-        width: 100%;
-    }
-
-    /* 4. Уменьшаем отступы (padding) у карточек, чтобы дать больше места тексту */
-    .info-card, .key-card, .info-detail-block, .history-block, .fact-block {
-        padding: 1rem; /* Было больше, что "съедало" место */
-        overflow-x: hidden; /* Запрещаем горизонтальный скролл */
-    }
-
-    /* 5. Уменьшаем шрифты, чтобы не вылезали */
-    .example-char {
-        font-size: 3.5rem !important;
-        min-width: auto !important;
-    }
-    
-    .example-pinyin, .example-meaning, .example-korean {
-        font-size: 1.4rem !important;
-    }
-    
-    .memory-association, .history-text, .fact-text {
-        font-size: 1.4rem !important;
-        line-height: 1.4;
-    }
-    
-    .detail-value.chinese {
-        font-size: 1.8rem !important;
-    }
-
-    /* 6. Примеры (карточки) делаем вертикальными внутри себя */
-    .example-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 0.8rem;
-    }
-    
-    .example-details {
-        align-items: center;
-        margin-top: 0.5rem;
-    }
-
-    /* 7. Исправление для блока карусели */
-    .radical-carousel-container {
-        margin-bottom: var(--space-4);
-    }
+  /* Заголовки секций */
+  .section-title {
+    font-size: 1.6rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+  }
+  
+  /* Заголовки блоков (Происхождение, Расположение и т.д.) */
+  .block-title,
+  .block-header .detail-title {
+    font-size: 1.5rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+  }
+  
+  /* Заголовок истории */
+  .history-permanent-header {
+    font-size: 1.4rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+  }
+  
+  /* Заголовок в detail-header */
+  .detail-header .detail-title {
+    font-size: 1.5rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Уменьшаем иконки в заголовках */
+  .block-icon,
+  .detail-icon {
+    font-size: 2rem !important;
+    flex-shrink: 0;
+  }
+  
+  /* Сам блок заголовка */
+  .block-header,
+  .detail-header {
+    gap: 0.5rem !important;
+    padding: 0.8rem 1rem !important;
+  }
+  
+  /* Текст в блоках */
+  .history-text,
+  .fact-text,
+  .memory-association {
+    font-size: 1.4rem !important;
+    line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Убираем фиксированную ширину у label */
+  .detail-label {
+    min-width: auto !important;
+    width: 100%;
+  }
+  
+  /* Карточки примеров */
+  .example-card {
+    padding: 1rem !important;
+  }
+  
+  /* Все текстовые элементы */
+  .info-card,
+  .key-card,
+  .info-detail-block,
+  .history-block,
+  .fact-block,
+  .memory-block-info {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
 }
 
-/* Для совсем маленьких экранов (до 480px) оставляем дополнительное сжатие */
+/* Для очень маленьких экранов */
 @media (max-width: 480px) {
-    .header-subtitle {
-        display: none; /* Скрываем подзаголовок, если совсем тесно */
-    }
-    .key-controls .btn-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
+  .section-title,
+  .block-title,
+  .history-permanent-header {
+    font-size: 1.4rem !important;
+  }
+  
+  .detail-title {
+    font-size: 1.3rem !important;
+  }
+  
+  .history-text,
+  .fact-text,
+  .memory-association {
+    font-size: 1.3rem !important;
+  }
 }
 
 /* АНИМАЦИИ */
