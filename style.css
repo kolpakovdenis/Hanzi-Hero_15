@@ -1,4 +1,9 @@
-/* === ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОГО ИНТЕРФЕЙСА === */
+
+# Now let's create the updated style.css with fixes for:
+# 1. Remove strong text-shadow (oreol) on carousel items in dark theme
+# 2. Fix favorite button active state visibility
+
+updated_style_css = '''/* === ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОГО ИНТЕРФЕЙСА === */
 
 :root {
   --color-bg: #fef7e8;
@@ -46,19 +51,18 @@
   --shadow-card: 0 2px 8px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
 }
 
-/* ТЁМНАЯ ТЕМА ДЛЯ КАРУСЕЛИ — ЯРКИЕ ЦВЕТА */
+/* ТЁМНАЯ ТЕМА ДЛЯ КАРУСЕЛИ — убран сильный ореол (text-shadow) */
 [data-theme="dark"] .carousel-item .carousel-pinyin {
-  color: #f1c40f !important;
-  text-shadow: 0 0 4px rgba(241, 196, 15, 0.5);
+  color: #f1c40f;
+  /* Убран text-shadow с сильным ореолом */
 }
 [data-theme="dark"] .carousel-num {
-  color: #ffd966 !important;
-  text-shadow: 0 0 3px rgba(255, 217, 102, 0.5);
+  color: #ffd966;
+  /* Убран text-shadow с сильным ореолом */
 }
 [data-theme="dark"] .carousel-item.active .carousel-pinyin,
 [data-theme="dark"] .carousel-item.active .carousel-num {
-  color: #c0392b !important;
-  text-shadow: none;
+  color: #c0392b;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -231,8 +235,54 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  position: relative;
 }
-.key-controls .btn-icon:hover { transform: translateY(-4px); background: var(--color-primary-light); color: white; }
+.key-controls .btn-icon:hover { 
+  transform: translateY(-4px); 
+  background: var(--color-primary-light); 
+  color: white; 
+}
+
+/* КНОПКА ИЗБРАННОГО — улучшенная видимость */
+.btn-favorite {
+  position: relative;
+  overflow: visible;
+}
+
+/* Неактивное состояние — пустая/серая звезда */
+.btn-favorite::before {
+  content: "☆";
+  position: absolute;
+  font-size: 3.5rem;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.btn-favorite::after {
+  content: "⭐";
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.3;
+  filter: grayscale(100%);
+  transition: all 0.3s ease;
+}
+
+/* Активное состояние — яркая золотая звезда */
+.btn-favorite.active::before {
+  opacity: 0;
+}
+
+.btn-favorite.active::after {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(241, 196, 15, 0.8), 0 0 20px rgba(241, 196, 15, 0.4);
+}
+
+/* Анимация при клике */
+.btn-favorite:active::after {
+  transform: scale(0.9);
+}
 
 /* ИНФО БЛОКИ (ПРАВАЯ КОЛОНКА) */
 .info-card {
@@ -609,4 +659,12 @@ body {
   .example-large-char { font-size: 6rem; }
   .section-title { font-size: var(--text-lg); }
   .fav-char { font-size: 3.5rem; }
-}
+}'''
+
+# Save updated style.css
+with open('/mnt/kimi/output/style.css', 'w', encoding='utf-8') as f:
+    f.write(updated_style_css)
+
+print("✅ style.css saved with fixes:")
+print("   1. Removed strong text-shadow (oreol) from carousel items in dark theme")
+print("   2. Added improved favorite button styles with clear active/inactive states")
