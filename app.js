@@ -15,59 +15,56 @@ let guidelineCtx = null;
 function initGuidelineCanvas() {
   const canvas = document.getElementById('guideline-canvas');
   if (!canvas) return;
-  
+
   guidelineCanvas = canvas;
   guidelineCtx = canvas.getContext('2d');
-  
+
   const resizeObserver = new ResizeObserver(() => drawGrid());
   const container = canvas.parentElement;
   if (container) resizeObserver.observe(container);
-  
+
   drawGrid();
 }
 
 function drawGrid() {
   if (!guidelineCanvas || !guidelineCtx) return;
-  
+
   const container = guidelineCanvas.parentElement;
   if (!container) return;
-  
+
   const rect = container.getBoundingClientRect();
   const size = Math.min(rect.width, rect.height);
-  
+
   if (size === 0) return;
-  
+
   guidelineCanvas.width = size;
   guidelineCanvas.height = size;
   guidelineCanvas.style.width = `${size}px`;
   guidelineCanvas.style.height = `${size}px`;
-  
+
   const ctx = guidelineCtx;
   ctx.clearRect(0, 0, size, size);
-  
+
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const mainColor = isDark ? '#ef4444' : '#c0392b';
   const accentColor = '#e67e22';
   const lightColor = isDark ? 'rgba(239,68,68,0.3)' : 'rgba(192,57,43,0.25)';
-  
+
   ctx.save();
   ctx.shadowBlur = 0;
-  
+
   const margin = Math.max(3, size * 0.01);
-  
-  // Внешняя рамка
+
   ctx.beginPath();
   ctx.strokeStyle = mainColor;
   ctx.lineWidth = Math.max(2, size * 0.007);
   ctx.strokeRect(margin, margin, size - margin*2, size - margin*2);
-  
-  // Внутренняя рамка
+
   ctx.beginPath();
   ctx.strokeStyle = accentColor;
   ctx.lineWidth = Math.max(1, size * 0.003);
   ctx.strokeRect(margin/2, margin/2, size - margin, size - margin);
-  
-  // Крест по центру
+
   ctx.beginPath();
   ctx.strokeStyle = mainColor;
   ctx.lineWidth = Math.max(1.5, size * 0.005);
@@ -76,8 +73,7 @@ function drawGrid() {
   ctx.moveTo(margin, size / 2);
   ctx.lineTo(size - margin, size / 2);
   ctx.stroke();
-  
-  // Диагонали
+
   ctx.beginPath();
   ctx.strokeStyle = accentColor;
   ctx.lineWidth = Math.max(1, size * 0.004);
@@ -86,13 +82,12 @@ function drawGrid() {
   ctx.moveTo(size - margin, margin);
   ctx.lineTo(margin, size - margin);
   ctx.stroke();
-  
-  // Пунктирные линии (сетка 3x3)
+
   ctx.beginPath();
   ctx.strokeStyle = lightColor;
   ctx.lineWidth = Math.max(1, size * 0.003);
   ctx.setLineDash([Math.max(4, size * 0.015), Math.max(3, size * 0.01)]);
-  
+
   const third = size / 3;
   const twoThird = (size * 2) / 3;
   ctx.moveTo(margin, third);
@@ -104,7 +99,7 @@ function drawGrid() {
   ctx.moveTo(twoThird, margin);
   ctx.lineTo(twoThird, size - margin);
   ctx.stroke();
-  
+
   ctx.restore();
 }
 
@@ -123,7 +118,6 @@ function initTooltips() {
   const tooltip = document.getElementById('tooltip');
   if (!tooltip) return;
 
-  // Находим все элементы с data-tooltip
   document.querySelectorAll('[data-tooltip]').forEach(el => {
     el.addEventListener('mouseenter', (e) => {
       const text = el.getAttribute('data-tooltip');
@@ -133,9 +127,7 @@ function initTooltips() {
         updateTooltipPosition(e);
       }
     });
-    
     el.addEventListener('mousemove', updateTooltipPosition);
-    
     el.addEventListener('mouseleave', () => {
       tooltip.classList.remove('show');
     });
@@ -145,22 +137,16 @@ function initTooltips() {
 function updateTooltipPosition(e) {
   const tooltip = document.getElementById('tooltip');
   if (!tooltip || !tooltip.classList.contains('show')) return;
-  
-  const x = e.clientX;
-  const y = e.clientY;
-  
-  // Позиционируем над курсором
-  tooltip.style.left = `${x}px`;
-  tooltip.style.top = `${y - tooltip.offsetHeight - 10}px`;
+  tooltip.style.left = `${e.clientX}px`;
+  tooltip.style.top = `${e.clientY - tooltip.offsetHeight - 10}px`;
 }
 
 // === ANIMATIONS ===
 function animateBlocks() {
-  // Сбрасываем анимацию для всех info-block
   const blocks = document.querySelectorAll('.info-block');
   blocks.forEach((block, index) => {
     block.style.animation = 'none';
-    block.offsetHeight; // Trigger reflow
+    block.offsetHeight;
     block.style.animation = `fadeInUp 0.6s ease forwards`;
     block.style.animationDelay = `${index * 0.1}s`;
   });
@@ -197,13 +183,11 @@ function setButtonsEnabled(enabled) {
   });
 }
 
-// === УЛУЧШЕННЫЙ ИНДИКАТОР ПРОГРЕССА С ТОЧКАМИ ===
+// === ИНДИКАТОР ПРОГРЕССА ===
 function renderStrokeDots(total) {
   const container = document.getElementById('stroke-dots');
   if (!container) return;
-  
   container.innerHTML = '';
-  
   for (let i = 0; i < total; i++) {
     const dot = document.createElement('div');
     dot.className = 'stroke-dot';
@@ -217,17 +201,16 @@ function updateStrokeProgress(strokeNum, total) {
   const totalEl = document.getElementById('total-strokes');
   const progressFill = document.getElementById('progress-fill');
   const percentageEl = document.getElementById('progress-percentage');
-  
+
   if (currentEl) currentEl.textContent = strokeNum;
   if (totalEl) totalEl.textContent = total;
-  
+
   if (progressFill) {
     const percent = total > 0 ? Math.round((strokeNum / total) * 100) : 0;
     progressFill.style.width = percent + '%';
     if (percentageEl) percentageEl.textContent = percent + '%';
   }
-  
-  // Обновляем точки
+
   const dots = document.querySelectorAll('.stroke-dot');
   dots.forEach((dot, index) => {
     dot.classList.remove('active', 'completed');
@@ -307,7 +290,7 @@ function closeFavoritesModal() {
 function renderCarousel() {
   const container = document.getElementById('radicalCarousel');
   if (!container) return;
-  
+
   container.innerHTML = '';
   CHARACTERS.forEach((c, i) => {
     const btn = document.createElement('button');
@@ -320,7 +303,7 @@ function renderCarousel() {
     btn.onclick = () => selectChar(i);
     container.appendChild(btn);
   });
-  
+
   setTimeout(() => {
     const activeItem = container.querySelector('.carousel-item.active');
     if (activeItem) {
@@ -333,7 +316,7 @@ function setupCarouselNavigation() {
   const container = document.getElementById('radicalCarousel');
   const prevBtn = document.getElementById('carouselPrev');
   const nextBtn = document.getElementById('carouselNext');
-  
+
   if (prevBtn) prevBtn.addEventListener('click', () => container.scrollBy({ left: -120, behavior: 'smooth' }));
   if (nextBtn) nextBtn.addEventListener('click', () => container.scrollBy({ left: 120, behavior: 'smooth' }));
 }
@@ -341,73 +324,51 @@ function setupCarouselNavigation() {
 // === ОТОБРАЖЕНИЕ ИНФОРМАЦИИ ===
 function renderInfo(charData) {
   if (!charData) return;
-  
-  // Обновляем основную информацию
-  const charGiant = document.getElementById('info-char');
-  if (charGiant) {
-    charGiant.textContent = charData.char;
-    charGiant.setAttribute('data-char', charData.char);
-    fitCharToContainer(charGiant, charData.char);
-  }
-  
-  const pinyinEl = document.getElementById('info-pinyin');
+
+  const pinyinEl = document.getElementById('detail-pinyin');
   if (pinyinEl) pinyinEl.textContent = charData.pinyin;
-  
-  const meaningEl = document.getElementById('info-meaning');
-  if (meaningEl) meaningEl.textContent = charData.meaning;
-  
-  const koreanNameEl = document.getElementById('char-korean-name');
-  if (koreanNameEl) koreanNameEl.textContent = charData.koreanName;
-  
-  const koreanMeaningEl = document.getElementById('korean-meaning');
-  if (koreanMeaningEl) koreanMeaningEl.textContent = `(${charData.koreanMeaning})`;
-  
-  const strokeCountEl = document.getElementById('stroke-count');
-  if (strokeCountEl) strokeCountEl.textContent = charData.strokes;
-  
-  const radicalNumEl = document.getElementById('radical-num');
-  if (radicalNumEl) radicalNumEl.textContent = charData.radicalNum;
-  
-  const toneEl = document.getElementById('tone-indicator');
+
+  const toneEl = document.getElementById('detail-tone');
   if (toneEl) toneEl.textContent = charData.tone;
-  
-  // Обновляем историю с форматированием (разбиваем на абзацы если есть переносы строк)
+
+  const koreanReadEl = document.getElementById('detail-korean-read');
+  if (koreanReadEl) koreanReadEl.textContent = charData.koreanName;
+
+  const meaningRuEl = document.getElementById('detail-meaning-ru');
+  if (meaningRuEl) meaningRuEl.textContent = charData.meaning;
+
+  const meaningKrEl = document.getElementById('detail-meaning-kr');
+  if (meaningKrEl) meaningKrEl.textContent = `${charData.koreanName} (${charData.koreanMeaning})`;
+
+  const statsEl = document.getElementById('detail-stats');
+  if (statsEl) statsEl.textContent = `Ключ №${charData.radicalNum} · Черты: ${charData.strokes}`;
+
+  const memoryEl = document.getElementById('detail-memory');
+  if (memoryEl) memoryEl.innerHTML = charData.memoryHook || '';
+
   const historyEl = document.getElementById('history-text');
   if (historyEl) {
-    // Заменяем переносы строк на <br> если они есть в данных
     const formattedHistory = charData.history.replace(/\n/g, '<br>');
     historyEl.innerHTML = formattedHistory;
   }
-  
+
   const positionEl = document.getElementById('position-text');
   if (positionEl) positionEl.textContent = charData.position;
-  
-  // Ассоциация для запоминания
-  const memBlock = document.getElementById('memory-association');
-  if (memBlock) {
-    memBlock.innerHTML = charData.memoryHook || '';
-  }
-  
-  // Рендерим примеры (максимум 2)
+
   renderExamples(charData.examples.slice(0, 2));
-  
-  // Обновляем кнопку избранного
   updateFavoriteButton();
-  
-  // Инициализируем точки прогресса
+
   renderStrokeDots(charData.strokes);
   updateStrokeProgress(0, charData.strokes);
-  
-  // Запускаем анимацию блоков
+
   animateBlocks();
 }
 
 function renderExamples(examples) {
   const container = document.getElementById('examples-grid');
   if (!container) return;
-  
+
   container.innerHTML = '';
-  
   examples.forEach(example => {
     const data = window.getExampleData(example);
     const card = document.createElement('div');
@@ -434,7 +395,7 @@ function getWriterOptions() {
   const container = document.getElementById('hanzi-target');
   const size = container ? container.clientWidth : 320;
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  
+
   return {
     width: size,
     height: size,
@@ -451,7 +412,7 @@ function getWriterOptions() {
     strokeHighlightSpeed: 2,
     showHintAfterMisses: 3,
     highlightOnComplete: true,
-    
+
     onLoadCharDataSuccess: function(data) {
       totalStrokes = data.strokes ? data.strokes.length : currentCharData.strokes;
       updateStrokeProgress(0, totalStrokes);
@@ -465,7 +426,7 @@ function getWriterOptions() {
         }
       }, 100);
     },
-    
+
     onLoadCharDataError: function(reason) {
       console.error('Error:', reason);
       showError('Не удалось загрузить данные иероглифа. Проверьте подключение к интернету.');
@@ -478,9 +439,9 @@ function initWriter(char) {
     try { writer.cancelQuiz(); } catch(e) {}
     writer = null;
   }
-  
+
   clearWriterContainer();
-  
+
   setTimeout(() => {
     writer = HanziWriter.create('hanzi-target', char, getWriterOptions());
     initGuidelineCanvas();
@@ -493,7 +454,7 @@ function animateCharacter() {
   updateStrokeProgress(0, totalStrokes);
   currentStrokeNum = 0;
   isAnimating = true;
-  
+
   writer.animateCharacter({
     onComplete: function() {
       isAnimating = false;
@@ -502,7 +463,7 @@ function animateCharacter() {
       updateStrokeProgress(totalStrokes, totalStrokes);
     }
   });
-  
+
   let interval = setInterval(() => {
     if (!isAnimating || currentStrokeNum >= totalStrokes) {
       clearInterval(interval);
@@ -518,18 +479,18 @@ function startPracticeMode() {
     showToast('Иероглиф ещё не загружен');
     return;
   }
-  
+
   isPracticeMode = true;
   currentStrokeNum = 0;
   setGridDim(true);
-  
+
   const banner = document.getElementById('practice-banner');
   if (banner) banner.classList.add('active');
-  
+
   setButtonsEnabled(false);
-  
+
   writer.hideCharacter();
-  
+
   writer.quiz({
     onCorrectStroke: function(strokeData) {
       currentStrokeNum = strokeData.strokeNum + 1;
@@ -558,25 +519,25 @@ function startPracticeMode() {
       }, 300);
     }
   });
-  
+
   showToast('Нарисуйте черты по порядку!');
 }
 
 function exitPracticeMode() {
   if (!isPracticeMode) return;
-  
+
   isPracticeMode = false;
   currentStrokeNum = 0;
   setGridDim(false);
-  
+
   if (writer) {
     writer.cancelQuiz();
     writer.showCharacter();
   }
-  
+
   const banner = document.getElementById('practice-banner');
   if (banner) banner.classList.remove('active');
-  
+
   setButtonsEnabled(true);
   updateStrokeProgress(0, totalStrokes);
   showToast('Выход из практики');
@@ -585,10 +546,10 @@ function exitPracticeMode() {
 function selectChar(idx) {
   if (!CHARACTERS[idx]) return;
   if (isPracticeMode) exitPracticeMode();
-  
+
   currentCharIdx = idx;
   currentCharData = CHARACTERS[idx];
-  
+
   hideError();
   renderCarousel();
   renderInfo(currentCharData);
@@ -621,70 +582,50 @@ document.getElementById('btn-animate')?.addEventListener('click', () => {
 document.getElementById('btn-practice')?.addEventListener('click', startPracticeMode);
 document.getElementById('btn-exit-practice')?.addEventListener('click', exitPracticeMode);
 document.getElementById('btn-retry')?.addEventListener('click', () => selectChar(currentCharIdx));
-document.getElementById('btn-favorite')?.addEventListener('click', toggleFavorite);
-document.getElementById('btn-favorites-scroll')?.addEventListener('click', openFavoritesModal);
 
+// === ИСПРАВЛЕНИЕ: добавляем обработчик для кнопки избранного ===
+document.getElementById('btn-favorite')?.addEventListener('click', toggleFavorite);
+
+document.getElementById('btn-favorites-scroll')?.addEventListener('click', openFavoritesModal);
 document.querySelector('.modal-close')?.addEventListener('click', closeFavoritesModal);
 window.addEventListener('click', (e) => {
   if (e.target === favoritesModal) closeFavoritesModal();
 });
 
-// Theme toggle with animation
+// Theme toggle
 const themeToggle = document.getElementById('themeToggle');
 let theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', theme);
 
-// Apply initial theme state
 if (theme === 'dark') {
   themeToggle?.classList.add('active');
 }
 
 themeToggle?.addEventListener('click', () => {
-  // Add animation class
   themeToggle.classList.add('theme-switching');
-  
+
   theme = theme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
-  
-  // Update button active state
+
   if (theme === 'dark') {
     themeToggle.classList.add('active');
   } else {
     themeToggle.classList.remove('active');
   }
-  
-  // Update writer colors if exists
+
   if (writer && currentCharData) {
     const isDark = theme === 'dark';
     writer.updateColor('strokeColor', isDark ? '#ef4444' : '#c0392b');
     writer.updateColor('outlineColor', isDark ? '#444' : '#ddd');
   }
-  
-  // Update grid
+
   drawGrid();
-  
-  // Remove animation class after animation completes
+
   setTimeout(() => {
     themeToggle.classList.remove('theme-switching');
   }, 500);
 });
-
-// === АВТОМАТИЧЕСКОЕ МАСШТАБИРОВАНИЕ ШИРОКИХ ИЕРОГЛИФОВ ===
-function fitCharToContainer(charElement, char) {
-  if (!charElement) return;
-  
-  // Список широких иероглифов, которые вылезают
-  const wideChars = ['亠', '冂', '冖', '冫', '人', '入', '八', '儿', '冃', '冄'];
-  
-  if (wideChars.includes(char)) {
-    charElement.style.transform = 'scale(0.75)';
-    charElement.style.fontSize = 'clamp(4rem, 10vw, 8rem)';
-  } else {
-    charElement.style.transform = 'scale(0.9)';
-    charElement.style.fontSize = '';
-  }
-}
 
 // Init
 window.addEventListener('load', () => {
@@ -696,15 +637,14 @@ window.addEventListener('load', () => {
     showError('Ошибка загрузки Hanzi Writer');
     return;
   }
-  
+
   renderCarousel();
   setupCarouselNavigation();
-  initTooltips(); // Инициализируем подсказки
+  initTooltips();
   selectChar(0);
   updateFavoritesModal();
 });
 
-// Обработка изменения размера окна
 window.addEventListener('resize', () => {
   setTimeout(drawGrid, 100);
 });
