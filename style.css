@@ -1049,104 +1049,93 @@ body {
   border-color: rgba(0,0,0,0.9) transparent transparent;
 }
 
-/* === ИСПРАВЛЕНИЕ ДЛЯ ЗАГОЛОВКОВ БЛОКОВ НА МОБИЛЬНЫХ === */
+/* === ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЗАГОЛОВКОВ НА МОБИЛЬНЫХ === */
+
 @media (max-width: 768px) {
-  /* Заголовки секций */
-  .section-title {
+  /* Заголовки секций (например, "Примеры иероглифов") */
+  .section-title,
+  .examples-section .section-title {
+    font-size: 1.8rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.2;
+    hyphens: auto;
+  }
+
+  /* Заголовки блоков (Происхождение, Расположение и т.д.) */
+  .block-title,
+  .detail-title,
+  .info-detail-block .detail-title,
+  .memory-block-info .detail-title {
     font-size: 1.6rem !important;
     word-break: break-word;
     overflow-wrap: break-word;
-    line-height: 1.3;
+    line-height: 1.2;
+    hyphens: auto;
   }
-  
-  /* Заголовки блоков (Происхождение, Расположение и т.д.) */
-  .block-title,
-  .block-header .detail-title {
-    font-size: 1.5rem !important;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.3;
-  }
-  
-  /* Заголовок истории */
+
+  /* Постоянный заголовок истории ("Путешествие этого ключа...") */
   .history-permanent-header {
-    font-size: 1.4rem !important;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.3;
-  }
-  
-  /* Заголовок в detail-header */
-  .detail-header .detail-title {
     font-size: 1.5rem !important;
     word-break: break-word;
     overflow-wrap: break-word;
-  }
-  
-  /* Уменьшаем иконки в заголовках */
-  .block-icon,
-  .detail-icon {
-    font-size: 2rem !important;
-    flex-shrink: 0;
-  }
-  
-  /* Сам блок заголовка */
-  .block-header,
-  .detail-header {
-    gap: 0.5rem !important;
+    line-height: 1.3;
+    hyphens: auto;
     padding: 0.8rem 1rem !important;
   }
-  
-  /* Текст в блоках */
+
+  /* Шапки блоков (иконка + заголовок) */
+  .block-header,
+  .detail-header {
+    padding: 0.6rem 1rem !important;
+    gap: 0.5rem !important;
+    align-items: center;
+  }
+
+  /* Иконки в заголовках */
+  .block-icon,
+  .detail-icon {
+    font-size: 1.8rem !important;
+    flex-shrink: 0;
+  }
+
+  /* Текст в блоках истории, фактов, ассоциаций — тоже переносим */
   .history-text,
   .fact-text,
   .memory-association {
-    font-size: 1.4rem !important;
-    line-height: 1.5;
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-  
-  /* Убираем фиксированную ширину у label */
-  .detail-label {
-    min-width: auto !important;
-    width: 100%;
-  }
-  
-  /* Карточки примеров */
-  .example-card {
-    padding: 1rem !important;
-  }
-  
-  /* Все текстовые элементы */
-  .info-card,
-  .key-card,
-  .info-detail-block,
-  .history-block,
-  .fact-block,
-  .memory-block-info {
     word-break: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+    line-height: 1.5;
   }
 }
 
-/* Для очень маленьких экранов */
 @media (max-width: 480px) {
+  /* Ещё сильнее уменьшаем заголовки на очень маленьких экранах */
   .section-title,
+  .examples-section .section-title {
+    font-size: 1.6rem !important;
+  }
+
   .block-title,
-  .history-permanent-header {
+  .detail-title,
+  .info-detail-block .detail-title,
+  .memory-block-info .detail-title {
     font-size: 1.4rem !important;
   }
-  
-  .detail-title {
+
+  .history-permanent-header {
     font-size: 1.3rem !important;
   }
-  
-  .history-text,
-  .fact-text,
-  .memory-association {
-    font-size: 1.3rem !important;
+
+  .block-header,
+  .detail-header {
+    padding: 0.5rem 0.8rem !important;
+  }
+
+  .block-icon,
+  .detail-icon {
+    font-size: 1.6rem !important;
   }
 }
 
