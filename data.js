@@ -1,4 +1,4 @@
-// === 20 КЛЮЧЕЙ КАНСИ (С ПРОВЕРЕННЫМИ И УЛУЧШЕННЫМИ ДАННЫМИ) ===
+// === 30 КЛЮЧЕЙ КАНСИ (С ПРОВЕРЕННЫМИ И УЛУЧШЕННЫМИ ДАННЫМИ) ===
 window.CHARACTERS = [
   {
     char: "一", pinyin: "yī", meaning: "один", koreanName: "한일", koreanMeaning: "один",
@@ -283,7 +283,6 @@ window.getExampleData = function(exampleChar) {
     '助': { pinyin: 'zhù', meaning: 'помощь', korean: '조' },
     '包': { pinyin: 'bāo', meaning: 'пакет', korean: '포' },
     '句': { pinyin: 'jù', meaning: 'фраза', korean: '구' },
-        // Новые примеры для ключей 21-30:
     '北': { pinyin: 'běi', meaning: 'север', korean: '북' },
     '化': { pinyin: 'huà', meaning: 'превращаться', korean: '화' },
     '医': { pinyin: 'yī', meaning: 'врач', korean: '의' },
