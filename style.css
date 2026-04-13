@@ -1,9 +1,4 @@
-
-# Now let's create the updated style.css with fixes for:
-# 1. Remove strong text-shadow (oreol) on carousel items in dark theme
-# 2. Fix favorite button active state visibility
-
-updated_style_css = '''/* === ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОГО ИНТЕРФЕЙСА === */
+/* === ОБНОВЛЕННЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОГО ИНТЕРФЕЙСА === */
 
 :root {
   --color-bg: #fef7e8;
@@ -660,11 +655,3 @@ body {
   .section-title { font-size: var(--text-lg); }
   .fav-char { font-size: 3.5rem; }
 }'''
-
-# Save updated style.css
-with open('/mnt/kimi/output/style.css', 'w', encoding='utf-8') as f:
-    f.write(updated_style_css)
-
-print("✅ style.css saved with fixes:")
-print("   1. Removed strong text-shadow (oreol) from carousel items in dark theme")
-print("   2. Added improved favorite button styles with clear active/inactive states")
