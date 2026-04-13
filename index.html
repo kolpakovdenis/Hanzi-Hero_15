@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- УЛУЧШЕННАЯ ШАПКА: отдельный блок с уникальным фоном -->
+    <!-- ШАПКА: упрощённая, без лишних кнопок -->
     <header class="header">
       <div class="header-content">
         <div class="logo">
@@ -22,32 +22,11 @@
     </header>
 
     <main class="main">
-      <!-- КАРУСЕЛЬ + КНОПКИ СПРАВА -->
+      <!-- КАРУСЕЛЬ (на всю ширину) -->
       <div class="radical-carousel-container">
         <button class="carousel-nav carousel-prev" id="carouselPrev" title="Предыдущие ключи">‹</button>
         <div class="radical-carousel" id="radicalCarousel"></div>
         <button class="carousel-nav carousel-next" id="carouselNext" title="Следующие ключи">›</button>
-        <div class="carousel-actions">
-          <button class="square-icon" id="btn-favorites-scroll" title="Избранное ключи">📜</button>
-          <button class="square-icon theme-toggle" id="themeToggle" title="Переключить тему инь-янь">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#1e3a5f;stop-opacity:1" />
-                </linearGradient>
-                <linearGradient id="whiteGradient" x1="100%" y1="100%" x2="0%" y2="0%">
-                  <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              <circle cx="50" cy="50" r="48" fill="url(#whiteGradient)"/>
-              <path d="M50,2 A48,48 0 1,1 49.9,2 A24,24 0 0,0 50,50 A24,24 0 0,1 50,2" fill="url(#blueGradient)"/>
-              <circle cx="50" cy="74" r="7" fill="#ffffff"/>
-              <circle cx="50" cy="26" r="7" fill="#1e3a5f"/>
-            </svg>
-          </button>
-        </div>
       </div>
 
       <!-- БАННЕР ОШИБОК -->
@@ -61,25 +40,8 @@
 
       <!-- ОСНОВНОЙ КОНТЕНТ: две колонки -->
       <div class="key-info-container">
-        <!-- ЛЕВАЯ КОЛОНКА: блок с практикой ключа -->
+        <!-- ЛЕВАЯ КОЛОНКА: практика ключа -->
         <div class="key-card">
-          <!-- Главный блок с информацией о ключе -->
-          <div class="char-main-layout">
-            <div class="char-giant" id="info-char" data-char="一">一</div>
-            <div class="char-details">
-              <div class="char-pinyin" id="info-pinyin">yī</div>
-              <div class="char-meaning" id="info-meaning">один</div>
-              <div class="char-korean">
-                <span class="kr-label">🇰🇷</span>
-                <span id="char-korean-name">한일</span>
-                <span class="korean-meaning" id="korean-meaning">(один)</span>
-              </div>
-              <div class="stroke-count">
-                Ключ №<span id="radical-num">1</span> · Черты: <span id="stroke-count">1</span>
-              </div>
-            </div>
-          </div>
-
           <!-- Область для рисования -->
           <div class="writer-wrap">
             <div class="grid-overlay-container">
@@ -88,7 +50,7 @@
             </div>
           </div>
 
-          <!-- УЛУЧШЕННЫЙ ИНДИКАТОР ПРОГРЕССА: визуальное представление -->
+          <!-- УЛУЧШЕННЫЙ ИНДИКАТОР ПРОГРЕССА -->
           <div class="progress-section">
             <div class="progress-header">
               <div class="progress-label">📝 Прогресс написания</div>
@@ -105,48 +67,76 @@
             </div>
           </div>
 
-          <!-- Кнопки управления с подсказками -->
+          <!-- Кнопки управления с подсказками (добавлена звезда) -->
           <div class="key-controls">
-            <button class="btn-icon" id="btn-speak" title="Прослушать произношение" data-tooltip="Озвучить иероглиф">
-              🐼
-            </button>
-            <button class="btn-icon" id="btn-animate" title="Показать порядок черт" data-tooltip="Анимация написания">
-              💿
-            </button>
-            <button class="btn-icon" id="btn-practice" title="Режим практики" data-tooltip="Нарисовать иероглиф">
-              🖌️
-            </button>
-            <button class="btn-icon btn-favorite" id="btn-favorite" title="Добавить в избранное" data-tooltip="В избранное">
-              ⭐
-            </button>
+            <button class="btn-icon" id="btn-speak" title="Прослушать произношение" data-tooltip="Озвучить иероглиф">🐼</button>
+            <button class="btn-icon" id="btn-animate" title="Показать порядок черт" data-tooltip="Анимация написания">💿</button>
+            <button class="btn-icon" id="btn-practice" title="Режим практики" data-tooltip="Нарисовать иероглиф">🖌️</button>
+            <button class="btn-icon btn-favorite" id="btn-favorite" title="Добавить в избранное" data-tooltip="В избранное">⭐</button>
           </div>
 
-          <!-- Блок с тоном -->
-          <div class="tone-box">
-            <div class="tone-label">🎵 ТОН</div>
-            <div class="tone-value" id="tone-indicator">1-й тон (высокий уровень)</div>
+          <!-- БЛОКИ ИНФОРМАЦИИ: только Звучание и Значение (Запоминание перенесено в правую колонку) -->
+          <div class="info-details-section">
+            <!-- Звучание (без корейского чтения) -->
+            <div class="info-detail-block sound-block">
+              <div class="detail-header">
+                <span class="detail-icon">🔊</span>
+                <span class="detail-title">Звучание</span>
+              </div>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span class="detail-label">Китайский:</span>
+                  <span class="detail-value chinese" id="detail-pinyin">yī</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Тон:</span>
+                  <span class="detail-value" id="detail-tone">1-й тон (высокий уровень)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Значение + номер ключа / кол-во черт -->
+            <div class="info-detail-block meaning-block">
+              <div class="detail-header">
+                <span class="detail-icon">📖</span>
+                <span class="detail-title">Значение</span>
+              </div>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span class="detail-label">Русский:</span>
+                  <span class="detail-value" id="detail-meaning-ru">один</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Корейский:</span>
+                  <span class="detail-value korean" id="detail-meaning-kr">하나 (один)</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Характеристики:</span>
+                  <span class="detail-value" id="detail-stats">Ключ №1 · Черты: 1</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- ПРАВАЯ КОЛОНКА: информация и примеры -->
+        <!-- ПРАВАЯ КОЛОНКА: примеры, запоминание, история -->
         <div class="info-card">
-          <!-- Примеры иероглифов -->
           <div class="examples-section">
             <div class="section-title">📚 Примеры иероглифов с этим ключом</div>
             <div class="examples-grid-2" id="examples-grid"></div>
           </div>
 
-          <!-- Блок запоминания с иконкой -->
-          <div class="info-block memory-block">
-            <div class="block-header">
-              <span class="block-icon">🧠</span>
-              <span class="block-title">Запоминание</span>
+          <!-- Блок Запоминание (перенесён из левой колонки) -->
+          <div class="info-detail-block memory-block-info">
+            <div class="detail-header">
+              <span class="detail-icon">🧠</span>
+              <span class="detail-title">Запоминание</span>
             </div>
-            <div class="memory-permanent-header">Запомните этот образ — он откроет дверь в мир иероглифов</div>
-            <div class="memory-association" id="memory-association"></div>
+            <div class="detail-content">
+              <div class="memory-association" id="detail-memory">💡 Как палочка в игре 'крестики-нолики' — горизонтальная линия, начало всего.</div>
+            </div>
           </div>
 
-          <!-- Блок истории с иконкой -->
           <div class="info-block history-block-wrapper">
             <div class="block-header">
               <span class="block-icon">📜</span>
@@ -158,7 +148,6 @@
             </div>
           </div>
 
-          <!-- Блок расположения с иконкой -->
           <div class="info-block position-block">
             <div class="block-header">
               <span class="block-icon">📍</span>
@@ -169,7 +158,6 @@
             </div>
           </div>
 
-          <!-- Ссылка на ресурс -->
           <div class="resource-link">
             <p>📚 Хотите узнать больше о китайских ключах?</p>
             <a href="https://en.wikipedia.org/wiki/Kangxi_radical" target="_blank" rel="noopener noreferrer">
@@ -197,9 +185,32 @@
       </div>
     </div>
 
+    <!-- ПЛАВАЮЩИЕ КНОПКИ -->
+    <div class="floating-buttons">
+      <button class="floating-btn" id="btn-favorites-scroll" title="Избранное ключи">📜</button>
+      <button class="floating-btn theme-toggle" id="themeToggle" title="Переключить тему">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#1e3a5f;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="whiteGradient" x1="100%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="48" fill="url(#whiteGradient)"/>
+          <path d="M50,2 A48,48 0 1,1 49.9,2 A24,24 0 0,0 50,50 A24,24 0 0,1 50,2" fill="url(#blueGradient)"/>
+          <circle cx="50" cy="74" r="7" fill="#ffffff"/>
+          <circle cx="50" cy="26" r="7" fill="#1e3a5f"/>
+        </svg>
+      </button>
+    </div>
+
     <!-- Всплывающие подсказки -->
     <div id="tooltip" class="tooltip"></div>
-    
+
     <!-- Toast уведомления -->
     <div id="toast" class="toast"></div>
   </div>
