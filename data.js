@@ -301,7 +301,7 @@ window.getExampleData = function(exampleChar) {
     '参': { pinyin: 'cān', meaning: 'участвовать', korean: '참' },
     '友': { pinyin: 'yǒu', meaning: 'друг', korean: '우' },
     '取': { pinyin: 'qǔ', meaning: 'брать', korean: '취' },
-    '吃': { pinyin: 'chī', meaning: 'есть', korean: '喫' },
+    '吃': { pinyin: 'chī', meaning: 'есть', korean: '먹' },
     '叫': { pinyin: 'jiào', meaning: 'кричать', korean: '교' }
   };
   return examplesMap[exampleChar] || { pinyin: '?', meaning: '?', korean: '?' };
