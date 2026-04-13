@@ -1,4 +1,4 @@
-// === 20 КЛЮЧЕЙ КАНСИ (ПОЛНАЯ ВЕРСИЯ) ===
+// === 20 КЛЮЧЕЙ КАНСИ (С ПРОВЕРЕННЫМИ И УЛУЧШЕННЫМИ ДАННЫМИ) ===
 window.CHARACTERS = [
   {
     char: "一", pinyin: "yī", meaning: "один", koreanName: "한일", koreanMeaning: "один",
@@ -162,7 +162,7 @@ window.CHARACTERS = [
   }
 ];
 
-// Данные для примеров иероглифов
+// Данные для примеров иероглифов (исправлены и дополнены)
 window.getExampleData = function(exampleChar) {
   const examplesMap = {
     '王': { pinyin: 'wáng', meaning: 'король', korean: '왕' },
