@@ -31,10 +31,34 @@
   --color-surface: #2a1f18;
   --color-surface-offset: #3d2c22;
   --color-primary: #ef4444;
+  --color-primary-dark: #c0392b;
+  --color-primary-light: #e67e22;
   --color-text: #f5f0e8;
   --color-text-muted: #c8b8a8;
   --color-border: #5a4538;
   --color-korean: #7ab3c8;
+  --color-association: #4a372c;
+  --color-accent: #f1c40f;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* ТЁМНАЯ ТЕМА ДЛЯ КАРУСЕЛИ — ЯРКИЕ ЦВЕТА */
+[data-theme="dark"] .carousel-item .carousel-pinyin {
+  color: #f1c40f !important;
+  text-shadow: 0 0 4px rgba(241, 196, 15, 0.5);
+}
+[data-theme="dark"] .carousel-num {
+  color: #ffd966 !important;
+  text-shadow: 0 0 3px rgba(255, 217, 102, 0.5);
+}
+[data-theme="dark"] .carousel-item.active .carousel-pinyin,
+[data-theme="dark"] .carousel-item.active .carousel-num {
+  color: #c0392b !important;
+  text-shadow: none;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -91,30 +115,56 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
   border: 2px solid rgba(241,196,15,0.7);
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 90px;
+  min-width: 110px;
+  box-shadow: var(--shadow-sm);
 }
-.carousel-item.active { background: linear-gradient(135deg, #f1c40f, #e67e22); transform: scale(1.05); }
-.carousel-item .carousel-hanzi { font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: #fff; }
-.carousel-nav {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.7);
-  border: 2px solid #f1c40f;
-  color: #f1c40f;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+.carousel-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  border-color: #f1c40f;
 }
-.carousel-nav:hover { background: #f1c40f; color: var(--color-primary-dark); }
+.carousel-item.active {
+  background: linear-gradient(135deg, #f1c40f, #e67e22);
+  border-color: #fff;
+  box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+  transform: scale(1.05);
+}
+.carousel-item .carousel-hanzi {
+  font-family: var(--font-display);
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  line-height: 1;
+}
+
+/* ЯВНЫЕ ЦВЕТА ДЛЯ КАРУСЕЛИ В СВЕТЛОЙ ТЕМЕ */
+.carousel-item .carousel-pinyin {
+  font-size: var(--text-sm);
+  margin-top: 6px;
+  color: #e67e22 !important;
+  font-weight: 600;
+}
+
+.carousel-num {
+  font-size: var(--text-xs);
+  margin-top: 4px;
+  color: #d4a017 !important;
+  font-weight: 500;
+}
+
+.carousel-item.active .carousel-pinyin,
+.carousel-item.active .carousel-num {
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
 
 /* ОСНОВНАЯ СЕТКА */
 .key-info-container {
