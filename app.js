@@ -183,7 +183,14 @@ function updateFavoritesModal() {
     const charData = CHARACTERS[idx];
     const div = document.createElement('div');
     div.className = 'fav-item';
-    div.innerHTML = `<div class="fav-char">${charData.char}</div><div class="fav-info"><div class="fav-pinyin">${charData.pinyin}</div><div class="fav-meaning">${charData.meaning}</div></div>`;
+    div.innerHTML = `
+      <div class="fav-char">${charData.char}</div>
+      <div class="fav-info">
+        <div class="fav-pinyin">${charData.pinyin}</div>
+        <div class="fav-meaning">${charData.meaning}</div>
+      </div>
+      <div class="fav-number">№${charData.radicalNum}</div>
+    `;
     div.addEventListener('click', () => { selectChar(idx); closeFavoritesModal(); });
     container.appendChild(div);
   });
@@ -214,20 +221,18 @@ function setupCarouselNavigation() {
 }
 
 // === ОТОБРАЖЕНИЕ ИНФОРМАЦИИ ===
-function renderExamplesMini(examples) {
+function renderExamplesLarge(examples) {
   const container = document.getElementById('examples-mini');
   container.innerHTML = '';
   examples.slice(0, 2).forEach(example => {
     const data = window.getExampleData(example);
     const card = document.createElement('div');
-    card.className = 'example-mini-card';
+    card.className = 'example-large-card';
     card.innerHTML = `
-      <div class="example-mini-char">${example}</div>
-      <div class="example-mini-details">
-        <div>${data.pinyin}</div>
-        <div>${data.meaning}</div>
-        <div>🇰🇷 ${data.korean}</div>
-      </div>
+      <div class="example-large-char">${example}</div>
+      <div class="example-large-pinyin">${data.pinyin}</div>
+      <div class="example-large-meaning">${data.meaning}</div>
+      <div class="example-large-korean">${data.korean}</div>
     `;
     container.appendChild(card);
   });
@@ -241,7 +246,7 @@ function renderInfo(charData) {
   document.getElementById('detail-memory').innerHTML = charData.memoryHook || '';
   document.getElementById('history-text').innerHTML = charData.history.replace(/\n/g, '<br>');
   document.getElementById('position-text').textContent = charData.position;
-  renderExamplesMini(charData.examples);
+  renderExamplesLarge(charData.examples);
   updateFavoriteButton();
   renderStrokeDots(charData.strokes);
   updateStrokeProgress(0, charData.strokes);
