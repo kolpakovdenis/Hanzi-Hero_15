@@ -501,7 +501,23 @@ body {
   font-size: var(--text-xl);
   font-weight: 700;
 }
+/* ===== Стили для кнопки закрытия модального окна ===== */
+.modal-header .modal-close {
+  background: transparent;    /* Убираем белый/серый фон */
+  border: none;               /* Убираем рамку */
+  font-size: 3.2rem;          /* Увеличиваем размер (было ~2rem) */
+  font-weight: bold;
+  color: white;               /* Белый крестик на красном фоне шапки */
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 var(--space-2);
+  transition: transform 0.2s ease;
+}
 
+.modal-header .modal-close:hover {
+  transform: scale(1.2);      /* Легкое увеличение при наведении */
+  color: #f1c40f;             /* Золотой при наведении */
+}
 /* УЛУЧШЕННЫЙ СПИСОК ИЗБРАННОГО */
 .favorites-list {
   overflow-y: auto;
