@@ -483,35 +483,24 @@ window.getExampleData = function(exampleChar) {
     '孙': { pinyin: 'sūn', meaning: 'внук', korean: '손' },
     '家': { pinyin: 'jiā', meaning: 'дом', korean: '가' },
     '安': { pinyin: 'ān', meaning: 'спокойный', korean: '안' },
-    // === ПРИМЕРЫ ДЛЯ КЛЮЧЕЙ 41-50 ===
-    // Для ключа №41 寸 (дюйм)
     '对': { pinyin: 'duì', meaning: 'правильный', korean: '대' },
     '寺': { pinyin: 'sì', meaning: 'храм', korean: '사' },
-    // Для ключа №42 小 (маленький)
     '少': { pinyin: 'shǎo', meaning: 'мало', korean: '소' },
     '尖': { pinyin: 'jiān', meaning: 'острый', korean: '첨' },
-    // Для ключа №43 尢 (хромой)
     '就': { pinyin: 'jiù', meaning: 'именно', korean: '취' },
     '尤': { pinyin: 'yóu', meaning: 'особенно', korean: '우' },
-    // Для ключа №44 尸 (тело)
     '屋': { pinyin: 'wū', meaning: 'комната', korean: '옥' },
     '层': { pinyin: 'céng', meaning: 'слой', korean: '층' },
-    // Для ключа №45 屮 (росток)
     '出': { pinyin: 'chū', meaning: 'выходить', korean: '출' },
     '屯': { pinyin: 'tún', meaning: 'деревня', korean: '둔' },
-    // Для ключа №46 山 (гора)
     '峰': { pinyin: 'fēng', meaning: 'вершина', korean: '봉' },
     '岛': { pinyin: 'dǎo', meaning: 'остров', korean: '도' },
-    // Для ключа №47 川 (река)
     '州': { pinyin: 'zhōu', meaning: 'область', korean: '주' },
     '顺': { pinyin: 'shùn', meaning: 'гладкий', korean: '순' },
-    // Для ключа №48 工 (работа)
     '左': { pinyin: 'zuǒ', meaning: 'левый', korean: '좌' },
     '差': { pinyin: 'chà', meaning: 'разница', korean: '차' },
-    // Для ключа №49 己 (себя)
     '记': { pinyin: 'jì', meaning: 'запоминать', korean: '기' },
     '改': { pinyin: 'gǎi', meaning: 'менять', korean: '개' },
-    // Для ключа №50 巾 (полотенце)
     '布': { pinyin: 'bù', meaning: 'ткань', korean: '포' },
     '帮': { pinyin: 'bāng', meaning: 'помогать', korean: '방' }
   };
