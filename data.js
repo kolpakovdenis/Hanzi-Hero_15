@@ -462,7 +462,7 @@ window.getExampleData = function(exampleChar) {
     '友': { pinyin: 'yǒu', meaning: 'друг', korean: '우' },
     '取': { pinyin: 'qǔ', meaning: 'брать', korean: '취' },
     '吃': { pinyin: 'chī', meaning: 'есть', korean: '먹' },
-    '叫': { pinyin: 'jiào', meaning: 'кричать', korean: '교' }
+    '叫': { pinyin: 'jiào', meaning: 'кричать', korean: '교' },
     '国': { pinyin: 'guó', meaning: 'страна', korean: '국' },
     '园': { pinyin: 'yuán', meaning: 'сад', korean: '원' },
     '地': { pinyin: 'dì', meaning: 'земля', korean: '지' },
