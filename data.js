@@ -1394,7 +1394,7 @@ window.CHARACTERS = [
   },
   {
     char: "非", pinyin: "fēi", meaning: "не, отрицание", koreanName: "아닐비", koreanMeaning: "не, отрицание, неправильный",
-    strokes: 8, radicalNum: 175, examples: ["非", "悲"],
+    strokes: 8, radicalNum: 175, examples: ["悲", "排"],
     tone: "1-й тон", history: "🏛️ Изображает два крыла, летящие в противоположные стороны — 'несовпадение', 'отрицание'. Символ отрицания, разделения, ошибки.\n\n📖 Интересный факт: 'Печаль, горе' (悲) — 'не' + 'сердце' (не-сердце = печаль). 'Плохой, злой' (非) — само отрицание.",
     position: "📍 Слева или сверху в иероглифах.",
     stats: "📊 Ключ №175. Частота: 25 иероглифов.",
@@ -1458,7 +1458,7 @@ window.CHARACTERS = [
   },
   {
     char: "飛", pinyin: "fēi", meaning: "летать", koreanName: "날비", koreanMeaning: "летать",
-    strokes: 9, radicalNum: 183, examples: ["飛", "翔"],
+    strokes: 9, radicalNum: 183, examples: ["翔", "翩"],
     tone: "1-й тон", history: "🏛️ Изображает птицу с расправленными крыльями, взлетающую вверх. Символ полёта, скорости, стремительности.\n\n📖 Интересный факт: 'Летать' (飛) — само значение. 'Парить, кружить' (翔) — 'летать' + 'овца' (парить, как овца на ветру? образно).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №183. Частота: 92 иероглифа.",
@@ -1506,7 +1506,7 @@ window.CHARACTERS = [
   },
   {
     char: "高", pinyin: "gāo", meaning: "высокий", koreanName: "높을고", koreanMeaning: "высокий",
-    strokes: 10, radicalNum: 189, examples: ["高", "髚"],
+    strokes: 10, radicalNum: 189, examples: ["敲", "膏"],
     tone: "1-й тон", history: "🏛️ Изображает высокое здание с башней. Символ высоты, возвышенности, превосходства.\n\n📖 Интересный факт: 'Высокий' (高) — само значение. 'Высокий, возвышенный' (髚) — 'высокий' + 'волос' (высокие волосы).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №189. Частота: 34 иероглифа.",
@@ -1530,7 +1530,7 @@ window.CHARACTERS = [
   },
   {
     char: "鬯", pinyin: "chàng", meaning: "жертвенное вино", koreanName: "울창주창", koreanMeaning: "жертвенное вино",
-    strokes: 10, radicalNum: 192, examples: ["鬱", "鬯"],
+    strokes: 10, radicalNum: 192, examples: ["鬱", "𩰪"],
     tone: "4-й тон", history: "🏛️ Изображает сосуд с ритуальным вином, которое использовалось в жертвоприношениях. Символ ритуального алкоголя, а также 'буйного роста' (по ассоциации).\n\n📖 Интересный факт: 'Буйный, мрачный' (鬱) — 'жертвенное вино' + 'дерево' + 'горшок' (вино, которое 'бродит' = буйный рост).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №192. Частота: 8 иероглифов (один из самых редких!).",
@@ -1538,7 +1538,7 @@ window.CHARACTERS = [
   },
   {
     char: "鬲", pinyin: "lì", meaning: "треножник", koreanName: "다리굽은솥력", koreanMeaning: "треножник, котёл",
-    strokes: 10, radicalNum: 193, examples: ["融", "鬲"],
+    strokes: 10, radicalNum: 193, examples: ["融", "鬹"],
     tone: "4-й тон", history: "🏛️ Пиктограмма древнего бронзового треножника для варки пищи. Символ кухонной утвари, а также 'сплавления' (так как в котле всё плавится).\n\n📖 Интересный факт: 'Плавить, соединять' (融) — 'треножник' + 'насекомое' (в треножнике плавят, как насекомое?).",
     position: "📍 Снизу или снаружи в иероглифах.",
     stats: "📊 Ключ №193. Частота: 73 иероглифа.",
@@ -1602,7 +1602,7 @@ window.CHARACTERS = [
   },
   {
     char: "黃", pinyin: "huáng", meaning: "жёлтый", koreanName: "누를황", koreanMeaning: "жёлтый",
-    strokes: 12, radicalNum: 201, examples: ["黃", "黈"],
+    strokes: 12, radicalNum: 201, examples: ["橫", "璜"],
     tone: "2-й тон", history: "🏛️ Изображает человека с жёлтым поясом (цвет императора). Жёлтый — цвет земли, центра, императорской власти.\n\n📖 Интересный факт: 'Жёлтый' (黃) — само значение. 'Жёлтый, золотистый' (黈) — 'жёлтый' + 'волос' (жёлтые волосы).",
     position: "📍 Слева или сверху в иероглифах.",
     stats: "📊 Ключ №201. Частота: 42 иероглифа.",
@@ -1618,7 +1618,7 @@ window.CHARACTERS = [
   },
   {
     char: "黑", pinyin: "hēi", meaning: "чёрный", koreanName: "검을흑", koreanMeaning: "чёрный, тёмный",
-    strokes: 12, radicalNum: 203, examples: ["黒", "墨"],
+    strokes: 12, radicalNum: 203, examples: ["點", "默"],
     tone: "1-й тон", history: "🏛️ Изображает закопчённую печь (сверху — дымоход, снизу — огонь). Чёрный — цвет сажи, тьмы, севера.\n\n📖 Интересный факт: 'Чёрный' (黒) — вариант написания. 'Тушь' (墨) — 'чёрный' + 'земля' (чёрная земля для туши).",
     position: "📍 Слева или сверху в иероглифах.",
     stats: "📊 Ключ №203. Частота: 172 иероглифа.",
@@ -1634,7 +1634,7 @@ window.CHARACTERS = [
   },
   {
     char: "黽", pinyin: "mǐn", meaning: "лягушка", koreanName: "맹꽁이", koreanMeaning: "лягушка, жаба",
-    strokes: 13, radicalNum: 205, examples: ["黽", "鼃"],
+    strokes: 13, radicalNum: 205, examples: ["繩", "蠅"],
     tone: "3-й тон", history: "🏛️ Пиктограмма лягушки с широким ртом и лапками. Лягушка — символ дождя и плодородия.\n\n📖 Интересный факт: 'Лягушка' (黽) — само значение. 'Лягушка, жаба' (鼃) — 'лягушка' + 'квакать' (квакающая лягушка).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №205. Частота: 40 иероглифов.",
@@ -1642,7 +1642,7 @@ window.CHARACTERS = [
   },
   {
     char: "鼎", pinyin: "dǐng", meaning: "треножник, котёл", koreanName: "솥정", koreanMeaning: "треножник, ритуальный котёл",
-    strokes: 13, radicalNum: 206, examples: ["鼎", "鼏"],
+    strokes: 13, radicalNum: 206, examples: ["鼏", "鼒"],
     tone: "3-й тон", history: "🏛️ Пиктограмма бронзового треножника с двумя ручками и тремя ножками. Символ власти, богатства, ритуала.\n\n📖 Интересный факт: 'Треножник' (鼎) — само значение. 'Крышка котла' (鼏) — 'треножник' + 'покрывать' (крышка для треножника).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №206. Частота: 14 иероглифов.",
@@ -1650,7 +1650,7 @@ window.CHARACTERS = [
   },
   {
     char: "鼓", pinyin: "gǔ", meaning: "барабан", koreanName: "북고", koreanMeaning: "барабан, бить в барабан",
-    strokes: 13, radicalNum: 207, examples: ["鼓", "鼔"],
+    strokes: 13, radicalNum: 207, examples: ["鼙", "鼚"],
     tone: "3-й тон", history: "🏛️ Изображает барабан (слева) и руку с палкой, бьющую по нему (справа). Символ музыки, ритма, сигнала.\n\n📖 Интересный факт: 'Барабан' (鼓) — само значение. 'Бить в барабан' (鼔) — вариант того же значения.",
     position: "📍 Слева или снизу в иероглифах.",
     stats: "📊 Ключ №207. Частота: 46 иероглифов.",
@@ -1666,7 +1666,7 @@ window.CHARACTERS = [
   },
   {
     char: "鼻", pinyin: "bí", meaning: "нос", koreanName: "코비", koreanMeaning: "нос",
-    strokes: 14, radicalNum: 209, examples: ["鼻", "鼾"],
+    strokes: 14, radicalNum: 209, examples: ["鼾", "齁"],
     tone: "2-й тон", history: "🏛️ Изображает нос (сверху — 'свой', снизу — 'дыхание'). Нос — орган обоняния и дыхания.\n\n📖 Интересный факт: 'Нос' (鼻) — само значение. 'Храпеть' (鼾) — 'нос' + 'сухой' (храп из сухого носа).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №209. Частота: 49 иероглифов.",
@@ -1674,7 +1674,7 @@ window.CHARACTERS = [
   },
   {
     char: "齊", pinyin: "qí", meaning: "ровный, одинаковый", koreanName: "가지런할제", koreanMeaning: "ровный, одинаковый",
-    strokes: 14, radicalNum: 210, examples: ["齊", "齋"],
+    strokes: 14, radicalNum: 210, examples: ["齋", "劑"],
     tone: "2-й тон", history: "🏛️ Изображает колосья злаков, растущие ровно — 'одинаковые', 'ровные'. Символ равенства, порядка, чистоты.\n\n📖 Интересный факт: 'Ровный' (齊) — само значение. 'Храм, пост' (齋) — 'ровный' + 'ритуал' (место, где соблюдают ритуалы).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №210. Частота: 18 иероглифов.",
@@ -1682,7 +1682,7 @@ window.CHARACTERS = [
   },
   {
     char: "齒", pinyin: "chǐ", meaning: "зуб", koreanName: "이치", koreanMeaning: "зуб",
-    strokes: 15, radicalNum: 211, examples: ["齒", "齢"],
+    strokes: 15, radicalNum: 211, examples: ["齡", "齦"],
     tone: "3-й тон", history: "🏛️ Пиктограмма рта с зубами (сверху — рот, снизу — зубы). Символ зубов, возраста (по зубам определяли возраст).\n\n📖 Интересный факт: 'Зуб' (齒) — само значение. 'Возраст, годы' (齢) — 'зуб' + 'жизнь' (возраст по зубам).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №211. Частота: 162 иероглифа.",
@@ -1690,7 +1690,7 @@ window.CHARACTERS = [
   },
   {
     char: "龍", pinyin: "lóng", meaning: "дракон", koreanName: "용룡", koreanMeaning: "дракон",
-    strokes: 16, radicalNum: 212, examples: ["龍", "龔"],
+    strokes: 16, radicalNum: 212, examples: ["龐", "襲"],
     tone: "2-й тон", history: "🏛️ Пиктограмма дракона с рогами, телом и хвостом. Дракон — символ императора, удачи, силы, дождя.\n\n📖 Интересный факт: 'Дракон' (龍) — само значение. 'Уважать, почитать' (龔) — 'дракон' + 'общий' (общее почитание дракона).",
     position: "📍 Слева или сверху в иероглифах.",
     stats: "📊 Ключ №212. Частота: 14 иероглифов.",
@@ -1698,7 +1698,7 @@ window.CHARACTERS = [
   },
   {
     char: "龜", pinyin: "guī", meaning: "черепаха", koreanName: "거북귀", koreanMeaning: "черепаха",
-    strokes: 16, radicalNum: 213, examples: ["龜", "龝"],
+    strokes: 16, radicalNum: 213, examples: ["龝", "𪚥"],
     tone: "1-й тон", history: "🏛️ Пиктограмма черепахи с панцирем, головой, хвостом и лапами. Черепаха — символ долголетия, мудрости, защиты.\n\n📖 Интересный факт: 'Черепаха' (龜) — само значение. 'Осень' (龝) — 'черепаха' + 'рис' (черепаха в рисовом поле осенью?).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №213. Частота: 24 иероглифа.",
@@ -1706,7 +1706,7 @@ window.CHARACTERS = [
   },
   {
     char: "龠", pinyin: "yuè", meaning: "флейта", koreanName: "피리약", koreanMeaning: "флейта, свирель",
-    strokes: 17, radicalNum: 214, examples: ["龠", "龢"],
+    strokes: 17, radicalNum: 214, examples: ["龢", "龤"],
     tone: "4-й тон", history: "🏛️ Пиктограмма древней флейты из нескольких трубок, связанных вместе. Последний, 214-й ключ Канси! Символ музыки, гармонии, единства.\n\n📖 Интересный факт: 'Флейта' (龠) — само значение. 'Гармония' (龢) — 'флейта' + 'колос' (гармония, как звук флейты в поле).",
     position: "📍 Сверху или снизу в иероглифах.",
     stats: "📊 Ключ №214. Частота: 19 иероглифов. ПОСЛЕДНИЙ КЛЮЧ СИСТЕМЫ КАНСИ!",
@@ -1717,161 +1717,231 @@ window.CHARACTERS = [
 // Данные для примеров иероглифов (исправлены и дополнены)
 window.getExampleData = function(exampleChar) {
   const examplesMap = {
+    // 一 (1)
     '王': { pinyin: 'wáng', meaning: 'король', korean: '왕' },
     '丁': { pinyin: 'dīng', meaning: 'гвоздь', korean: '정' },
+    // 丨 (2)
     '十': { pinyin: 'shí', meaning: 'десять', korean: '십' },
     '中': { pinyin: 'zhōng', meaning: 'центр', korean: '중' },
+    // 丶 (3)
     '丸': { pinyin: 'wán', meaning: 'пилюля', korean: '환' },
     '凡': { pinyin: 'fán', meaning: 'обычный', korean: '범' },
+    // 丿 (4)
     '乂': { pinyin: 'yì', meaning: 'косить', korean: '예' },
     '乃': { pinyin: 'nǎi', meaning: 'затем', korean: '내' },
+    // 乙 (5)
     '九': { pinyin: 'jiǔ', meaning: 'девять', korean: '구' },
     '乞': { pinyin: 'qǐ', meaning: 'просить', korean: '걸' },
+    // 亅 (6)
     '了': { pinyin: 'le', meaning: 'частица', korean: '료' },
     '矛': { pinyin: 'máo', meaning: 'копьё', korean: '모' },
+    // 二 (7)
     '三': { pinyin: 'sān', meaning: 'три', korean: '삼' },
     '于': { pinyin: 'yú', meaning: 'в', korean: '우' },
+    // 亠 (8)
     '方': { pinyin: 'fāng', meaning: 'квадрат', korean: '방' },
     '亡': { pinyin: 'wáng', meaning: 'погибать', korean: '망' },
+    // 人 (9)
     '你': { pinyin: 'nǐ', meaning: 'ты', korean: '이' },
     '什': { pinyin: 'shén', meaning: 'что', korean: '십' },
+    // 儿 (10)
     '兄': { pinyin: 'xiōng', meaning: 'старший брат', korean: '형' },
     '元': { pinyin: 'yuán', meaning: 'начало', korean: '원' },
+    // 入 (11)
     '內': { pinyin: 'nèi', meaning: 'внутри', korean: '내' },
     '全': { pinyin: 'quán', meaning: 'полный', korean: '전' },
+    // 八 (12)
     '分': { pinyin: 'fēn', meaning: 'делить', korean: '분' },
     '公': { pinyin: 'gōng', meaning: 'общий', korean: '공' },
+    // 冂 (13)
     '同': { pinyin: 'tóng', meaning: 'одинаковый', korean: '동' },
     '岡': { pinyin: 'gāng', meaning: 'холм', korean: '강' },
+    // 冖 (14)
     '冠': { pinyin: 'guān', meaning: 'корона', korean: '관' },
     '冢': { pinyin: 'zhǒng', meaning: 'могила', korean: '총' },
+    // 冫 (15)
     '冰': { pinyin: 'bīng', meaning: 'лёд', korean: '빙' },
     '冷': { pinyin: 'lěng', meaning: 'холод', korean: '랭' },
+    // 几 (16)
     '凤': { pinyin: 'fèng', meaning: 'феникс', korean: '봉' },
+    // 凵 (17)
     '凶': { pinyin: 'xiōng', meaning: 'злой', korean: '흉' },
     '出': { pinyin: 'chū', meaning: 'выход', korean: '출' },
+    // 刀 (18)
     '切': { pinyin: 'qiē', meaning: 'резать', korean: '절' },
+    // 力 (19)
     '功': { pinyin: 'gōng', meaning: 'успех', korean: '공' },
     '助': { pinyin: 'zhù', meaning: 'помощь', korean: '조' },
+    // 勹 (20)
     '包': { pinyin: 'bāo', meaning: 'пакет', korean: '포' },
     '句': { pinyin: 'jù', meaning: 'фраза', korean: '구' },
+    // 匕 (21)
     '北': { pinyin: 'běi', meaning: 'север', korean: '북' },
     '化': { pinyin: 'huà', meaning: 'превращаться', korean: '화' },
+    // 匚 (22)
     '医': { pinyin: 'yī', meaning: 'врач', korean: '의' },
     '匹': { pinyin: 'pǐ', meaning: 'конь', korean: '필' },
+    // 匸 (23)
     '区': { pinyin: 'qū', meaning: 'район', korean: '구' },
     '匿': { pinyin: 'nì', meaning: 'скрываться', korean: '닉' },
+    // 十 (24)
     '千': { pinyin: 'qiān', meaning: 'тысяча', korean: '천' },
     '午': { pinyin: 'wǔ', meaning: 'полдень', korean: '오' },
+    // 卜 (25)
     '占': { pinyin: 'zhàn', meaning: 'гадать', korean: '점' },
     '卦': { pinyin: 'guà', meaning: 'триграмма', korean: '괘' },
+    // 卩 (26)
     '印': { pinyin: 'yìn', meaning: 'печать', korean: '인' },
     '即': { pinyin: 'jí', meaning: 'немедленно', korean: '즉' },
+    // 厂 (27)
     '原': { pinyin: 'yuán', meaning: 'источник', korean: '원' },
     '历': { pinyin: 'lì', meaning: 'история', korean: '력' },
+    // 厶 (28)
     '去': { pinyin: 'qù', meaning: 'уходить', korean: '거' },
     '参': { pinyin: 'cān', meaning: 'участвовать', korean: '참' },
+    // 又 (29)
     '友': { pinyin: 'yǒu', meaning: 'друг', korean: '우' },
     '取': { pinyin: 'qǔ', meaning: 'брать', korean: '취' },
+    // 口 (30)
     '吃': { pinyin: 'chī', meaning: 'есть', korean: '먹' },
     '叫': { pinyin: 'jiào', meaning: 'кричать', korean: '교' },
+    // 囗 (31)
     '国': { pinyin: 'guó', meaning: 'страна', korean: '국' },
     '园': { pinyin: 'yuán', meaning: 'сад', korean: '원' },
+    // 土 (32)
     '地': { pinyin: 'dì', meaning: 'земля', korean: '지' },
     '场': { pinyin: 'chǎng', meaning: 'площадка', korean: '장' },
+    // 士 (33)
     '志': { pinyin: 'zhì', meaning: 'воля', korean: '지' },
     '声': { pinyin: 'shēng', meaning: 'звук', korean: '성' },
+    // 夂 (34)
     '处': { pinyin: 'chù', meaning: 'место', korean: '처' },
     '冬': { pinyin: 'dōng', meaning: 'зима', korean: '동' },
+    // 夊 (35)
     '复': { pinyin: 'fù', meaning: 'повторять', korean: '복' },
     '夏': { pinyin: 'xià', meaning: 'лето', korean: '하' },
+    // 夕 (36)
     '外': { pinyin: 'wài', meaning: 'снаружи', korean: '외' },
     '多': { pinyin: 'duō', meaning: 'много', korean: '다' },
+    // 大 (37)
     '天': { pinyin: 'tiān', meaning: 'небо', korean: '천' },
     '太': { pinyin: 'tài', meaning: 'слишком', korean: '태' },
+    // 女 (38)
     '好': { pinyin: 'hǎo', meaning: 'хороший', korean: '호' },
     '妈': { pinyin: 'mā', meaning: 'мама', korean: '마' },
+    // 子 (39)
     '孩': { pinyin: 'hái', meaning: 'ребёнок', korean: '해' },
     '孙': { pinyin: 'sūn', meaning: 'внук', korean: '손' },
+    // 宀 (40)
     '家': { pinyin: 'jiā', meaning: 'дом', korean: '가' },
     '安': { pinyin: 'ān', meaning: 'спокойный', korean: '안' },
+    // 寸 (41)
     '对': { pinyin: 'duì', meaning: 'правильный', korean: '대' },
     '寺': { pinyin: 'sì', meaning: 'храм', korean: '사' },
+    // 小 (42)
     '少': { pinyin: 'shǎo', meaning: 'мало', korean: '소' },
     '尖': { pinyin: 'jiān', meaning: 'острый', korean: '첨' },
+    // 尢 (43)
     '就': { pinyin: 'jiù', meaning: 'именно', korean: '취' },
     '尤': { pinyin: 'yóu', meaning: 'особенно', korean: '우' },
+    // 尸 (44)
     '屋': { pinyin: 'wū', meaning: 'комната', korean: '옥' },
     '层': { pinyin: 'céng', meaning: 'слой', korean: '층' },
+    // 屮 (45)
     '出': { pinyin: 'chū', meaning: 'выходить', korean: '출' },
     '屯': { pinyin: 'tún', meaning: 'деревня', korean: '둔' },
+    // 山 (46)
     '峰': { pinyin: 'fēng', meaning: 'вершина', korean: '봉' },
     '岛': { pinyin: 'dǎo', meaning: 'остров', korean: '도' },
+    // 川 (47)
     '州': { pinyin: 'zhōu', meaning: 'область', korean: '주' },
     '顺': { pinyin: 'shùn', meaning: 'гладкий', korean: '순' },
+    // 工 (48)
     '左': { pinyin: 'zuǒ', meaning: 'левый', korean: '좌' },
     '差': { pinyin: 'chà', meaning: 'разница', korean: '차' },
+    // 己 (49)
     '记': { pinyin: 'jì', meaning: 'запоминать', korean: '기' },
     '改': { pinyin: 'gǎi', meaning: 'менять', korean: '개' },
+    // 巾 (50)
     '布': { pinyin: 'bù', meaning: 'ткань', korean: '포' },
     '帮': { pinyin: 'bāng', meaning: 'помогать', korean: '방' },
+    // 干 (51)
     '旱': { pinyin: 'hàn', meaning: 'засуха', korean: '한' },
     '平': { pinyin: 'píng', meaning: 'ровный', korean: '평' },
     '年': { pinyin: 'nián', meaning: 'год', korean: '년' },
+    // 幺 (52)
     '幻': { pinyin: 'huàn', meaning: 'иллюзия', korean: '환' },
     '麼': { pinyin: 'me', meaning: 'вопрос. частица', korean: '마' },
     '幽': { pinyin: 'yōu', meaning: 'таинственный', korean: '유' },
+    // 广 (53)
     '庄': { pinyin: 'zhuāng', meaning: 'деревня', korean: '장' },
     '店': { pinyin: 'diàn', meaning: 'магазин', korean: '점' },
     '府': { pinyin: 'fǔ', meaning: 'резиденция', korean: '부' },
+    // 廴 (54)
     '延': { pinyin: 'yán', meaning: 'продлевать', korean: '연' },
     '建': { pinyin: 'jiàn', meaning: 'строить', korean: '건' },
     '廷': { pinyin: 'tíng', meaning: 'двор', korean: '정' },
+    // 廾 (55)
     '弄': { pinyin: 'nòng', meaning: 'играть, делать', korean: '롱' },
     '弈': { pinyin: 'yì', meaning: 'игра в го', korean: '혁' },
     '弊': { pinyin: 'bì', meaning: 'злоупотребление', korean: '폐' },
+    // 弋 (56)
     '式': { pinyin: 'shì', meaning: 'формула, тип', korean: '식' },
     '弒': { pinyin: 'shì', meaning: 'убить (правителя)', korean: '시' },
     '代': { pinyin: 'dài', meaning: 'заменять', korean: '대' },
+    // 弓 (57)
     '引': { pinyin: 'yǐn', meaning: 'тянуть', korean: '인' },
     '張': { pinyin: 'zhāng', meaning: 'растягивать', korean: '장' },
     '強': { pinyin: 'qiáng', meaning: 'сильный', korean: '강' },
+    // 彐 (58)
     '雪': { pinyin: 'xuě', meaning: 'снег', korean: '설' },
     '掃': { pinyin: 'sǎo', meaning: 'мести', korean: '소' },
     '當': { pinyin: 'dāng', meaning: 'долженствовать', korean: '당' },
+    // 彡 (59)
     '形': { pinyin: 'xíng', meaning: 'форма', korean: '형' },
     '彩': { pinyin: 'cǎi', meaning: 'цвет', korean: '채' },
     '顔': { pinyin: 'yán', meaning: 'лицо', korean: '안' },
+    // 彳 (60)
     '行': { pinyin: 'xíng', meaning: 'идти', korean: '행' },
     '往': { pinyin: 'wǎng', meaning: 'направляться', korean: '왕' },
     '很': { pinyin: 'hěn', meaning: 'очень', korean: '흔' },
+    // 心 (61)
     '思': { pinyin: 'sī', meaning: 'думать', korean: '사' },
     '想': { pinyin: 'xiǎng', meaning: 'хотеть, думать', korean: '상' },
     '意': { pinyin: 'yì', meaning: 'смысл', korean: '의' },
+    // 戈 (62)
     '我': { pinyin: 'wǒ', meaning: 'я', korean: '아' },
     '武': { pinyin: 'wǔ', meaning: 'военный', korean: '무' },
     '戦': { pinyin: 'zhàn', meaning: 'война', korean: '전' },
+    // 戶 (63)
     '所': { pinyin: 'suǒ', meaning: 'место', korean: '소' },
     '扉': { pinyin: 'fēi', meaning: 'дверь (створка)', korean: '비' },
     '扇': { pinyin: 'shàn', meaning: 'веер', korean: '선' },
+    // 手 (64)
     '打': { pinyin: 'dǎ', meaning: 'бить', korean: '타' },
     '持': { pinyin: 'chí', meaning: 'держать', korean: '지' },
     '拜': { pinyin: 'bài', meaning: 'кланяться', korean: '배' },
+    // 支 (65)
     '枝': { pinyin: 'zhī', meaning: 'ветка', korean: '지' },
     '肢': { pinyin: 'zhī', meaning: 'конечность', korean: '지' },
     '翅': { pinyin: 'chì', meaning: 'крыло', korean: '시' },
+    // 攴 (66)
     '收': { pinyin: 'shōu', meaning: 'получать', korean: '수' },
     '救': { pinyin: 'jiù', meaning: 'спасать', korean: '구' },
     '教': { pinyin: 'jiào', meaning: 'учить', korean: '교' },
+    // 文 (67)
     '紋': { pinyin: 'wén', meaning: 'узор', korean: '문' },
     '齊': { pinyin: 'qí', meaning: 'равный', korean: '제' },
     '斐': { pinyin: 'fěi', meaning: 'изящный', korean: '비' },
+    // 斗 (68)
     '料': { pinyin: 'liào', meaning: 'материал', korean: '료' },
     '斛': { pinyin: 'hú', meaning: 'мера объема', korean: '곡' },
     '斟': { pinyin: 'zhēn', meaning: 'наливать', korean: '짐' },
+    // 斤 (69)
     '斧': { pinyin: 'fǔ', meaning: 'топор', korean: '부' },
     '斫': { pinyin: 'zhuó', meaning: 'рубить', korean: '작' },
     '断': { pinyin: 'duàn', meaning: 'ломать', korean: '단' },
+    // 方 (70)
     '放': { pinyin: 'fàng', meaning: 'отпускать', korean: '방' },
     '旁': { pinyin: 'páng', meaning: 'сторона', korean: '방' },
     '旅': { pinyin: 'lǚ', meaning: 'путешествие', korean: '려' },
@@ -2188,8 +2258,8 @@ window.getExampleData = function(exampleChar) {
 '静': { pinyin: 'jìng', meaning: 'тихий, спокойный', korean: '정' },
 '清': { pinyin: 'qīng', meaning: 'чистый, прозрачный', korean: '청' },
 // 非 (175)
-'非': { pinyin: 'fēi', meaning: 'не, отрицание', korean: '비' },
 '悲': { pinyin: 'bēi', meaning: 'печаль, горе', korean: '비' },
+'排': { pinyin: 'pái', meaning: 'выстраивать в ряд', korean: '배' },
 // 面 (176)
 '顔': { pinyin: 'yán', meaning: 'лицо', korean: '안' },
 '麵': { pinyin: 'miàn', meaning: 'лапша, мука', korean: '면' },
@@ -2212,8 +2282,8 @@ window.getExampleData = function(exampleChar) {
 '颱': { pinyin: 'tái', meaning: 'тайфун', korean: '태' },
 '颯': { pinyin: 'sà', meaning: 'резкий звук ветра', korean: '삽' },
 // 飛 (183)
-'飛': { pinyin: 'fēi', meaning: 'летать', korean: '비' },
 '翔': { pinyin: 'xiáng', meaning: 'парить, кружить', korean: '상' },
+'翩': { pinyin: 'piān', meaning: 'порхать', korean: '편' },
 // 食 (184)
 '飯': { pinyin: 'fàn', meaning: 'варёный рис, еда', korean: '반' },
 '飲': { pinyin: 'yǐn', meaning: 'пить', korean: '음' },
@@ -2230,8 +2300,8 @@ window.getExampleData = function(exampleChar) {
 '髄': { pinyin: 'suǐ', meaning: 'костный мозг', korean: '수' },
 '髭': { pinyin: 'zī', meaning: 'усы', korean: '자' },
 // 高 (189)
-'高': { pinyin: 'gāo', meaning: 'высокий', korean: '고' },
-'髚': { pinyin: 'qiào', meaning: 'высокий, возвышенный', korean: '교' },
+'敲': { pinyin: 'qiāo', meaning: 'стучать', korean: '고' },
+'膏': { pinyin: 'gāo', meaning: 'крем, жир', korean: '고' },
 // 髟 (190)
 '髪': { pinyin: 'fà', meaning: 'волосы', korean: '발' },
 '髣': { pinyin: 'fǎng', meaning: 'похожий, подобный', korean: '방' },
@@ -2240,10 +2310,10 @@ window.getExampleData = function(exampleChar) {
 '鬨': { pinyin: 'hòng', meaning: 'крик, гам', korean: '홍' },
 // 鬯 (192)
 '鬱': { pinyin: 'yù', meaning: 'буйный, мрачный', korean: '울' },
-'鬯': { pinyin: 'chàng', meaning: 'жертвенное вино', korean: '창' },
+'𩰪': { pinyin: 'yù', meaning: 'душистый, ароматный', korean: '울' },
 // 鬲 (193)
 '融': { pinyin: 'róng', meaning: 'плавить, соединять', korean: '융' },
-'鬲': { pinyin: 'lì', meaning: 'треножник', korean: '력' },
+'鬹': { pinyin: 'guī', meaning: 'треножник', korean: '규' },
 // 鬼 (194)
 '魂': { pinyin: 'hún', meaning: 'душа', korean: '혼' },
 '魔': { pinyin: 'mó', meaning: 'демон, злой дух', korean: '마' },
@@ -2266,47 +2336,47 @@ window.getExampleData = function(exampleChar) {
 '磨': { pinyin: 'mó', meaning: 'молоть, полировать', korean: '마' },
 '魔': { pinyin: 'mó', meaning: 'демон, злой дух', korean: '마' },
 // 黃 (201)
-'黃': { pinyin: 'huáng', meaning: 'жёлтый', korean: '황' },
-'黈': { pinyin: 'tǒu', meaning: 'жёлтый, золотистый', korean: '두' },
+'橫': { pinyin: 'héng', meaning: 'горизонтальный', korean: '횡' },
+'璜': { pinyin: 'huáng', meaning: 'нефритовый амулет', korean: '황' },
 // 黍 (202)
 '黏': { pinyin: 'nián', meaning: 'липкий, клейкий', korean: '점' },
 '黎': { pinyin: 'lí', meaning: 'чёрный, множество', korean: '려' },
 // 黑 (203)
-'黒': { pinyin: 'hēi', meaning: 'чёрный', korean: '흑' },
-'墨': { pinyin: 'mò', meaning: 'тушь', korean: '묵' },
+'點': { pinyin: 'diǎn', meaning: 'точка, капля', korean: '점' },
+'默': { pinyin: 'mò', meaning: 'молчать', korean: '묵' },
 // 黹 (204)
 '黻': { pinyin: 'fú', meaning: 'узор на одежде', korean: '불' },
 '黼': { pinyin: 'fǔ', meaning: 'богатое одеяние', korean: '보' },
 // 黽 (205)
-'黽': { pinyin: 'mǐn', meaning: 'лягушка', korean: '민' },
-'鼃': { pinyin: 'wā', meaning: 'лягушка, жаба', korean: '와' },
+'繩': { pinyin: 'shéng', meaning: 'верёвка', korean: '승' },
+'蠅': { pinyin: 'yíng', meaning: 'муха', korean: '승' },
 // 鼎 (206)
-'鼎': { pinyin: 'dǐng', meaning: 'треножник', korean: '정' },
 '鼏': { pinyin: 'mì', meaning: 'крышка котла', korean: '멱' },
+'鼒': { pinyin: 'zī', meaning: 'треножник с ручками', korean: '자' },
 // 鼓 (207)
-'鼓': { pinyin: 'gǔ', meaning: 'барабан', korean: '고' },
-'鼔': { pinyin: 'gǔ', meaning: 'бить в барабан', korean: '고' },
+'鼙': { pinyin: 'pí', meaning: 'малый барабан', korean: '비' },
+'鼚': { pinyin: 'chāng', meaning: 'барабанный бой', korean: '창' },
 // 鼠 (208)
 '鼬': { pinyin: 'yòu', meaning: 'ласка, хорёк', korean: '유' },
 '鼩': { pinyin: 'qú', meaning: 'землеройка', korean: '구' },
 // 鼻 (209)
-'鼻': { pinyin: 'bí', meaning: 'нос', korean: '비' },
 '鼾': { pinyin: 'hān', meaning: 'храпеть', korean: '한' },
+'齁': { pinyin: 'hōu', meaning: 'храп', korean: '후' },
 // 齊 (210)
-'齊': { pinyin: 'qí', meaning: 'ровный, одинаковый', korean: '제' },
 '齋': { pinyin: 'zhāi', meaning: 'храм, пост', korean: '재' },
+'劑': { pinyin: 'jì', meaning: 'лекарство, доза', korean: '제' },
 // 齒 (211)
-'齒': { pinyin: 'chǐ', meaning: 'зуб', korean: '치' },
-'齢': { pinyin: 'líng', meaning: 'возраст, годы', korean: '령' },
+'齡': { pinyin: 'líng', meaning: 'возраст, годы', korean: '령' },
+'齦': { pinyin: 'yín', meaning: 'десна', korean: '은' },
 // 龍 (212)
-'龍': { pinyin: 'lóng', meaning: 'дракон', korean: '룡' },
-'龔': { pinyin: 'gōng', meaning: 'уважать, почитать', korean: '공' },
+'龐': { pinyin: 'páng', meaning: 'огромный', korean: '방' },
+'襲': { pinyin: 'xí', meaning: 'атаковать', korean: '습' },
 // 龜 (213)
-'龜': { pinyin: 'guī', meaning: 'черепаха', korean: '귀' },
 '龝': { pinyin: 'qiū', meaning: 'осень', korean: '추' },
+'𪚥': { pinyin: 'zhé', meaning: 'много болтовни, дракон', korean: '철' },
 // 龠 (214)
-'龠': { pinyin: 'yuè', meaning: 'флейта', korean: '약' },
-'龢': { pinyin: 'hé', meaning: 'гармония', korean: '화' }    
+'龢': { pinyin: 'hé', meaning: 'гармония', korean: '화' },
+'龤': { pinyin: 'xié', meaning: 'гармоничный', korean: '해' }    
   };
   return examplesMap[exampleChar] || { pinyin: '?', meaning: '?', korean: '?' };
 };
