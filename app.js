@@ -402,72 +402,36 @@ function selectChar(idx) {
   currentCharIdx = idx;
   currentCharData = CHARACTERS[idx];
   hideError();
-  
-  // Обновляем активную кнопку в карусели без полной перерисовки
-  document.querySelectorAll('.carousel-item').forEach((item, i) => {
-    item.classList.toggle('active', i === idx);
-  });
-  
-  // Прокручиваем карусель к активному элементу
-  const activeItem = document.querySelector('.carousel-item.active');
-  if (activeItem) {
-    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  }
-
+  renderCarousel();
   renderInfo(currentCharData);
   setButtonsEnabled(true);
   initWriter(currentCharData.char);
 }
-// === ОЗВУЧКА (СИНТЕЗ РЕЧИ) ===
-let availableVoices = [];
 
-// Предзагрузка голосов (обязательно для Chrome, Yandex, Huawei)
-if ('speechSynthesis' in window) {
-  availableVoices = window.speechSynthesis.getVoices();
-  // В некоторых браузерах голоса загружаются асинхронно
-  window.speechSynthesis.onvoiceschanged = () => {
-    availableVoices = window.speechSynthesis.getVoices();
-  };
-}
-
+// === ОЗВУЧКА ЧЕРЕЗ GOOGLE TRANSLATE TTS ===
 function speakText(text) {
-  if (!window.speechSynthesis) { 
-    showToast('Аудио не поддерживается в этом браузере'); 
-    return; 
-  }
-
-  // Отменяем предыдущее воспроизведение, если оно есть
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'zh-CN'; // Задаем китайский язык
-  utterance.rate = 0.8;     // Скорость
-
-  // Пытаемся найти китайский голос в системе пользователя
-  const chineseVoice = availableVoices.find(voice => voice.lang.startsWith('zh'));
-  if (chineseVoice) {
-    utterance.voice = chineseVoice;
-  } else {
-    // Если китайского голоса нет, предупредим пользователя
-    showToast('Китайский голос не найден в ОС. Использую голос по умолчанию.', 2500);
-  }
-
-  // Произносим текст
-  window.speechSynthesis.speak(utterance);
-
-  // Хак для мобильных браузеров (Chrome, Huawei, Yandex)
-  // Принудительно "будим" синтезатор речи
-  setTimeout(() => {
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.pause();
-      window.speechSynthesis.resume();
+  if (!text) return;
+  
+  // Google Translate TTS - работает везде, не требует установки голосов
+  const audio = new Audio();
+  audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=zh-CN&client=tw-ob`;
+  
+  audio.onerror = () => {
+    // Fallback на системный синтез речи
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.8;
+      window.speechSynthesis.speak(utterance);
+    } else {
+      showToast('Не удалось воспроизвести звук');
     }
-  }, 100);
-
-  utterance.onerror = (e) => {
-    console.error('Ошибка синтеза речи:', e);
-    showToast('Не удалось воспроизвести звук');
   };
+  
+  audio.play().catch(err => {
+    console.error('Ошибка воспроизведения:', err);
+    showToast('Не удалось воспроизвести звук');
+  });
 }
 // === EVENT LISTENERS ===
 document.getElementById('btn-speak')?.addEventListener('click', () => { if (currentCharData) speakText(currentCharData.char); });
