@@ -2592,5 +2592,5 @@ window.getExampleData = function(exampleChar) {
 '龢': { pinyin: 'hé', meaning: 'гармония', korean: '화' },
 '龤': { pinyin: 'xié', meaning: 'гармоничный', korean: '해' }    
   };
-  return examplesMap[exampleChar] || { pinyin: '?', meaning: '?', korean: '?'}
+  return examplesMap[exampleChar] || { pinyin: '?', meaning: '?', korean: '?'};
 };
