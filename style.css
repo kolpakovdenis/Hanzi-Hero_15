@@ -670,4 +670,128 @@ body {
   .example-large-char { font-size: 6rem; }
   .section-title { font-size: var(--text-lg); }
   .fav-char { font-size: 3.5rem; }
-}'''
+}
+/* === ИСПРАВЛЕНИЕ Z-INDEX СЕТКИ === */
+.guideline-canvas { 
+  z-index: 1; /* Сетка позади иероглифа */
+  opacity: 0.6;
+}
+.hanzi-target-overlay { 
+  z-index: 2; /* Иероглиф поверх сетки */
+}
+
+/* === КРАСИВЫЙ СКРОЛЛБАР ДЛЯ КАРУСЕЛИ === */
+.radical-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+.radical-carousel::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+.radical-carousel::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* === ПОИСК ПО КЛЮЧАМ === */
+.search-wrapper {
+  padding: 0 var(--space-4) var(--space-2);
+  background: var(--color-surface-offset);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2);
+}
+.search-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-base);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.search-input:focus {
+  border-color: var(--color-primary);
+}
+
+/* === ГЛОБАЛЬНЫЙ ПРОГРЕСС (В ШАПКЕ) === */
+.global-progress {
+  background: rgba(255,255,255,0.2);
+  height: 6px;
+  border-radius: 3px;
+  margin-top: var(--space-2);
+  overflow: hidden;
+}
+.global-progress-fill {
+  height: 100%;
+  background: #f1c40f;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* === АДАПТИВНЫЕ КНОПКИ НАВИГАЦИИ === */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+  gap: var(--space-2);
+}
+.nav-btn {
+  flex: 1;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface-offset);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: all 0.2s;
+}
+.nav-btn:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary-dark);
+}
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+/* === АДАПТАЦИЯ КНОПОК НАВИГАЦИИ === */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+  gap: var(--space-2);
+}
+.nav-btn {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-offset);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  transition: all 0.2s;
+}
+.nav-btn:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary-dark);
+}
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Стили для кликабельных примеров */
+.example-large-card {
+  cursor: pointer;
+  user-select: none;
+}
+.example-large-card:active {
+  transform: scale(0.98);
+}
