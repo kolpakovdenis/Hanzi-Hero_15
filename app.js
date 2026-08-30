@@ -402,62 +402,61 @@ function selectChar(idx) {
   currentCharIdx = idx;
   currentCharData = CHARACTERS[idx];
   hideError();
-  renderCarousel();
+  
+  // Обновляем активную кнопку в карусели без полной перерисовки
+  document.querySelectorAll('.carousel-item').forEach((item, i) => {
+    item.classList.toggle('active', i === idx);
+  });
+  
+  // Прокручиваем карусель к активному элементу
+  const activeItem = document.querySelector('.carousel-item.active');
+  if (activeItem) {
+    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
   renderInfo(currentCharData);
   setButtonsEnabled(true);
   initWriter(currentCharData.char);
 }
-// === ОЗВУЧКА (СИНТЕЗ РЕЧИ) ===
-let availableVoices = [];
 
-// Предзагрузка голосов (обязательно для Chrome, Yandex, Huawei)
-if ('speechSynthesis' in window) {
-  availableVoices = window.speechSynthesis.getVoices();
-  // В некоторых браузерах голоса загружаются асинхронно
-  window.speechSynthesis.onvoiceschanged = () => {
-    availableVoices = window.speechSynthesis.getVoices();
-  };
-}
+// === ОЗВУЧКА ЧЕРЕЗ MP3 ФАЙЛЫ ===
+// Используем стандартный объект Audio() для воспроизведения локальных файлов.
+// Это гарантирует 100% работу во всех браузерах без зависимости от системных голосов TTS.
+let currentAudio = null;
 
 function speakText(text) {
-  if (!window.speechSynthesis) { 
-    showToast('Аудио не поддерживается в этом браузере'); 
-    return; 
+  // Если аудио не поддерживается браузером, выходим
+  if (!window.Audio) {
+    showToast('Аудио не поддерживается в этом браузере');
+    return;
   }
 
-  // Отменяем предыдущее воспроизведение, если оно есть
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'zh-CN'; // Задаем китайский язык
-  utterance.rate = 0.8;     // Скорость
-
-  // Пытаемся найти китайский голос в системе пользователя
-  const chineseVoice = availableVoices.find(voice => voice.lang.startsWith('zh'));
-  if (chineseVoice) {
-    utterance.voice = chineseVoice;
-  } else {
-    // Если китайского голоса нет, предупредим пользователя
-    showToast('Китайский голос не найден в ОС. Использую голос по умолчанию.', 2500);
+  // Останавливаем предыдущее воспроизведение, если оно есть
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
   }
 
-  // Произносим текст
-  window.speechSynthesis.speak(utterance);
-
-  // Хак для мобильных браузеров (Chrome, Huawei, Yandex)
-  // Принудительно "будим" синтезатор речи
-  setTimeout(() => {
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.pause();
-      window.speechSynthesis.resume();
-    }
-  }, 100);
-
-  utterance.onerror = (e) => {
-    console.error('Ошибка синтеза речи:', e);
-    showToast('Не удалось воспроизвести звук');
+  // Формируем путь к MP3 файлу.
+  // encodeURIComponent необходим для правильной обработки китайских иероглифов в URL (например, %E4%B8%80.mp3)
+  // Файлы должны лежать в папке /audio/ и называться точно так же, как иероглиф (например: 一.mp3)
+  const audioPath = `audio/${encodeURIComponent(text)}.mp3`;
+  
+  currentAudio = new Audio(audioPath);
+  
+  // Обрабатываем ошибку, если файл не найден
+  currentAudio.onerror = (e) => {
+    console.error('Ошибка загрузки аудио файла:', audioPath, e);
+    showToast(`Аудио файл не найден: ${text}`);
   };
+
+  // Пытаемся воспроизвести
+  currentAudio.play().catch(e => {
+    console.error('Ошибка воспроизведения:', e);
+    showToast(`Не удалось воспроизвести: ${text}`);
+  });
 }
+
 // === EVENT LISTENERS ===
 document.getElementById('btn-speak')?.addEventListener('click', () => { if (currentCharData) speakText(currentCharData.char); });
 document.getElementById('btn-animate')?.addEventListener('click', () => { if (isPracticeMode) exitPracticeMode(); animateCharacter(); });
