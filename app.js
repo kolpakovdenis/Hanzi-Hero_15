@@ -402,7 +402,18 @@ function selectChar(idx) {
   currentCharIdx = idx;
   currentCharData = CHARACTERS[idx];
   hideError();
-  renderCarousel();
+  
+  // Обновляем активную кнопку в карусели без полной перерисовки
+  document.querySelectorAll('.carousel-item').forEach((item, i) => {
+    item.classList.toggle('active', i === idx);
+  });
+  
+  // Прокручиваем карусель к активному элементу
+  const activeItem = document.querySelector('.carousel-item.active');
+  if (activeItem) {
+    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
   renderInfo(currentCharData);
   setButtonsEnabled(true);
   initWriter(currentCharData.char);
