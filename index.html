@@ -21,7 +21,14 @@
       </div>
     </header>
 
+<div class="global-progress">
+  <div class="global-progress-fill" id="global-progress-fill"></div>
+</div>
+
     <main>
+<div class="search-wrapper">
+  <input type="text" class="search-input" id="search-input" placeholder="Поиск: номер, пиньинь или значение (напр. 85, shui, вода)">
+</div>
       <!-- КАРУСЕЛЬ -->
       <div class="radical-carousel-container">
         <button class="carousel-nav carousel-prev" id="carouselPrev">‹</button>
@@ -55,11 +62,16 @@
             </div>
           </div>
 
-          <div class="key-controls">
+                    <div class="key-controls">
             <button class="btn-icon" id="btn-speak" data-tooltip="Озвучить">🐼</button>
             <button class="btn-icon" id="btn-animate" data-tooltip="Анимация">💿</button>
             <button class="btn-icon" id="btn-practice" data-tooltip="Практика">🖌️</button>
             <button class="btn-icon btn-favorite" id="btn-favorite" data-tooltip="В избранное">⭐</button>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="nav-btn" id="btn-prev">← Назад</button>
+            <button class="nav-btn" id="btn-next">Вперед →</button>
           </div>
 
           <div class="info-details-section">
@@ -95,6 +107,11 @@
           <div class="info-block">
             <div class="section-title">🗺️ История ключа</div>
             <div class="history-text" id="history-text">—</div>
+          </div>
+
+          <div class="info-block" id="similar-block" style="display: none;">
+            <div class="section-title">⚠️ Похожие ключи</div>
+            <div class="fact-text" id="similar-text" style="color: var(--color-primary-dark); background: rgba(241, 196, 15, 0.1); padding: 10px; border-radius: 8px;">—</div>
           </div>
 
           <div class="info-block">
