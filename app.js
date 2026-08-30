@@ -7,6 +7,7 @@ let totalStrokes = 0;
 let currentStrokeNum = 0;
 let isAnimating = false;
 let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let learned = JSON.parse(localStorage.getItem('learnedChars') || '[]');
 
 // === СЕТКА ===
 let guidelineCanvas = null, guidelineCtx = null;
@@ -153,6 +154,21 @@ function updateStrokeProgress(strokeNum, total) {
   });
 }
 
+// === ГЛОБАЛЬНЫЙ ПРОГРЕСС И ОБУЧЕНИЕ ===
+function updateGlobalProgress() {
+  const percent = Math.round((learned.length / 214) * 100);
+  const fill = document.getElementById('global-progress-fill');
+  if (fill) fill.style.width = percent + '%';
+}
+function markAsLearned() {
+  if (!learned.includes(currentCharIdx)) {
+    learned.push(currentCharIdx);
+    localStorage.setItem('learnedChars', JSON.stringify(learned));
+    updateGlobalProgress();
+    showToast('Ключ отмечен как изученный! 📚');
+  }
+}
+
 // === ИЗБРАННОЕ ===
 function updateFavoriteButton() {
   const btn = document.getElementById('btn-favorite');
@@ -198,7 +214,7 @@ function updateFavoritesModal() {
 function openFavoritesModal() { document.getElementById('favorites-modal').style.display = 'flex'; }
 function closeFavoritesModal() { document.getElementById('favorites-modal').style.display = 'none'; }
 
-// === КАРУСЕЛЬ ===
+// === КАРУСЕЛЬ И ПОИСК ===
 function renderCarousel() {
   const container = document.getElementById('radicalCarousel');
   container.innerHTML = '';
@@ -219,6 +235,39 @@ function setupCarouselNavigation() {
   document.getElementById('carouselPrev').addEventListener('click', () => container.scrollBy({ left: -120, behavior: 'smooth' }));
   document.getElementById('carouselNext').addEventListener('click', () => container.scrollBy({ left: 120, behavior: 'smooth' }));
 }
+function setupSearch() {
+  const input = document.getElementById('search-input');
+  if (!input) return;
+  input.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const items = document.querySelectorAll('.carousel-item');
+    items.forEach((item, index) => {
+      const charData = CHARACTERS[index];
+      const matchesQuery = 
+        charData.radicalNum.toString() === query ||
+        charData.pinyin.toLowerCase().includes(query) ||
+        charData.meaning.toLowerCase().includes(query) ||
+        charData.char === query;
+      item.style.display = matchesQuery ? 'flex' : 'none';
+    });
+  });
+}
+
+// === НАВИГАЦИЯ ===
+function setupNavButtons() {
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+  prevBtn?.addEventListener('click', () => {
+    let newIdx = currentCharIdx - 1;
+    if (newIdx < 0) newIdx = CHARACTERS.length - 1;
+    selectChar(newIdx);
+  });
+  nextBtn?.addEventListener('click', () => {
+    let newIdx = currentCharIdx + 1;
+    if (newIdx >= CHARACTERS.length) newIdx = 0;
+    selectChar(newIdx);
+  });
+}
 
 // === ОТОБРАЖЕНИЕ ИНФОРМАЦИИ ===
 function renderExamplesLarge(examples) {
@@ -234,9 +283,11 @@ function renderExamplesLarge(examples) {
       <div class="example-large-meaning">${data.meaning}</div>
       <div class="example-large-korean">${data.korean}</div>
     `;
+    card.addEventListener('click', () => speakText(example));
     container.appendChild(card);
   });
 }
+
 function renderInfo(charData) {
   document.getElementById('detail-pinyin').textContent = charData.pinyin;
   document.getElementById('detail-tone').textContent = `(${charData.tone})`;
@@ -246,6 +297,17 @@ function renderInfo(charData) {
   document.getElementById('detail-memory').innerHTML = charData.memoryHook || '';
   document.getElementById('history-text').innerHTML = charData.history.replace(/\n/g, '<br>');
   document.getElementById('position-text').textContent = charData.position;
+  
+  // Отображение похожих ключей (Бонус)
+  const similarBlock = document.getElementById('similar-block');
+  const similarText = document.getElementById('similar-text');
+  if (charData.similar) {
+    similarBlock.style.display = 'block';
+    similarText.innerHTML = charData.similar;
+  } else {
+    similarBlock.style.display = 'none';
+  }
+
   renderExamplesLarge(charData.examples);
   updateFavoriteButton();
   renderStrokeDots(charData.strokes);
@@ -319,6 +381,7 @@ function startPracticeMode() {
     onMistake: function() { showToast('Попробуйте ещё раз!', 1500); },
     onComplete: function() {
       showToast('Иероглиф освоен! 🎉', 3000);
+      markAsLearned(); // Отмечаем как изученный
       setTimeout(exitPracticeMode, 1500);
     }
   });
@@ -386,6 +449,9 @@ window.addEventListener('load', () => {
   if (typeof HanziWriter === 'undefined') { showError('Ошибка загрузки Hanzi Writer'); return; }
   renderCarousel();
   setupCarouselNavigation();
+  setupSearch();
+  setupNavButtons();
+  updateGlobalProgress();
   initTooltips();
   selectChar(0);
   updateFavoritesModal();
