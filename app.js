@@ -283,7 +283,11 @@ function renderExamplesLarge(examples) {
       <div class="example-large-meaning">${data.meaning}</div>
       <div class="example-large-korean">${data.korean}</div>
     `;
-    card.addEventListener('click', () => speakText(example));
+    // При клике: озвучиваем И открываем модалку с анимацией
+    card.addEventListener('click', () => {
+      speakText(example);
+      openExampleModal(example);
+    });
     container.appendChild(card);
   });
 }
@@ -457,6 +461,125 @@ function speakText(text) {
   });
 }
 
+// === МОДАЛКА АНИМАЦИИ ПРИМЕРОВ ===
+let exampleWriter = null;
+
+function openExampleModal(char) {
+  const modal = document.getElementById('example-modal');
+  const target = document.getElementById('example-writer-target');
+  
+  // Получаем пиньинь из базы данных примеров
+  const data = window.getExampleData(char);
+  const pinyinText = data.pinyin !== '?' ? `${data.pinyin}` : '';
+  
+  // Обновляем заголовок: иероглиф, пиньинь и кнопка озвучки
+  const titleEl = document.getElementById('example-modal-title');
+  titleEl.innerHTML = `
+    <span style="font-family: var(--font-display); font-size: 2.8rem;">${char}</span> 
+    <span style="opacity: 0.9; font-weight: 500; font-size: 1.8rem; margin: 0 10px;">${pinyinText}</span>
+    <button id="btn-example-speak" style="background:none; border:none; color:white; font-size:2.4rem; cursor:pointer; padding:0 5px;">🔊</button>
+  `;
+  
+  // Привязываем клик к новой кнопке озвучки в шапке
+  document.getElementById('btn-example-speak')?.addEventListener('click', () => speakText(char));
+  
+  // Очищаем старый writer
+  if (exampleWriter) { try { exampleWriter.cancelQuiz(); } catch(e){} exampleWriter = null; }
+  target.innerHTML = '';
+  
+  // Задаем размер контейнера
+  const size = Math.min(target.clientWidth || 280, 300);
+  
+  // Создаем новый HanziWriter для примера
+  exampleWriter = HanziWriter.create('example-writer-target', char, {
+    width: size,
+    height: size,
+    padding: Math.max(10, size * 0.05),
+    showOutline: true,
+    showCharacter: false, // Не показываем иероглиф сразу, пусть он прорисуется
+    strokeColor: '#c0392b',
+    outlineColor: '#ddd',
+    drawingColor: '#2c6e9e', drawingWidth: Math.max(4, size * 0.02),
+    strokeAnimationSpeed: 1, delayBetweenStrokes: 300,
+    
+    // Если иероглифа нет в базе HanziWriter, показываем его как текст
+    onLoadCharDataError: function() {
+      target.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--font-display);font-size:9rem;color:var(--color-primary);">${char}</div>`;
+      showToast('Анимация для этого иероглифа недоступна');
+    },
+    onLoadCharDataSuccess: function() {
+      // Если данные загрузились успешно, запускаем анимацию
+      setTimeout(() => {
+        if (exampleWriter) {
+          try { exampleWriter.animateCharacter(); } catch(e) {}
+        }
+      }, 200);
+    }
+  });
+  
+  modal.style.display = 'flex';
+}
+
+  // Автоматически запускаем анимацию при открытии окна
+  setTimeout(() => {
+    if (exampleWriter) exampleWriter.animateCharacter();
+  }, 300);
+
+
+function closeExampleModal() {
+  document.getElementById('example-modal').style.display = 'none';
+  if (exampleWriter) { try { exampleWriter.cancelQuiz(); } catch(e){} }
+}
+
+
+// === ПРАКТИКА НАПИСАНИЯ ПРИМЕРА ===
+function startExamplePractice() {
+
+  if (!exampleWriter) {
+    showToast('Иероглиф ещё не загружен');
+    return;
+  }
+
+  // Останавливаем предыдущую анимацию/практику
+  try {
+    exampleWriter.cancelQuiz();
+  } catch (e) {}
+
+  // Скрываем готовый иероглиф
+  exampleWriter.hideCharacter();
+
+  // Запускаем режим самостоятельного написания
+  exampleWriter.quiz({
+
+    showHintAfterMisses: 2,
+
+    onCorrectStroke: function(strokeData) {
+      const current = strokeData.strokeNum + 1;
+      const total = strokeData.strokesRemaining + current;
+
+      showToast(
+        `Черта ${current} из ${total}`,
+        1000
+      );
+    },
+
+    onMistake: function() {
+      showToast('Попробуйте ещё раз ✍️', 1200);
+    },
+
+    onComplete: function() {
+      showToast('Отлично! Иероглиф написан правильно! 🎉', 2500);
+
+      // После завершения снова показываем готовый иероглиф
+      setTimeout(() => {
+        if (exampleWriter) {
+          exampleWriter.showCharacter();
+        }
+      }, 1200);
+    }
+  });
+}
+
 // === EVENT LISTENERS ===
 document.getElementById('btn-speak')?.addEventListener('click', () => { if (currentCharData) speakText(currentCharData.char); });
 document.getElementById('btn-animate')?.addEventListener('click', () => { if (isPracticeMode) exitPracticeMode(); animateCharacter(); });
@@ -467,6 +590,15 @@ document.getElementById('btn-favorite')?.addEventListener('click', toggleFavorit
 document.getElementById('btn-favorites-scroll')?.addEventListener('click', openFavoritesModal);
 document.querySelector('.modal-close')?.addEventListener('click', closeFavoritesModal);
 window.addEventListener('click', (e) => { if (e.target === document.getElementById('favorites-modal')) closeFavoritesModal(); });
+
+document.getElementById('example-close-btn')?.addEventListener('click', closeExampleModal);
+document.getElementById('btn-example-animate')?.addEventListener('click', () => {
+  if (exampleWriter) exampleWriter.animateCharacter();
+});
+window.addEventListener('click', (e) => { 
+  if (e.target === document.getElementById('example-modal')) closeExampleModal();
+});
+document.getElementById('btn-example-practice')?.addEventListener('click', startExamplePractice); 
 
 // Theme toggle
 const themeToggle = document.getElementById('themeToggle');
