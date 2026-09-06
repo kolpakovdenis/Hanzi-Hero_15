@@ -150,6 +150,40 @@
     <div id="toast" class="toast"></div>
   </div>
 
+<!-- МОДАЛКА АНИМАЦИИ И ПРАКТИКИ ПРИМЕРА -->
+<div id="example-modal" class="favorites-modal">
+  <div class="modal-content" style="max-width: 400px;">
+
+    <div class="modal-header">
+      <span id="example-modal-title">Пример</span>
+      <button class="modal-close" id="example-close-btn">&times;</button>
+    </div>
+
+    <div style="padding: var(--space-6); text-align: center;">
+
+      <!-- Поле для Hanzi Writer -->
+      <div id="example-writer-target"
+           style="
+             width: 100%;
+             aspect-ratio: 1/1;
+             max-width: 300px;
+             margin: 0 auto 20px auto;
+             border: 2px solid var(--color-border);
+             border-radius: var(--radius-lg);
+             background: var(--color-surface-offset);
+           ">
+      </div>
+
+            <!-- Две кнопки -->
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="nav-btn" id="btn-example-animate" style="flex: 1;">💿 Анимация</button>
+        <button class="nav-btn" id="btn-example-practice" style="flex: 1; background: var(--color-primary-light); color: white; border-color: var(--color-primary-dark);">✍️ Написать</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
