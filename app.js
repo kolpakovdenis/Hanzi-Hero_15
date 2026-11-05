@@ -295,6 +295,7 @@ function renderExamplesLarge(examples) {
 function renderInfo(charData) {
   document.getElementById('detail-pinyin').textContent = charData.pinyin;
   document.getElementById('detail-tone').textContent = `(${charData.tone})`;
+  document.getElementById('detail-trans').textContent = charData.koreanTrans || '—';
   document.getElementById('detail-meaning-ru').textContent = charData.meaning;
   document.getElementById('detail-meaning-kr').textContent = `${charData.koreanName}`;
   document.getElementById('detail-stats').textContent = `Ключ №${charData.radicalNum} · Черты: ${charData.strokes}`;
