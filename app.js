@@ -247,6 +247,7 @@ function setupSearch() {
         charData.radicalNum.toString() === query ||
         charData.pinyin.toLowerCase().includes(query) ||
         charData.meaning.toLowerCase().includes(query) ||
+        (charData.koreanTrans || '').includes(query) ||
         charData.char === query;
       item.style.display = matchesQuery ? 'flex' : 'none';
     });
@@ -296,7 +297,6 @@ function renderInfo(charData) {
   document.getElementById('detail-pinyin').innerHTML =
   `<span class="pinyin-trans">/ ${charData.koreanTrans || ''}</span> ${charData.pinyin}`;
   document.getElementById('detail-tone').textContent = `(${charData.tone})`;
-  document.getElementById('detail-trans').textContent = charData.koreanTrans || '—';
   document.getElementById('detail-meaning-ru').textContent = charData.meaning;
   document.getElementById('detail-meaning-kr').textContent = `${charData.koreanName}`;
   document.getElementById('detail-stats').textContent = `Ключ №${charData.radicalNum} · Черты: ${charData.strokes}`;
