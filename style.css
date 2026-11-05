@@ -2,7 +2,7 @@
 
 :root {
   --color-bg: #fef7e8;
-  --color-surface: #ffffff;
+  --color-surface: #ffffff;А
   --color-surface-offset: #faf0e1;
   --color-primary: #c0392b;
   --color-primary-dark: #8b1a1a;
@@ -432,6 +432,9 @@ body {
 }
 .detail-label { font-weight: 500; color: var(--color-text-muted); min-width: 60px; }
 .tone { margin-left: auto; color: var(--color-primary); }
+
+.pinyin-trans { color: #888; font-size: .8em; font-family: 'Noto Sans KR', sans-serif; }
+[data-theme="dark"] .pinyin-trans { color: #666; }
 
 /* БАННЕРЫ, МОДАЛКИ, TOAST */
 .practice-mode-banner {
