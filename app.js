@@ -293,7 +293,8 @@ function renderExamplesLarge(examples) {
 }
 
 function renderInfo(charData) {
-  document.getElementById('detail-pinyin').textContent = charData.pinyin;
+  document.getElementById('detail-pinyin').innerHTML =
+  `<span class="pinyin-trans">/ ${charData.koreanTrans || ''}</span> ${charData.pinyin}`;
   document.getElementById('detail-tone').textContent = `(${charData.tone})`;
   document.getElementById('detail-trans').textContent = charData.koreanTrans || '—';
   document.getElementById('detail-meaning-ru').textContent = charData.meaning;
