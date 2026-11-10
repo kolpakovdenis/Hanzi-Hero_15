@@ -2,7 +2,7 @@
 
 :root {
   --color-bg: #fef7e8;
-  --color-surface: #ffffff;А
+  --color-surface: #ffffff;
   --color-surface-offset: #faf0e1;
   --color-primary: #c0392b;
   --color-primary-dark: #8b1a1a;
@@ -433,6 +433,21 @@ body {
 .detail-label { font-weight: 500; color: var(--color-text-muted); min-width: 60px; }
 .tone { margin-left: auto; color: var(--color-primary); }
 
+/* === Упрощённые формы (КНР) === */
+.carousel-simp-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #f1c40f;
+  margin-left: 3px;
+}
+#btn-simp.active { background: rgba(241, 196, 15, 0.25); }
+.example-simp {
+  font-size: .85em;
+  color: var(--color-text-muted);
+  margin-top: -2px;
+}
+[data-theme="dark"] .example-simp { color: #777; }
 .pinyin-trans { color: #888; font-size: .8em; font-family: 'Noto Sans KR', sans-serif; }
 [data-theme="dark"] .pinyin-trans { color: #666; }
 
@@ -682,7 +697,15 @@ body {
 .hanzi-target-overlay { 
   z-index: 2; /* Иероглиф поверх сетки */
 }
+/* строка 697-699 остаётся: */
+.hanzi-target-overlay { 
+  z-index: 2; /* Иероглиф поверх сетки */
+}
 
+/* ↓ ВОТ ЭТО ДОБАВИТЬ СЮДА (после строки 699): */
+.guideline-canvas.dim {
+  opacity: 0.15;
+}
 /* === КРАСИВЫЙ СКРОЛЛБАР ДЛЯ КАРУСЕЛИ === */
 .radical-carousel::-webkit-scrollbar {
   height: 8px;
