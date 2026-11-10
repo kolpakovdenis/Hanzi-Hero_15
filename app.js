@@ -276,7 +276,7 @@ function setupNavButtons() {
 function renderExamplesLarge(examples) {
   const container = document.getElementById('examples-mini');
   container.innerHTML = '';
-  examples.slice(0, 2).forEach(example => {
+  examples.slice(0, 3).forEach(example => {
     const data = window.getExampleData(example);
     const card = document.createElement('div');
     card.className = 'example-large-card';
