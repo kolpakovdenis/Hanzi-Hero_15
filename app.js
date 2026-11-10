@@ -8,6 +8,8 @@ let currentStrokeNum = 0;
 let isAnimating = false;
 let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 let learned = JSON.parse(localStorage.getItem('learnedChars') || '[]');
+let simpMode = false;
+const glyph = c => (simpMode && c.simp) ? c.simp : c.char;
 
 // === СЕТКА ===
 let guidelineCanvas = null, guidelineCtx = null;
@@ -221,7 +223,7 @@ function renderCarousel() {
   CHARACTERS.forEach((c, i) => {
     const btn = document.createElement('button');
     btn.className = `carousel-item ${i === currentCharIdx ? 'active' : ''}`;
-    btn.innerHTML = `<span class="carousel-hanzi">${c.char}</span><span class="carousel-pinyin">${c.pinyin}</span><span class="carousel-num">${c.radicalNum}</span>`;
+        btn.innerHTML = `<span class="carousel-hanzi">${c.char}</span><span class="carousel-pinyin">${c.pinyin}</span><span class="carousel-num">${c.radicalNum}</span>${c.simp ? '<span class="carousel-simp-dot" title="Есть форма КНР"></span>' : ''}`;
     btn.onclick = () => selectChar(i);
     container.appendChild(btn);
   });
@@ -278,8 +280,10 @@ function renderExamplesLarge(examples) {
     const data = window.getExampleData(example);
     const card = document.createElement('div');
     card.className = 'example-large-card';
+    const simp = EXAMPLE_SIMP[example];
     card.innerHTML = `
       <div class="example-large-char">${example}</div>
+      ${simp ? `<div class="example-simp">в КНР: ${simp}</div>` : ''}
       <div class="example-large-pinyin">${data.pinyin}</div>
       <div class="example-large-meaning">${data.meaning}</div>
       <div class="example-large-korean">${data.korean}</div>
@@ -303,7 +307,20 @@ function renderInfo(charData) {
   document.getElementById('detail-memory').innerHTML = charData.memoryHook || '';
   document.getElementById('history-text').innerHTML = charData.history.replace(/\n/g, '<br>');
   document.getElementById('position-text').textContent = charData.position;
-  
+    // Форма КНР: кнопка + блок в развороте
+  const btnSimp = document.getElementById('btn-simp');
+  if (btnSimp) {
+    btnSimp.style.display = charData.simp ? '' : 'none';
+    btnSimp.classList.remove('active');
+  }
+  const simpBlock = document.getElementById('simp-block');
+  if (simpBlock) {
+    if (charData.simp) {
+      simpBlock.style.display = 'block';
+      document.getElementById('simp-text').innerHTML =
+        charData.simpNote || `В КНР пишется: <b>${charData.simp}</b>`;
+    } else simpBlock.style.display = 'none';
+  }
   // Отображение похожих ключей (Бонус)
   const similarBlock = document.getElementById('similar-block');
   const similarText = document.getElementById('similar-text');
@@ -335,11 +352,18 @@ function getWriterOptions() {
     strokeAnimationSpeed: 1, delayBetweenStrokes: 500, strokeHighlightSpeed: 2,
     onLoadCharDataSuccess: function(data) {
       totalStrokes = data.strokes ? data.strokes.length : currentCharData.strokes;
+      renderStrokeDots(totalStrokes);
       updateStrokeProgress(0, totalStrokes);
       hideError();
       setTimeout(() => { drawGrid(); }, 100);
     },
-    onLoadCharDataError: function(reason) { showError('Не удалось загрузить данные.'); }
+        onLoadCharDataError: function() {
+      const target = document.getElementById('hanzi-target');
+      if (target && currentCharData) {
+        target.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--font-display);font-size:9rem;color:var(--color-primary);">${glyph(currentCharData)}</div>`;
+        showToast('Анимация недоступна — форма показана текстом');
+      }
+    }
   };
 }
 function initWriter(char) {
@@ -422,7 +446,8 @@ function selectChar(idx) {
 
   renderInfo(currentCharData);
   setButtonsEnabled(true);
-  initWriter(currentCharData.char);
+    simpMode = false;
+  initWriter(glyph(currentCharData));
 }
 
 // === ОЗВУЧКА ЧЕРЕЗ MP3 ФАЙЛЫ ===
@@ -523,11 +548,7 @@ function openExampleModal(char) {
 }
 
   // Автоматически запускаем анимацию при открытии окна
-  setTimeout(() => {
-    if (exampleWriter) exampleWriter.animateCharacter();
-  }, 300);
-
-
+  
 function closeExampleModal() {
   document.getElementById('example-modal').style.display = 'none';
   if (exampleWriter) { try { exampleWriter.cancelQuiz(); } catch(e){} }
@@ -586,6 +607,12 @@ function startExamplePractice() {
 document.getElementById('btn-speak')?.addEventListener('click', () => { if (currentCharData) speakText(currentCharData.char); });
 document.getElementById('btn-animate')?.addEventListener('click', () => { if (isPracticeMode) exitPracticeMode(); animateCharacter(); });
 document.getElementById('btn-practice')?.addEventListener('click', startPracticeMode);
+document.getElementById('btn-simp')?.addEventListener('click', () => { if (isPracticeMode) exitPracticeMode();
+  if (!currentCharData?.simp) return;
+  simpMode = !simpMode;
+  initWriter(glyph(currentCharData));
+  document.getElementById('btn-simp').classList.toggle('active', simpMode);
+});
 document.getElementById('btn-exit-practice')?.addEventListener('click', exitPracticeMode);
 document.getElementById('btn-retry')?.addEventListener('click', () => selectChar(currentCharIdx));
 document.getElementById('btn-favorite')?.addEventListener('click', toggleFavorite);
