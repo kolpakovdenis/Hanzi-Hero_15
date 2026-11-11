@@ -697,15 +697,7 @@ body {
 .hanzi-target-overlay { 
   z-index: 2; /* Иероглиф поверх сетки */
 }
-/* строка 697-699 остаётся: */
-.hanzi-target-overlay { 
-  z-index: 2; /* Иероглиф поверх сетки */
-}
 
-/* ↓ ВОТ ЭТО ДОБАВИТЬ СЮДА (после строки 699): */
-.guideline-canvas.dim {
-  opacity: 0.15;
-}
 /* === КРАСИВЫЙ СКРОЛЛБАР ДЛЯ КАРУСЕЛИ === */
 .radical-carousel::-webkit-scrollbar {
   height: 8px;
@@ -821,3 +813,54 @@ body {
 .example-large-card:active {
   transform: scale(0.98);
 }
+
+/* === ФОРМЫ КЛЮЧА В СОСТАВЕ ИЕРОГЛИФОВ === */
+.forms-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+.forms-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-offset);
+}
+.forms-chip i { font-style: normal; font-size: .78em; color: var(--color-text-muted); }
+.forms-chip b {
+  font-family: var(--font-display);
+  font-size: 1.35em;
+  color: var(--color-primary);
+  line-height: 1;
+  font-weight: 600;
+}
+.forms-none { font-size: .9em; color: var(--color-text-muted); }
+.forms-list { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.forms-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 12px;
+  background: var(--color-surface-offset);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.forms-pos { font-size: .8em; color: var(--color-text-muted); }
+.forms-glyph { font-family: var(--font-display); font-size: 1.9rem; color: var(--color-primary); line-height: 1; }
+.forms-ex { font-size: .92em; color: var(--color-text); font-family: var(--font-display); }
+.example-form {
+  font-size: .85em;
+  color: var(--color-primary-dark);
+  background: rgba(44, 110, 158, 0.08);
+  border-radius: 999px;
+  padding: 1px 10px;
+  margin-bottom: 4px;
+}
+[data-theme="dark"] .example-form { background: rgba(44, 110, 158, 0.2); color: #9ec9e8; }
+
+/* === ЗАТУХАНИЕ СЕТКИ В РЕЖИМЕ ПРАКТИКИ === */
+.guideline-canvas.dim { opacity: 0.15; }
