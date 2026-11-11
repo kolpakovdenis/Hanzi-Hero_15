@@ -281,8 +281,10 @@ function renderExamplesLarge(examples) {
     const card = document.createElement('div');
     card.className = 'example-large-card';
     const simp = EXAMPLE_SIMP[example];
+    const form = findFormFor(example);
     card.innerHTML = `
       <div class="example-large-char">${example}</div>
+      ${form ? `<div class="example-form">🔑 ${form.glyph} — ${form.pos}</div>` : ''}
       ${simp ? `<div class="example-simp">в КНР: ${simp}</div>` : ''}
       <div class="example-large-pinyin">${data.pinyin}</div>
       <div class="example-large-meaning">${data.meaning}</div>
@@ -295,6 +297,39 @@ function renderExamplesLarge(examples) {
     });
     container.appendChild(card);
   });
+}
+
+// === ФОРМЫ КЛЮЧА В СОСТАВЕ ИЕРОГЛИФОВ ===
+function getRadicalForms(num) {
+  return (window.RADICAL_FORMS && window.RADICAL_FORMS[num]) || null;
+}
+function findFormFor(exampleChar) {
+  if (!currentCharData) return null;
+  const forms = getRadicalForms(currentCharData.radicalNum);
+  if (!forms) return null;
+  for (const f of forms) {
+    if (f[2].split(/\s+/).includes(exampleChar)) return { glyph: f[1], pos: f[0] };
+  }
+  return null;
+}
+function renderFormsBlock(charData) {
+  const strip = document.getElementById('forms-strip');
+  const text = document.getElementById('forms-text');
+  const forms = getRadicalForms(charData.radicalNum);
+  if (strip) {
+    strip.innerHTML = forms
+      ? forms.map(f => `<span class="forms-chip"><i>${f[0]}</i><b>${f[1]}</b></span>`).join('')
+      : '<span class="forms-none">начертание не меняется</span>';
+  }
+  if (text) {
+    text.innerHTML = forms
+      ? '<div class="forms-list">' + forms.map(f =>
+          `<span class="forms-item"><span class="forms-pos">${f[0]}</span>` +
+          `<span class="forms-glyph">${f[1]}</span>` +
+          `<span class="forms-ex">${f[2].split(/\s+/).slice(0, 4).join(' ')}</span></span>`
+        ).join('') + '</div>'
+      : 'Этот ключ сохраняет своё начертание в любом положении — см. примеры выше.';
+  }
 }
 
 function renderInfo(charData) {
@@ -331,6 +366,7 @@ function renderInfo(charData) {
     similarBlock.style.display = 'none';
   }
 
+  renderFormsBlock(charData);
   renderExamplesLarge(charData.examples);
   updateFavoriteButton();
   renderStrokeDots(charData.strokes);
