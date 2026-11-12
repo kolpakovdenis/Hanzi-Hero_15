@@ -553,6 +553,12 @@ function openExampleModal(char) {
   // Задаем размер контейнера
   const size = Math.min(target.clientWidth || 280, 300);
   
+  // На случай предыдущей ошибки — возвращаем кнопкам активность
+  ['btn-example-animate', 'btn-example-practice'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) { b.disabled = false; b.style.opacity = ''; }
+  });
+
   // Создаем новый HanziWriter для примера
   exampleWriter = HanziWriter.create('example-writer-target', char, {
     width: size,
@@ -569,6 +575,10 @@ function openExampleModal(char) {
     onLoadCharDataError: function() {
       target.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--font-display);font-size:9rem;color:var(--color-primary);">${char}</div>`;
       showToast('Анимация для этого иероглифа недоступна');
+      ['btn-example-animate', 'btn-example-practice'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) { b.disabled = true; b.style.opacity = '0.4'; }
+      });
     },
     onLoadCharDataSuccess: function() {
       // Если данные загрузились успешно, запускаем анимацию
