@@ -441,9 +441,9 @@ body {
   background: #f1c40f;
   margin-left: 3px;
 }
-/* КНОПКА «ФОРМА КНР» (简): иероглиф золотой, контур чёрный;
-   в режиме КНР контур подсвечивается золотым */
-#btn-simp { color: #f1c40f; border-color: var(--color-text); }
+/* КНОПКА «ФОРМА КНР» (简): фон и контур — как у соседних кнопок,
+   иероглиф золотой; в режиме КНР контур подсвечивается золотым */
+#btn-simp { color: #f1c40f; background: var(--color-surface-offset); }
 #btn-simp:hover { color: #ffffff; }
 #btn-simp.active { border-color: #f1c40f; background: rgba(241, 196, 15, 0.25); }
 .example-simp {
