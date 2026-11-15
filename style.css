@@ -441,6 +441,8 @@ body {
   background: #f1c40f;
   margin-left: 3px;
 }
+#btn-simp { color: #f1c40f; border-color: #f1c40f; }
+#btn-simp:hover { color: #ffffff; }
 #btn-simp.active { background: rgba(241, 196, 15, 0.25); }
 .example-simp {
   font-size: .85em;
